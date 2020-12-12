@@ -1,0 +1,3 @@
+C:/Users/carva/CLionProjects/ProjetoLPAED/cmake-build-debug/CMakeFiles/ProjetoLPAED.dir
+C:/Users/carva/CLionProjects/ProjetoLPAED/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/carva/CLionProjects/ProjetoLPAED/cmake-build-debug/CMakeFiles/rebuild_cache.dir
