@@ -17,7 +17,10 @@ typedef struct dias {
 
 typedef struct estudio {
     int id_estudio;
-    int custo;
+    int numero;
+    int edificio;
+    char configuracao[2];
+    int area;
     int totalRegras;
     int *codigo;
     int totalDias;
@@ -25,20 +28,42 @@ typedef struct estudio {
     DIAS *array_dias;
 } ESTUDIO;
 
+typedef struct estudio_array {
+    int n_estudios;
+    int size_estudios;
+    ESTUDIO *pestudios; //ARRAY DE ESTUDIOS
+} ESTUDIO_ARRAY;
+
+//LISTA LIGADA DE EDIFICIOS
 typedef struct edificio {
     int id_edificio;
-    int totalEstudios;
+    char nome[MAX200];
+    double latitude;
+    double longitude;
+    char morada[MAX200];
+    double preco_m2;
+    //int totalEstudios;
     struct edificio *next;
-    ESTUDIO *array_estudio;
-}EDIFICIO ;
+    ESTUDIO_ARRAY array_estudios;
+    //ESTUDIO *array_estudio;
+} EDIFICIO;
 
+
+
+
+typedef struct listaedificios {
+    EDIFICIO *pedificios;
+} LISTAEDIFICIOS;
+
+
+//LISTA LIGADA DE EVENTOS
 typedef struct evento {
     int id_evento, id_cliente;
     char *nome_cliente;
     char *nome_evento;
     double horas_minutos;
     struct evento *nextEvento;
-}EVENTO;
+} EVENTO;
 
 typedef struct regras {
     int id;
@@ -55,13 +80,17 @@ typedef struct historicoEstadias {
     struct historicoEstadias *pnext_estadia;
 } HISTORICOESTADIAS;
 
-typedef struct hospede{
+typedef struct hospede {
     int id_cliente;
     char *nome_cliente;
     HISTORICOESTADIAS *pprimeiraEstadia;
     struct hospede *pnext;
-}HOSPEDE;
+} HOSPEDE;
 
+LISTAEDIFICIOS create_lista_edificio(int ID_edificios[], int size);
+
+void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
+                     char morada[MAX200], float preco_m2);
 
 
 void create_dynarray_edificio(EDIFICIO *pcs, int initsize);

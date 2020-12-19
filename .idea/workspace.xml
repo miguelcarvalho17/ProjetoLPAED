@@ -21,15 +21,19 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1lZ06PVvyoWLpjmU288iMQkwk92" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -37,27 +41,26 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RunManager">
-    <configuration name="ProjetoLPAED" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProjetoLPAED" TARGET_NAME="ProjetoLPAED" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProjetoLPAED" RUN_TARGET_NAME="ProjetoLPAED">
+    <configuration name="ProjetoLPAED" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProjetoLPAED" TARGET_NAME="ProjetoLPAED" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProjetoLPAED" RUN_TARGET_NAME="ProjetoLPAED">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -70,11 +73,14 @@
       <updated>1607789129728</updated>
       <workItem from="1607789131705" duration="83000" />
       <workItem from="1607789261282" duration="2477000" />
+      <workItem from="1607791964888" duration="792000" />
+      <workItem from="1607868856704" duration="741000" />
+      <workItem from="1608389883409" duration="6083000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="500" y="184" key="FileChooserDialogImpl" timestamp="1607789213757">
@@ -97,9 +103,10 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.right/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214508" />
-    <state x="442" y="93" key="SettingsEditor" timestamp="1607791738369">
-      <screen x="0" y="0" width="1440" height="860" />
+    <state x="589" y="112" key="SettingsEditor" timestamp="1607792153012">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="442" y="93" key="SettingsEditor/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607791738369" />
+    <state x="589" y="112" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607792153012" />
   </component>
 </project>
