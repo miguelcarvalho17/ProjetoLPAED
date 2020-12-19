@@ -14,8 +14,30 @@ int main_projeto(int argc, const char *argv[]) {
 }
 
 
-void create_dynarray_edificio(EDIFICIO *pcs, int initsize) {
-    ESTUDIO *pestudio = (ESTUDIO *) calloc(initsize, sizeof(ESTUDIO));
-    pcs->pestudio = pestudio;
-    pcs->nestudios = initsize;
+
+typedef struct edificio *nodeEdificio; //Define nodeEdificio as pointer of data type struct edificio
+
+/* nodeEdificio createNode(){
+    nodeEdificio temp; //
+    temp = (nodeEdificio)malloc(sizeof(struct edificio));
+    temp->next = NULL;
+    return temp;
 }
+
+nodeEdificio addNode(nodeEdificio head, int id){
+    nodeEdificio temp,p; //  declarar 2 nodes temp e p
+    temp = createNode(); // retorna um node com a data=id e apontar para NULL
+    temp->id_edificio = id; //  id to id_edificio
+    if(head == NULL){
+        head = temp;     //lista ligada vazia
+    }
+    else{
+        p  = head; // apontar p a cabeça
+        while(p->next != NULL){
+            p = p->next;//traverse the list until p is the last node.The last node always points to NULL.
+        }
+        p->next = temp;//Point the previous last node to the new node created.
+    }
+    return head;
+}
+*/
