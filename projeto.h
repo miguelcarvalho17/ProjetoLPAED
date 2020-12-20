@@ -24,7 +24,7 @@ typedef struct estudio {
     int totalRegras;
     int *codigo;
     int totalDias;
-    int ocupaçao;
+    int ocupacao;
     DIAS *array_dias;
 } ESTUDIO;
 
@@ -68,13 +68,13 @@ typedef struct evento {
 typedef struct regras {
     int id;
     char *regra;
-    int preços;
+    int precos;
 } REGRAS;
 
 typedef struct historicoEstadias {
     int id_estadia;
     char *nome_evento;
-    int preço;
+    int preco;
     double hora_minuto;
     DIAS data;
     struct historicoEstadias *pnext_estadia;
@@ -90,10 +90,14 @@ typedef struct hospede {
 LISTAEDIFICIOS create_lista_edificio(int ID_edificios[], int size);
 
 void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
-                     char morada[MAX200], float preco_m2);
+                     char morada[MAX200], double preco_m2);
 
 
-void create_dynarray_edificio(EDIFICIO *pcs, int initsize);
+void print_listaEdificio(LISTAEDIFICIOS g);
+
+EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
+
+void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area);
 
 int main_projeto(int argc, const char *argv[]);
 

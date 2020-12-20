@@ -49,11 +49,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -75,7 +70,8 @@
       <workItem from="1607789261282" duration="2477000" />
       <workItem from="1607791964888" duration="792000" />
       <workItem from="1607868856704" duration="741000" />
-      <workItem from="1608389883409" duration="6083000" />
+      <workItem from="1608389883409" duration="7264000" />
+      <workItem from="1608476685965" duration="6074000" />
     </task>
     <servers />
   </component>
@@ -87,26 +83,30 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="500" y="184" key="FileChooserDialogImpl/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789213757" />
-    <state width="1397" height="202" key="GridCell.Tab.0.bottom" timestamp="1607789214508">
-      <screen x="0" y="0" width="1440" height="860" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1608482513335">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.bottom/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214508" />
-    <state width="1397" height="202" key="GridCell.Tab.0.center" timestamp="1607789214507">
-      <screen x="0" y="0" width="1440" height="860" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608482513335" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1608482513335">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.center/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214507" />
-    <state width="1397" height="202" key="GridCell.Tab.0.left" timestamp="1607789214507">
-      <screen x="0" y="0" width="1440" height="860" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608482513335" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1608482513335">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.left/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214507" />
-    <state width="1397" height="202" key="GridCell.Tab.0.right" timestamp="1607789214508">
-      <screen x="0" y="0" width="1440" height="860" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608482513335" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1608482513335">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.right/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214508" />
-    <state x="589" y="112" key="SettingsEditor" timestamp="1607792153012">
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608482513335" />
+    <state x="589" y="112" key="SettingsEditor" timestamp="1608479629576">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="442" y="93" key="SettingsEditor/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607791738369" />
-    <state x="589" y="112" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607792153012" />
+    <state x="589" y="112" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1608479629576" />
   </component>
 </project>

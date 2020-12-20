@@ -12,6 +12,11 @@
 int main_projeto(int argc, const char *argv[]) {
     int ids[] = {1, 2, 3, 4};
     LISTAEDIFICIOS e = create_lista_edificio(ids, 4);
+    insert_estudio(&e, 1, 1, "t2", 50);
+    print_listaEdificio(e);
+
+    //USAR ISTO
+    //e.pedificios->array_estudios.pestudios;
 
     return 0;
 }
@@ -19,13 +24,13 @@ int main_projeto(int argc, const char *argv[]) {
 
 LISTAEDIFICIOS create_lista_edificio(int ID_edificios[], int size) {
     LISTAEDIFICIOS e1 = {NULL};
-    for (int i = 0; i < size; ++i) {
-        insert_edificio(&e1, ID_edificios[i],"PF Boavista",41.162392,-8.655714,"Avenida da Boavista", 1.5);
-    }
+        insert_edificio(&e1, ID_edificios[0], "PF Boavista", 41.162392, -8.655714, "Avenida da Boavista", 1.5);
+        insert_edificio(&e1, ID_edificios[1], "PF Maia", 41.162392, -8.655714, "Avenida da Boavista", 1.5);
     return e1;
 }
 
-void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200],double latitude, double longitude, char morada[MAX200], float preco_m2) {
+void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
+                     char morada[MAX200], double preco_m2) {
     //TEMOS UM JOGO A APONTAR PARA NULL
     //QUEREMOS COLOCAR O JOGO A APONTAR PARA OS JOGADORES
     //PLAYER CRIADO
@@ -59,42 +64,55 @@ void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200],doub
     pant->next = s;
 }
 
-void insert_estudio(LISTAEDIFICIOS *pg, const char player[], char id, char suit, int points) {
+void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area) {
     //FUNÇAO AUXILIAR
-    PLAYER *pp = find_player(pg, player);
+    EDIFICIO *pedificio = find_edificio(pg, id);
 
-    if (pp != NULL) {
+    if (pedificio != NULL) {
 
-        if (pp->deck.n_cards >= pp->deck.size_cards) {
-            if (pp->deck.size_cards == 0) {
-                pp->deck.size_cards = 2;
+        if (pedificio->array_estudios.n_estudios >= pedificio->array_estudios.size_estudios) {
+            if (pedificio->array_estudios.size_estudios == 0) {
+                pedificio->array_estudios.size_estudios = 2;
             } else {
-                pp->deck.size_cards *= 2;
+                pedificio->array_estudios.size_estudios *= 2;
             }
-            pp->deck.pcards = (CARD *) realloc(pp->deck.pcards, sizeof(CARD) * pp->deck.size_cards);
+            pedificio->array_estudios.pestudios = (ESTUDIO *) realloc(pedificio->array_estudios.pestudios,
+                                                                      sizeof(ESTUDIO) *
+                                                                      pedificio->array_estudios.size_estudios);
         }
-        CARD *pc = pp->deck.pcards + pp->deck.n_cards;
-        pc->cardId = id;
-        pc->cardSuit = suit;
-        pc->cardPoints = points;
+        ESTUDIO *pestudio = pedificio->array_estudios.pestudios + pedificio->array_estudios.n_estudios;
+        pestudio->id_estudio = id;
+        pestudio->numero = numero;
+        strcpy(pestudio->configuracao, configuracao);
+        pestudio->area = area;
 
-        pp->deck.n_cards++;
+
+        pedificio->array_estudios.n_estudios++;
     }
 
 }
 
-/*
- * TEMOS DE ACABAR O PRINTF!!!!
-void print_lista_edificios(LISTAEDIFICIOS e) {
-    EDIFICIO *pedificio = e.pedificios;
+EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id) {
 
-    while (pedificio != NULL) {
-        printf("Edificio:ID-> %d,Nome-> %s,Latitude %lf, Longitude-> %lf, Morada %s, Preco m2-> %lf \n", pedificio->id_edificio, pedificio->nome, pedificio->latitude, pedificio->longitude, pedificio->morada, pedificio->preco_m2);
-        ESTUDIO *pestudio = pedificio->array_estudios.pestudios;
-        for (int i = 0; i < pedificio->array_estudios.n_estudios; ++i) {
-            printf("\tEstudio:%c, %c, %d\n", pestudio->id_estudio, pestudio->numero, pc->cardPoints);
-            pestudio++;
+    EDIFICIO *pst = pg->pedificios;
+    while (pst != NULL) {
+        if (pst->id_edificio == id) {
+            return pst;
         }
-        pedificio = pedificio->next;
+        pst = pst->next;
     }
-*/
+    return NULL;
+}
+
+void print_listaEdificio(LISTAEDIFICIOS g) {
+    EDIFICIO *pp = g.pedificios;
+    while (pp != NULL) {
+        printf("EDIFICIO: %d, %s, %lf, %lf, %s, %lf\n", pp->id_edificio, pp->nome, pp->latitude, pp->longitude, pp->morada, pp->preco_m2);
+        ESTUDIO *pc = pp->array_estudios.pestudios;
+        for (int i = 0; i < pp->array_estudios.n_estudios; ++i) {
+            printf("\tEstudio:%d, %d, %s, %d\n", pc->id_estudio, pc->numero, pc->configuracao, pc->area);
+            pc++;
+        }
+        pp = pp->next;
+    }
+}

@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/carva/CLionProjects/ProjetoLPAED/projeto.c
+projeto.h
+C:/Users/carva/CLionProjects/ProjetoLPAED/projeto.h
+stdio.h
+-
+math.h
+-
+string.h
+-
+stdlib.h
+-
+
+C:/Users/carva/CLionProjects/ProjetoLPAED/projeto.h
+
