@@ -15,16 +15,34 @@ typedef struct dias {
     struct evento *evento;
 } DIAS;
 
+typedef struct regras {
+    int id;
+    char tipo[MAX200];
+    double taxa;
+} REGRAS;
+
+typedef struct regras_array{
+    int n_regras;
+    int size_regras;
+    REGRAS *pregras;
+}REGRAS_ARRAY;
+
+typedef struct POLITICA {
+    char nome[MAX200];
+    REGRAS_ARRAY regras;
+}POLITICA;
+
 typedef struct estudio {
     int id_estudio;
     int numero;
-    int edificio;
+    struct edificio *nome;// Nome do edificio
+    //int edificio;
     char configuracao[2];
     int area;
-    int totalRegras;
+    int n_politicas;
     int *codigo;
     int totalDias;
-    int ocupacao;
+    POLITICA politicas[MAX200];
     DIAS *array_dias;
 } ESTUDIO;
 
@@ -49,8 +67,6 @@ typedef struct edificio {
 } EDIFICIO;
 
 
-
-
 typedef struct listaedificios {
     EDIFICIO *pedificios;
 } LISTAEDIFICIOS;
@@ -64,12 +80,6 @@ typedef struct evento {
     double horas_minutos;
     struct evento *nextEvento;
 } EVENTO;
-
-typedef struct regras {
-    int id;
-    char *regra;
-    int precos;
-} REGRAS;
 
 typedef struct historicoEstadias {
     int id_estadia;
@@ -92,12 +102,21 @@ LISTAEDIFICIOS create_lista_edificio(int ID_edificios[], int size);
 void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                      char morada[MAX200], double preco_m2);
 
+void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero, char configuracao[], int area);
+
+ESTUDIO remove_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY *pcs, int id_estudio);
+
+ESTUDIO *find_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY cs, int id_estudio);
+
+void print_dynarray_array_estudios(ESTUDIO_ARRAY cs);
 
 void print_listaEdificio(LISTAEDIFICIOS g);
 
 EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
 
 void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area);
+
+void create_dynarray_array_estudios(ESTUDIO_ARRAY *pcs, int initsize);
 
 int main_projeto(int argc, const char *argv[]);
 
