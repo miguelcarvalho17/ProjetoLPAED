@@ -12,19 +12,17 @@
 //tp 10,11,12
 
 int main_projeto(int argc, const char *argv[]) {
-    int ids[] = {1, 2, 3, 4};
-    LISTAEDIFICIOS e = create_lista_edificio(ids, 4);
-    ESTUDIO_ARRAY edificio1 = {0,0,NULL};
-    create_dynarray_array_estudios(&edificio1,3);
-    insert_estudio_dynarray_array_estudio(&edificio1, 1,1,"T2", 50);
-    insert_estudio_dynarray_array_estudio(&edificio1, 2,2,"T2", 50);
-    insert_estudio_dynarray_array_estudio(&edificio1, 3,2,"T0", 150);
-    print_dynarray_array_estudios(edificio1);
-    printf("-----------------------------\n");
-    remove_estudio_dynarray_arrayestudios(&edificio1,2);
-    print_dynarray_array_estudios(edificio1);
-    //insert_estudio(&e, 1, 1, "t2", 50);
-    //print_listaEdificio(e);
+    LISTAEDIFICIOS *e = create_lista_edificio();
+
+    insert_edificio(e, 1, "PF Boavista", 41.162392, -8.655714, "Avenida da Boavista", 1.5,3);
+    insert_edificio(e, 2, "PF Maia", 41.162392, -8.655714, "Avenida da Boavista", 1.5,5);
+
+    insert_estudio(e, 1,1, 1, "t2", 50);
+    insert_estudio(e, 2,2, 1, "t2", 50);
+    insert_estudio(e, 1,3, 2, "t2", 50);
+    insert_estudio(e, 1,4, 3, "t2", 50);
+    insert_estudio(e, 1,5, 4, "t2", 50);
+    print_listaEdificio(e);
 
     //USAR ISTO
     //e.pedificios->array_estudios.pestudios;
@@ -33,15 +31,15 @@ int main_projeto(int argc, const char *argv[]) {
 }
 
 
-LISTAEDIFICIOS create_lista_edificio(int ID_edificios[], int size) {
-    LISTAEDIFICIOS e1 = {NULL};
-        insert_edificio(&e1, ID_edificios[0], "PF Boavista", 41.162392, -8.655714, "Avenida da Boavista", 1.5);
-        insert_edificio(&e1, ID_edificios[1], "PF Maia", 41.162392, -8.655714, "Avenida da Boavista", 1.5);
-    return e1;
+LISTAEDIFICIOS* create_lista_edificio() {
+    LISTAEDIFICIOS *le = (LISTAEDIFICIOS *) calloc(1, sizeof(LISTAEDIFICIOS));
+    le->pedificios = NULL;
+
+    return le;
 }
 
 void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
-                     char morada[MAX200], double preco_m2) {
+                     char morada[MAX200], double preco_m2, int size_estudios) {
     //TEMOS A LISTA EDIFICIOS A APONTAR PARA NULL
     //QUEREMOS COLOCAR A LISTA A APONTAR PARA OS EDIFICIOS
     //EDIFICIO CRIADO
@@ -52,8 +50,8 @@ void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], dou
     s->longitude = longitude;
     strcpy(s->morada, morada);
     s->preco_m2 = preco_m2;
-    ESTUDIO_ARRAY estudio = {0, 0, NULL};
-    s->array_estudios = estudio;
+    ESTUDIO_ARRAY *estudiosarray = create_dynarray_array_estudios(size_estudios);
+    s->array_estudios = *estudiosarray;
     s->next = NULL;
     //SE FOR FIRST FAZEMOS ISTO
     if (pg->pedificios == NULL) {
@@ -75,10 +73,10 @@ void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], dou
     pant->next = s;
 }
 
-/*
-void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area) {
+
+void insert_estudio(LISTAEDIFICIOS *pg, int edificio,int id_estudio, int numero, char configuracao[], int area) {
     //FUNÇAO AUXILIAR
-    EDIFICIO *pedificio = find_edificio(pg, id);
+    EDIFICIO *pedificio = find_edificio(pg, edificio);
 
     if (pedificio != NULL) {
 
@@ -93,7 +91,7 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[],
                                                                       pedificio->array_estudios.size_estudios);
         }
         ESTUDIO *pestudio = pedificio->array_estudios.pestudios + pedificio->array_estudios.n_estudios;
-        pestudio->id_estudio = id;
+        pestudio->id_estudio = id_estudio;
         pestudio->numero = numero;
 
         //VER ISTO, TENTAR DAR FIX!
@@ -106,12 +104,16 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[],
         pedificio->array_estudios.n_estudios++;
     }
 }
- */
 
-void create_dynarray_array_estudios(ESTUDIO_ARRAY *pcs, int initsize) {
+
+ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize) {
     ESTUDIO *pestudios = (ESTUDIO *) calloc(initsize, sizeof(ESTUDIO));
-    pcs->pestudios = pestudios;
-    pcs->n_estudios = initsize;
+    ESTUDIO_ARRAY *estudiosarray = (ESTUDIO_ARRAY *) calloc(1, sizeof(ESTUDIO_ARRAY));
+    estudiosarray->pestudios = pestudios;
+    estudiosarray->n_estudios = 0;
+    estudiosarray->size_estudios = initsize;
+
+    return estudiosarray;
 }
 
 void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero, char configuracao[], int area) {
@@ -133,7 +135,6 @@ void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero
         int newsize = pcs->n_estudios + 10;
         pcs->pestudios = (ESTUDIO *) realloc(pcs->pestudios, newsize * sizeof(ESTUDIO));
         for (i = oldsize; i < newsize; ++i) {
-            //FAZER O NOME, EM FALTA
             pestudio->area = 0;
             pestudio->numero = 0;
             pestudio->id_estudio = 0;
@@ -147,7 +148,10 @@ void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero
     }
 }
 
-ESTUDIO remove_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY *pcs, int id_estudio) {
+
+
+/*
+ESTUDIO remove_estudio_dynarray_arrayestudios(EDIFICIO *pedificio, int id_estudio) {
     ESTUDIO st = {0, 0,0,"",0};
     ESTUDIO *pst = find_estudio_dynarray_arrayestudios(*pcs, id_estudio);
 
@@ -166,6 +170,7 @@ ESTUDIO remove_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY *pcs, int id_estudio
     }
     return st;
 }
+ */
 
 ESTUDIO *find_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY cs, int id_estudio) {
     ESTUDIO *pst = cs.pestudios;
@@ -202,13 +207,15 @@ EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id) {
     return NULL;
 }
 
-void print_listaEdificio(LISTAEDIFICIOS g) {
-    EDIFICIO *pp = g.pedificios;
+//FIND ESTUDIO, FAZER!!!
+
+void print_listaEdificio(const LISTAEDIFICIOS* g) {
+    EDIFICIO *pp = g->pedificios;
     while (pp != NULL) {
         printf("EDIFICIO: %d, %s, %lf, %lf, %s, %lf\n", pp->id_edificio, pp->nome, pp->latitude, pp->longitude, pp->morada, pp->preco_m2);
         ESTUDIO *pc = pp->array_estudios.pestudios;
         for (int i = 0; i < pp->array_estudios.n_estudios; ++i) {
-            printf("\tEstudio:%d, %d, %s, %d\n", pc->id_estudio, pc->numero, pc->configuracao, pc->area);
+            printf("\tEstudio:ID-> %d,Numero porta-> %d,Configuracao-> %s,Area-> %d\n", pc->id_estudio, pc->numero, pc->configuracao, pc->area);
             pc++;
         }
         pp = pp->next;

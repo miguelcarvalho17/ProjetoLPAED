@@ -12,7 +12,7 @@ typedef struct dias {
     int mes;
     int ano;
 
-    struct evento *evento;
+    struct evento *evento;//  TEM DE MUDAR PARA UMA LISTA LIGADA DE EVENTOS
 } DIAS;
 
 typedef struct regras {
@@ -35,15 +35,13 @@ typedef struct POLITICA {
 typedef struct estudio {
     int id_estudio;
     int numero;
-    struct edificio *nome;// Nome do edificio
-    //int edificio;
     char configuracao[2];
     int area;
     int n_politicas;
     int *codigo;
     int totalDias;
     POLITICA politicas[MAX200];
-    DIAS *array_dias;
+    DIAS *array_dias;// vai entrar nas agendas, nao aqui, ARRAY DE AGENDAS
 } ESTUDIO;
 
 typedef struct estudio_array {
@@ -55,7 +53,7 @@ typedef struct estudio_array {
 //LISTA LIGADA DE EDIFICIOS
 typedef struct edificio {
     int id_edificio;
-    char nome[MAX200];
+    char nome[MAX200];// usar com *
     double latitude;
     double longitude;
     char morada[MAX200];
@@ -63,11 +61,11 @@ typedef struct edificio {
     //int totalEstudios;
     struct edificio *next;
     ESTUDIO_ARRAY array_estudios;
-    //ESTUDIO *array_estudio;
 } EDIFICIO;
 
 
 typedef struct listaedificios {
+    int num_edificios;
     EDIFICIO *pedificios;
 } LISTAEDIFICIOS;
 
@@ -97,10 +95,10 @@ typedef struct hospede {
     struct hospede *pnext;
 } HOSPEDE;
 
-LISTAEDIFICIOS create_lista_edificio(int ID_edificios[], int size);
+LISTAEDIFICIOS *create_lista_edificio();
 
 void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
-                     char morada[MAX200], double preco_m2);
+                      char morada[MAX200], double preco_m2, int size_estudios);
 
 void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero, char configuracao[], int area);
 
@@ -110,13 +108,13 @@ ESTUDIO *find_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY cs, int id_estudio);
 
 void print_dynarray_array_estudios(ESTUDIO_ARRAY cs);
 
-void print_listaEdificio(LISTAEDIFICIOS g);
+void print_listaEdificio(const LISTAEDIFICIOS* g);
 
 EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
 
-void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area);
+void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char configuracao[], int area);
 
-void create_dynarray_array_estudios(ESTUDIO_ARRAY *pcs, int initsize);
+ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
 
 int main_projeto(int argc, const char *argv[]);
 
