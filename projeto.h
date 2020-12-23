@@ -97,12 +97,14 @@ typedef struct hospede {
 
 LISTAEDIFICIOS *create_lista_edificio();
 
+ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
+
 void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
-                      char morada[MAX200], double preco_m2, int size_estudios);
+                     char morada[MAX200], double preco_m2, int size_estudios);
 
 void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero, char configuracao[], int area);
 
-ESTUDIO remove_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY *pcs, int id_estudio);
+//ESTUDIO remove_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY *pcs, int id_estudio);
 
 ESTUDIO *find_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY cs, int id_estudio);
 
@@ -115,6 +117,7 @@ EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
 void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char configuracao[], int area);
 
 ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
+
 
 int main_projeto(int argc, const char *argv[]);
 
