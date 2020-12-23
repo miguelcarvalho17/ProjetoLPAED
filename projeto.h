@@ -12,8 +12,14 @@ typedef struct dias {
     int mes;
     int ano;
 
-    struct evento *nextevento;//  TEM DE MUDAR PARA UMA LISTA LIGADA DE EVENTOS
+    struct evento *nextevento;
 } DIAS;
+
+typedef struct dias_array {
+    int n_dias;
+    int size_dias;
+    DIAS *pdias; //ARRAY DE ESTUDIOS
+} DIAS_ARRAY;
 
 typedef struct regras {
     int id;
@@ -32,15 +38,19 @@ typedef struct POLITICA {
     REGRAS_ARRAY regras;
 }POLITICA;
 
-typedef struct agendas{
+typedef struct agendas_array{
     char nome[MAX200];
     int n_agendas;
     int size_agendas;
 
+}AGENDAS_ARRAY;
 
+typedef struct agendas{
+    int id_agendas;
+    char plataforma[MAX200];
     DIAS *array_dias;
-
 }AGENDAS;
+
 typedef struct estudio {
     int id_estudio;
     int numero;
@@ -50,7 +60,7 @@ typedef struct estudio {
     int *codigo;
     int totalDias;
     POLITICA politicas[MAX200];
-   // DIAS *array_dias;// vai entrar nas agendas, nao aqui, ARRAY DE AGENDAS
+    AGENDAS *array_agendas;
 } ESTUDIO;
 
 typedef struct estudio_array {
@@ -129,6 +139,15 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char 
 
 ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
 
+
+void save_edificios_txt(LISTAEDIFICIOS pg, char fn[]);
+
+void imprimir_edificios_txt(char filename[]);
+
+void read_edificios(LISTAEDIFICIOS e, char filename[]);
+
+void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
+                   char morada[MAX200], double preco_m2, int size_estudios);
 
 int main_projeto(int argc, const char *argv[]);
 
