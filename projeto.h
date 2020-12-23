@@ -12,7 +12,7 @@ typedef struct dias {
     int mes;
     int ano;
 
-    struct evento *evento;//  TEM DE MUDAR PARA UMA LISTA LIGADA DE EVENTOS
+    struct evento *nextevento;//  TEM DE MUDAR PARA UMA LISTA LIGADA DE EVENTOS
 } DIAS;
 
 typedef struct regras {
@@ -32,6 +32,15 @@ typedef struct POLITICA {
     REGRAS_ARRAY regras;
 }POLITICA;
 
+typedef struct agendas{
+    char nome[MAX200];
+    int n_agendas;
+    int size_agendas;
+
+
+    DIAS *array_dias;
+
+}AGENDAS;
 typedef struct estudio {
     int id_estudio;
     int numero;
@@ -41,7 +50,7 @@ typedef struct estudio {
     int *codigo;
     int totalDias;
     POLITICA politicas[MAX200];
-    DIAS *array_dias;// vai entrar nas agendas, nao aqui, ARRAY DE AGENDAS
+   // DIAS *array_dias;// vai entrar nas agendas, nao aqui, ARRAY DE AGENDAS
 } ESTUDIO;
 
 typedef struct estudio_array {
@@ -98,6 +107,8 @@ typedef struct hospede {
 LISTAEDIFICIOS *create_lista_edificio();
 
 ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
+//EDIFICIO remove_edificio(LISTAEDIFICIOS *pg, int id_edificio);
+void remove_edificio(LISTAEDIFICIOS *pg, char name[]);
 
 void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                      char morada[MAX200], double preco_m2, int size_estudios);

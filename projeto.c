@@ -27,7 +27,12 @@ int main_projeto(int argc, const char *argv[]) {
     //printf("%d\n", ps->id_estudio);
     print_listaEdificio(e);
     printf("..............\n");
-    remove_estudio_dynarray_arrayestudios(e, 1);
+    remove_estudio_dynarray_arrayestudios(e, 2);
+
+    print_listaEdificio(e);
+    printf("..............\n");
+    //remove_edificio(e, 2);
+    remove_edificio(e, "xd");
 
     print_listaEdificio(e);
 
@@ -157,7 +162,7 @@ void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs, int id, int numer
 
 ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio) {
     EDIFICIO *pedificio = pg->pedificios;
-    ESTUDIO st = {0, 0, 0, "", 0};
+    ESTUDIO st = {0, 0, "0", 0};
     while (pedificio != NULL) {
         ESTUDIO *pst = find_estudio_dynarray_arrayestudios(pedificio->array_estudios, id_estudio);
         if (pst != NULL) {
@@ -176,6 +181,59 @@ ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio
         pedificio = pedificio->next;
     }
     return st;
+}
+
+/*EDIFICIO remove_edificio(LISTAEDIFICIOS *pg, int id_edificio) {
+    EDIFICIO *pedificio = pg->pedificios;
+    EDIFICIO ed = {0, "", 0, 0, "", 0, NULL};
+    while (pedificio != NULL) {
+        EDIFICIO *pst = find_edificio(pg, id_edificio);
+        if (pst != NULL) {
+            while (pst < (pg->pedificios) &&
+                   pst->id_edificio != 0) {
+                *pst = *(pst + 1);
+                pst++;
+            }
+            if (pst->id_edificio == pg->pedificios->id_edificio) {
+                pst->id_edificio = 0;
+                strcpy(pst->nome, "");
+                pst->latitude = 0;
+                pst->longitude = 0;
+                strcpy(pst->morada, "");
+                pst->preco_m2 = 0;
+            }
+        }
+        pedificio = pedificio->next;
+    }
+    return ed;
+}*/
+
+void remove_edificio(LISTAEDIFICIOS *pg, char name[]) {
+    //NAO REMOVEMOS NADA SE A LISTA ESTIVER VAZIA
+    if (pg->pedificios == NULL) {
+        printf("Esse edificio nao existe.");
+        return;
+    }
+    EDIFICIO *pant = NULL, *pcurrent = pg->pedificios;
+    while (pcurrent != NULL && strcmp(name, pcurrent->nome) != 0) {
+        pant = pcurrent;
+        pcurrent = pcurrent->next;
+    }
+    //SE O NOME NAO EXISTIR
+    if (pcurrent == NULL) {
+        return;
+    }
+    //REMOÇÃO A CABEÇA
+    if (pcurrent == pg->pedificios) {
+        pg->pedificios = pcurrent->next;
+        pg->num_edificios--;
+        free(pcurrent);
+        return;
+    }
+    pant->next = pcurrent->next;
+    free(pcurrent);
+    //DECREMENTAR O NUMERO DE EDIFICIOS
+    pg->num_edificios--;
 }
 
 ESTUDIO *find_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY cs, int id_estudio) {
@@ -213,14 +271,18 @@ EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id) {
     return NULL;
 }
 
-//FIND ESTUDIO, FAZER!!!
+
 void print_listaEdificio(const LISTAEDIFICIOS *g) {
     EDIFICIO *pp = g->pedificios;
     while (pp != NULL) {
-        printf("EDIFICIO: %d, %s, %lf, %lf, %s, %lf\n", pp->id_edificio, pp->nome, pp->latitude, pp->longitude,
-               pp->morada, pp->preco_m2);
+        if (pp->id_edificio != 0) {
+            printf("EDIFICIO: %d, %s, %lf, %lf, %s, %lf\n", pp->id_edificio, pp->nome, pp->latitude, pp->longitude,
+                   pp->morada, pp->preco_m2);
+        }
         ESTUDIO *pc = pp->array_estudios.pestudios;
-        for (int i = 0; i < pp->array_estudios.n_estudios; ++i) {
+
+        for (int i = 0; i < pp->array_estudios.n_estudios && pp->id_edificio != 0; ++i) {
+
             printf("\tEstudio:ID-> %d,Numero porta-> %d,Configuracao-> %s,Area-> %d\n", pc->id_estudio, pc->numero,
                    pc->configuracao, pc->area);
             pc++;
