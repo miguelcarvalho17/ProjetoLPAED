@@ -18,7 +18,7 @@ typedef struct dias {
 typedef struct dias_array {
     int n_dias;
     int size_dias;
-    DIAS *pdias; //ARRAY DE ESTUDIOS
+    DIAS *pdias; //ARRAY DE DIAS
 } DIAS_ARRAY;
 
 typedef struct regras {
@@ -127,7 +127,7 @@ void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero
 
 //ESTUDIO remove_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY *pcs, int id_estudio);
 
-ESTUDIO *find_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY cs, int id_estudio);
+ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
 
 void print_dynarray_array_estudios(ESTUDIO_ARRAY cs);
 

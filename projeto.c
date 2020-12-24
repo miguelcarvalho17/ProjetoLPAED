@@ -20,15 +20,14 @@ int main_projeto(int argc, const char *argv[]) {
     insert_edificio(e, 2, "PF Maia", 41.162392, -8.655714, "Avenida da Boavista", 1.5, 5);
 
 
-
     insert_estudio(e, 1, 1, 1, "t2", 50);
-    insert_estudio(e, 2, 2, 1, "t2", 50);
+    insert_estudio(e, 1, 2, 1, "t2", 50);
     insert_estudio(e, 1, 3, 2, "t2", 50);
-    insert_estudio(e, 2, 4, 3, "t2", 50);
-    insert_estudio(e, 2, 5, 4, "t2", 50);
-    insert_estudio(e, 1, 6, 5, "t2", 50);
-    insert_estudio(e, 1, 7, 6, "t2", 50);
-    insert_estudio(e, 1, 8, 7, "t2", 50);
+    insert_estudio(e, 1, 4, 3, "t2", 50);
+    insert_estudio(e, 2, 6, 5, "t2", 50);
+    insert_estudio(e, 2, 7, 6, "t2", 50);
+    insert_estudio(e, 2, 8, 7, "t2", 50);
+    insert_estudio(e, 1, 5, 4, "t2", 50);
     //ESTUDIO *ps = find_estudio_dynarray_arrayestudios(e->pedificios->array_estudios, 6);
 
     //print_listaEdificio(e);
@@ -39,12 +38,21 @@ int main_projeto(int argc, const char *argv[]) {
     //printf("%d\n", ps->id_estudio);
     //print_listaEdificio(e);
     //printf("..............\n");
-    //remove_estudio_dynarray_arrayestudios(e, 1);
+
 
     print_listaEdificio(e);
     printf("..............\n");
-    edit_edificio(e,1,"Ribeira",41.162392, -8.655714, "Ribeira",1.5, 3);
+    edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
     //remove_edificio(e, "PF Boavista");
+    print_listaEdificio(e);
+    printf("..............\n");
+    //remove_edificio(e, "PF Maia");
+    // print_listaEdificio(e);
+    printf("..............\n");
+    ESTUDIO *printestudio = find_estudio_dynarray_arrayestudios(e, 5);
+    printf("%d", printestudio->id_estudio);
+    printf("..............\n");
+    remove_estudio_dynarray_arrayestudios(e, 7);
     print_listaEdificio(e);
 
     return 0;
@@ -94,9 +102,9 @@ void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], dou
 
 
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
-                     char morada[MAX200], double preco_m2, int size_estudios){
-    EDIFICIO *pe = find_edificio( pg, id_edificio);
-    if(pe != NULL){
+                   char morada[MAX200], double preco_m2, int size_estudios) {
+    EDIFICIO *pe = find_edificio(pg, id_edificio);
+    if (pe != NULL) {
         pe->id_edificio = id_edificio;
         strcpy(pe->nome, nome);
         pe->latitude = latitude;
@@ -183,7 +191,7 @@ ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio
 
     ESTUDIO st = {0, 0, "0", 0};
     while (pedificio != NULL) {
-        ESTUDIO *pst = find_estudio_dynarray_arrayestudios(pedificio->array_estudios, id_estudio);
+        ESTUDIO *pst = find_estudio_dynarray_arrayestudios(pg, id_estudio);
         if (pst != NULL) {
             while (pst < (pedificio->array_estudios.pestudios + pedificio->array_estudios.n_estudios - 1) &&
                    pst->id_estudio != 0) {
@@ -255,17 +263,32 @@ void remove_edificio(LISTAEDIFICIOS *pg, char name[]) {
     pg->num_edificios--;
 }
 
-ESTUDIO *find_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY cs, int id_estudio) {
-    ESTUDIO *pst = cs.pestudios;
+ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio) { // BINARY SEARCH
+    EDIFICIO *pedificio = pg->pedificios;
 
-    if (pst == NULL) {
-        printf("* find_student_dynarray_classstudents(): Array estudios encontra-se vazio!\n");
-        return pst;
+    while (pedificio != NULL) {
+        ESTUDIO *pst = pedificio->array_estudios.pestudios;
+        int l = 0;
+        int r = pedificio->array_estudios.n_estudios - 1;
+
+        if (pst == NULL) {
+            printf("* find_student_dynarray_classstudents(): Array estudios encontra-se vazio!\n");
+            return pst;
+        }
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+            if (pst[m].id_estudio == id_estudio) {
+                return &pst[m];
+            }
+            if (pst[m].id_estudio < id_estudio) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+        pedificio = pedificio->next;
     }
-    for (int i = 0; i < cs.n_estudios && pst->id_estudio != id_estudio; ++i) {
-        pst++;
-    }
-    return (pst->id_estudio == id_estudio ? pst : NULL);
+    return NULL;
 }
 
 void print_dynarray_array_estudios(ESTUDIO_ARRAY cs) {
@@ -310,49 +333,34 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
 }
 
 /*
-
 void read_edificios(LISTAEDIFICIOS e, char filename[]) {
-
     FILE *fp = fopen(filename, "r");
-
     if (fp == NULL) {
         printf("Ocorreu um erro ao abrir o ficheiro %s on r mode\n", filename);
         return;
     }
-
     char buf[200];
     char *tmp;
-
     while (fgets(buf, 255, fp) != NULL) {
         if ((strlen(buf) > 0) && (buf[strlen(buf) - 1] == '\n'))
             buf[strlen(buf) - 1] = '\0';
-
         tmp = strtok(buf, ",");
         e.pedificios->id_edificio =atoi(tmp);
-
         tmp = strtok(NULL, ",");
         strcpy(e.pedificios->nome, tmp);
-
         tmp = strtok(NULL, ",");
         e.pedificios->latitude = atof(tmp);
-
         tmp = strtok(NULL, ",");
         e.pedificios->longitude = atof(tmp);
-
         tmp = strtok(NULL, ",");
         strcpy(e.pedificios->morada, tmp);
-
         tmp = strtok(NULL, ",");
         e.pedificios->preco_m2 = atof(tmp);
-
         e.pedificios++;
     }
 }
-
-
 void imprimir_edificios_txt(char filename[]) {
     FILE *fp = fopen(filename, "r");
-
     char c;
     if (fp != NULL) {
         while((c=fgetc(fp))!=EOF){
@@ -363,20 +371,15 @@ void imprimir_edificios_txt(char filename[]) {
         printf("Erro na abertura do ficheiro\n");
     }
 }
-
 void save_edificios_txt(LISTAEDIFICIOS pg, char fn[]){
     FILE *fp = NULL;
-
     if ((fp = fopen(fn, "a")) == NULL) {
         return;
     }
-
     //Criar um auxiliar para depois poder usar imprimir aluno a aluno de cada vez
     EDIFICIO *edificio = pg.pedificios;
-
     //Write number of students
     fprintf(fp, "\nNumero de edificios:%d\n", pg.num_edificios);
-
     //Write each student in a single line
     for (int i = 0; i < pg.num_edificios; i++) {
         //...
@@ -385,5 +388,4 @@ void save_edificios_txt(LISTAEDIFICIOS pg, char fn[]){
     }
     fclose(fp);
 }
-
  */
