@@ -38,29 +38,26 @@ typedef struct POLITICA {
     REGRAS_ARRAY regras;
 }POLITICA;
 
+typedef struct agendas{
+    int id_agendas;
+    char plataforma[MAX200];
+    DIAS_ARRAY *array_dias;
+}AGENDAS;
+
 typedef struct agendas_array{
     char nome[MAX200];
     int n_agendas;
     int size_agendas;
-
+    AGENDAS *pagenda;
 }AGENDAS_ARRAY;
-
-typedef struct agendas{
-    int id_agendas;
-    char plataforma[MAX200];
-    DIAS *array_dias;
-}AGENDAS;
 
 typedef struct estudio {
     int id_estudio;
     int numero;
     char configuracao[2];
     int area;
-    int n_politicas;
-    int *codigo;
-    int totalDias;
     POLITICA politicas[MAX200];
-    AGENDAS *array_agendas;
+    AGENDAS_ARRAY array_agendas;
 } ESTUDIO;
 
 typedef struct estudio_array {
@@ -72,12 +69,11 @@ typedef struct estudio_array {
 //LISTA LIGADA DE EDIFICIOS
 typedef struct edificio {
     int id_edificio;
-    char nome[MAX200];// usar com *
+    char nome[MAX200];
     double latitude;
     double longitude;
     char morada[MAX200];
     double preco_m2;
-    //int totalEstudios;
     struct edificio *next;
     ESTUDIO_ARRAY array_estudios;
 } EDIFICIO;
@@ -91,10 +87,9 @@ typedef struct listaedificios {
 
 //LISTA LIGADA DE EVENTOS
 typedef struct evento {
-    int id_evento, id_cliente;
-    char *nome_cliente;
-    char *nome_evento;
-    double horas_minutos;
+    int id_evento;
+    char tipo[MAX200];
+    int id_cliente;
     struct evento *nextEvento;
 } EVENTO;
 
@@ -114,41 +109,42 @@ typedef struct hospede {
     struct hospede *pnext;
 } HOSPEDE;
 
+
+int main_projeto(int argc, const char *argv[]);
+
+/** Criar lista ligada de edificios */
 LISTAEDIFICIOS *create_lista_edificio();
 
-ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
-//EDIFICIO remove_edificio(LISTAEDIFICIOS *pg, int id_edificio);
-void remove_edificio(LISTAEDIFICIOS *pg, char name[]);
+/** Imprimir toda a informação dos edificios */
+void print_listaEdificio(const LISTAEDIFICIOS* g);
 
+/** Funções de inserir */
 void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                      char morada[MAX200], double preco_m2, int size_estudios);
 
-void insert_estudio_dynarray_array_estudio(ESTUDIO_ARRAY *pcs,int id, int numero, char configuracao[], int area);
-
-//ESTUDIO remove_estudio_dynarray_arrayestudios(ESTUDIO_ARRAY *pcs, int id_estudio);
-
-ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
-
-void print_dynarray_array_estudios(ESTUDIO_ARRAY cs);
-
-void print_listaEdificio(const LISTAEDIFICIOS* g);
-
-EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
+ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
 
 void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char configuracao[], int area);
 
-ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
+/** Funções de remover */
+
+void remove_edificio(LISTAEDIFICIOS *pg, char name[]);
+
+ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
 
 
-void save_edificios_txt(LISTAEDIFICIOS pg, char fn[]);
+/** Funções de find */
+EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
 
-void imprimir_edificios_txt(char filename[]);
+ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
 
-void read_edificios(LISTAEDIFICIOS e, char filename[]);
+/** Funções de editar */
 
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                    char morada[MAX200], double preco_m2, int size_estudios);
 
-int main_projeto(int argc, const char *argv[]);
+void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area);
+
+
 
 #endif //PROJETOLPAED_PROJETO_H
