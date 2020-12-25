@@ -163,4 +163,6 @@ void gravar_edificios(LISTAEDIFICIOS *g);
 
 void gravar_estudios(LISTAEDIFICIOS *g);
 
+void read_edificios_txt(LISTAEDIFICIOS *g);
+
 #endif //PROJETOLPAED_PROJETO_H

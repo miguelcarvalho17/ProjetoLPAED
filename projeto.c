@@ -37,13 +37,13 @@ int main_projeto(int argc, const char *argv[]) {
 
 
     /** Imprimir lista */
-    print_listaEdificio(e);
+    //print_listaEdificio(e);
     printf("----------------------------------\n\n");
 
-    //gravar_edificios(e);
+    gravar_edificios(e);
     gravar_estudios(e);
 
-
+    read_edificios_txt(e);
 
 /*
     // Find estudio
@@ -298,16 +298,9 @@ void gravar_edificios(LISTAEDIFICIOS *g) {
     FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "w"));
 
     if (fp != NULL) {
-        fprintf(fp, "Numero de edificios:%d\n\n", g->num_edificios);
+        fprintf(fp, "Numero de edificios:%d\n", g->num_edificios);
         while (pp != NULL) {
-            fprintf(fp,"ID:%d\n", pp->id_edificio);
-            fprintf(fp, "Nome do edificio:%s\n", pp->nome);
-            fprintf(fp, "Morada:%s\n", pp->morada);
-            fprintf(fp, "Preco por m2:%f\n", pp->preco_m2);
-            fprintf(fp, "Latitude:%f\n", pp->latitude);
-            fprintf(fp, "Longitude:%f\n", pp->longitude);
-            fprintf(fp, "\n");
-
+            fprintf(fp,"%d,%s, %s, %f, %f, %f\n", pp->id_edificio,pp->nome, pp->morada, pp->preco_m2, pp->latitude, pp->longitude);
             pp = pp->next;
         }
 
@@ -333,5 +326,28 @@ void gravar_estudios(LISTAEDIFICIOS *g) {
         fclose(fp);
     }else {
         printf("Erro na abertura do ficheiro\n");
+    }
+}
+
+
+void read_edificios_txt(LISTAEDIFICIOS *g) {
+    FILE *fp = NULL;
+    int num_edificios = 0;
+
+//TESTAMOS SE FP != NULL PARA VER SE ENTRAMOS NO FICHEIRO OU NAO
+    if ((fp = fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "r")) != NULL) {
+        //IGNORAR ATE ao espaço, so guardar o que esta a frente( nome da turma)
+        fscanf(fp, "%*s %*s %d\n", &num_edificios);
+
+        char morada[MAX200]; char nome[MAX200];
+        int id;
+        float latitude, longitude, preco_m2;
+
+        for (int i = 0; i < num_edificios; ++i) {
+            fscanf(fp, "%d, %s, %s, %f, %f, %f\n", &id, nome, morada, &preco_m2, &latitude, &longitude);
+
+            insert_edificio(g,nome, latitude,longitude,morada,preco_m2,3);
+        }
+        fclose(fp);
     }
 }
