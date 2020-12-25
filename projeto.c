@@ -53,10 +53,13 @@ int main_projeto(int argc, const char *argv[]) {
 
 */
     //Remove estudio
-   // EDIFICIO *edificio = find_edificio(e, 2);
-    //ESTUDIO *aremover = find_estudio_dynarray_arrayestudios(e, 5);
-    //remove_estudio_dynarray_arrayestudios(edificio, aremover);
+    EDIFICIO *edificio = find_edificio(e, 2);
+    ESTUDIO *aremover = find_estudio_dynarray_arrayestudios(e, 5);
+    remove_estudio_dynarray_arrayestudios(edificio, aremover);
     //remove_estudio_dynarray_arrayestudios(e, 7);
+
+    print_listaEdificio(e);
+    gravar_estudios(e);
 
 
 
@@ -67,9 +70,8 @@ int main_projeto(int argc, const char *argv[]) {
 
 
     // Editar edificio
-    edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
+    //edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
 
-    print_listaEdificio(e);
 
     //gravar_edificios(e);
     // Editar estudio
@@ -327,13 +329,14 @@ void gravar_estudios(LISTAEDIFICIOS *g) {
     FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\estudios.txt", "w"));
     if (fp != NULL) {
         while (pp != NULL){
+            fprintf(fp, "Numero de estudios: %d\n", pp->array_estudios.n_estudios);
         ESTUDIO *pc = pp->array_estudios.pestudios;
-        fprintf(fp, "%d\n", g->pedificios->array_estudios.n_estudios);
-        for (int i = 0; i < g->pedificios->array_estudios.n_estudios; i++) {
-            fprintf(fp, "%d\n", pc->id_estudio);
-            fprintf(fp, "%d\n", pc->numero);
-            fprintf(fp, "%s\n", pc->configuracao);
-            fprintf(fp, "%d\n", pc->area);
+        for (int i = 0; i < g->pedificios->array_estudios.n_estudios && pc->id_estudio > 0 && pc->id_estudio < 1000; i++) {
+            fprintf(fp, "ID do edificio:%d\n", pp->id_edificio);
+            fprintf(fp, "ID do estudio:%d\n", pc->id_estudio);
+            fprintf(fp, "Numero da porta:%d\n", pc->numero);
+            fprintf(fp, "Configuracao:%s\n", pc->configuracao);
+            fprintf(fp, "Area:%d\n", pc->area);
             fprintf(fp, "\n");
             pc++;
         }
