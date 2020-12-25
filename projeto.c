@@ -41,7 +41,7 @@ int main_projeto(int argc, const char *argv[]) {
     printf("----------------------------------\n\n");
 
     //gravar_edificios(e);
-    //gravar_estudios(e);
+    gravar_estudios(e);
 
 
 
@@ -53,25 +53,18 @@ int main_projeto(int argc, const char *argv[]) {
 
 */
     //Remove estudio
-    EDIFICIO *edificio = find_edificio(e, 2);
-    ESTUDIO *aremover = find_estudio_dynarray_arrayestudios(e, 5);
-    remove_estudio_dynarray_arrayestudios(edificio, aremover);
+    //EDIFICIO *edificio = find_edificio(e, 2);
+    //ESTUDIO *aremover = find_estudio_dynarray_arrayestudios(e, 5);
+    //remove_estudio_dynarray_arrayestudios(edificio, aremover);
     //remove_estudio_dynarray_arrayestudios(e, 7);
-
-    print_listaEdificio(e);
-    gravar_estudios(e);
-
 
 
     //print_listaEdificio(e);
     // Remove edificio
     //remove_edificio(e, "PF Maia");
 
-
-
     // Editar edificio
     //edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
-
 
     //gravar_edificios(e);
     // Editar estudio
@@ -332,12 +325,7 @@ void gravar_estudios(LISTAEDIFICIOS *g) {
             fprintf(fp, "Numero de estudios: %d\n", pp->array_estudios.n_estudios);
         ESTUDIO *pc = pp->array_estudios.pestudios;
         for (int i = 0; i < g->pedificios->array_estudios.n_estudios && pc->id_estudio > 0 && pc->id_estudio < 1000; i++) {
-            fprintf(fp, "ID do edificio:%d\n", pp->id_edificio);
-            fprintf(fp, "ID do estudio:%d\n", pc->id_estudio);
-            fprintf(fp, "Numero da porta:%d\n", pc->numero);
-            fprintf(fp, "Configuracao:%s\n", pc->configuracao);
-            fprintf(fp, "Area:%d\n", pc->area);
-            fprintf(fp, "\n");
+            fprintf(fp, "ESTUDIO %d, %d, %s, %d\n", pc->id_estudio,pc->numero,pc->configuracao,pc->area);
             pc++;
         }
             pp = pp->next;

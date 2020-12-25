@@ -7,7 +7,7 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
@@ -44,14 +44,19 @@
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RunManager">
-    <configuration name="ProjetoLPAED" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProjetoLPAED" TARGET_NAME="ProjetoLPAED" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProjetoLPAED" RUN_TARGET_NAME="ProjetoLPAED">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProjetoLPAED" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProjetoLPAED" TARGET_NAME="ProjetoLPAED" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProjetoLPAED" RUN_TARGET_NAME="ProjetoLPAED">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -83,7 +88,8 @@
       <workItem from="1608747626537" duration="3673000" />
       <workItem from="1608817541556" duration="13697000" />
       <workItem from="1608861263957" duration="932000" />
-      <workItem from="1608902757991" duration="7543000" />
+      <workItem from="1608902757991" duration="10156000" />
+      <workItem from="1608913948415" duration="877000" />
     </task>
     <servers />
   </component>
@@ -95,30 +101,30 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="500" y="184" key="FileChooserDialogImpl/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789213757" />
-    <state width="1877" height="278" key="GridCell.Tab.0.bottom" timestamp="1608910403895">
+    <state width="1877" height="294" key="GridCell.Tab.0.bottom" timestamp="1608913821552">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.bottom/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214508" />
     <state width="1493" height="31" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608907795817" />
-    <state width="1877" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608910403895" />
-    <state width="1877" height="278" key="GridCell.Tab.0.center" timestamp="1608910403894">
+    <state width="1877" height="294" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608913821552" />
+    <state width="1877" height="294" key="GridCell.Tab.0.center" timestamp="1608913821552">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.center/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214507" />
     <state width="1493" height="31" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608907795817" />
-    <state width="1877" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608910403894" />
-    <state width="1877" height="278" key="GridCell.Tab.0.left" timestamp="1608910403894">
+    <state width="1877" height="294" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608913821552" />
+    <state width="1877" height="294" key="GridCell.Tab.0.left" timestamp="1608913821552">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.left/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214507" />
     <state width="1493" height="31" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608907795817" />
-    <state width="1877" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608910403894" />
-    <state width="1877" height="278" key="GridCell.Tab.0.right" timestamp="1608910403894">
+    <state width="1877" height="294" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608913821552" />
+    <state width="1877" height="294" key="GridCell.Tab.0.right" timestamp="1608913821552">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1397" height="202" key="GridCell.Tab.0.right/0.0.1440.860/-1920.-53.1920.1040@0.0.1440.860" timestamp="1607789214508" />
     <state width="1493" height="31" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608907795817" />
-    <state width="1877" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608910403894" />
+    <state width="1877" height="294" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608913821552" />
     <state width="1877" height="347" key="GridCell.Tab.1.bottom" timestamp="1608831665467">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

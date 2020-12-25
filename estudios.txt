@@ -1,62 +1,13 @@
 Numero de estudios: 6
-ID do edificio:1
-ID do estudio:7
-Numero da porta:6
-Configuracao:t2
-Area:50
-
-ID do edificio:1
-ID do estudio:8
-Numero da porta:7
-Configuracao:t2
-Area:50
-
-ID do edificio:1
-ID do estudio:9
-Numero da porta:3
-Configuracao:t2
-Area:50
-
-ID do edificio:1
-ID do estudio:9
-Numero da porta:3
-Configuracao:t2
-Area:50
-
-ID do edificio:1
-ID do estudio:10
-Numero da porta:3
-Configuracao:t2
-Area:50
-
-ID do edificio:1
-ID do estudio:11
-Numero da porta:3
-Configuracao:t2
-Area:50
-
-Numero de estudios: 4
-ID do edificio:2
-ID do estudio:1
-Numero da porta:1
-Configuracao:t2
-Area:50
-
-ID do edificio:2
-ID do estudio:2
-Numero da porta:1
-Configuracao:t2
-Area:50
-
-ID do edificio:2
-ID do estudio:3
-Numero da porta:2
-Configuracao:t2
-Area:50
-
-ID do edificio:2
-ID do estudio:4
-Numero da porta:3
-Configuracao:t2
-Area:50
-
+ESTUDIO 6, 5, t2, 50
+ESTUDIO 7, 6, t2, 50
+ESTUDIO 8, 7, t2, 50
+ESTUDIO 9, 3, t2, 50
+ESTUDIO 10, 3, t2, 50
+ESTUDIO 11, 3, t2, 50
+Numero de estudios: 5
+ESTUDIO 1, 1, t2, 50
+ESTUDIO 2, 1, t2, 50
+ESTUDIO 3, 2, t2, 50
+ESTUDIO 5, 4, t2, 50
+ESTUDIO 4, 3, t2, 50
