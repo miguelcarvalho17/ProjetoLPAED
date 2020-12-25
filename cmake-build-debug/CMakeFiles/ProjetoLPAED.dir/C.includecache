@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/carva/CLionProjects/ProjetoLPAED/main.c
-stdio.h
--
-projeto.h
-C:/Users/carva/CLionProjects/ProjetoLPAED/projeto.h
-
 C:/Users/carva/CLionProjects/ProjetoLPAED/projeto.c
 projeto.h
 C:/Users/carva/CLionProjects/ProjetoLPAED/projeto.h

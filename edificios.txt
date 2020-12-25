@@ -1,0 +1,16 @@
+Numero de edificios:2
+
+ID:1
+Nome do edificio:Ribeira
+Morada:Ribeira
+Preco por m2:1.500000
+Latitude:41.162392
+Longitude:-8.655714
+
+ID:2
+Nome do edificio:PF Boavista
+Morada:Avenida da Boavista
+Preco por m2:1.500000
+Latitude:41.162392
+Longitude:-8.655714
+

@@ -33,10 +33,21 @@ typedef struct regras_array{
     REGRAS *pregras;
 }REGRAS_ARRAY;
 
-typedef struct POLITICA {
+typedef struct politica {
     char nome[MAX200];
     REGRAS_ARRAY regras;
 }POLITICA;
+
+typedef struct plataforma {
+    char nome[MAX200];
+    POLITICA politicas[MAX200];
+}PLATAFORMA;
+
+typedef struct plataformas_array{
+    int n_plataformas;
+    int size_plataformas;
+    PLATAFORMA *pplataforma;
+}PLATAFORMAS_ARRAY;
 
 typedef struct agendas{
     int id_agendas;
@@ -45,7 +56,6 @@ typedef struct agendas{
 }AGENDAS;
 
 typedef struct agendas_array{
-    char nome[MAX200];
     int n_agendas;
     int size_agendas;
     AGENDAS *pagenda;
@@ -56,7 +66,9 @@ typedef struct estudio {
     int numero;
     char configuracao[2];
     int area;
-    POLITICA politicas[MAX200];
+    float preco_diaria;
+    float preco_mensal;
+    float preco_final;
     AGENDAS_ARRAY array_agendas;
 } ESTUDIO;
 
@@ -119,7 +131,7 @@ LISTAEDIFICIOS *create_lista_edificio();
 void print_listaEdificio(const LISTAEDIFICIOS* g);
 
 /** Funções de inserir */
-void insert_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
+void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, double longitude,
                      char morada[MAX200], double preco_m2, int size_estudios);
 
 ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
@@ -130,7 +142,7 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char 
 
 void remove_edificio(LISTAEDIFICIOS *pg, char name[]);
 
-ESTUDIO remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
+void remove_estudio_dynarray_arrayestudios(EDIFICIO *edificio, ESTUDIO *aremover);
 
 
 /** Funções de find */
@@ -146,5 +158,9 @@ void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], doubl
 void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area);
 
 
+
+void gravar_edificios(LISTAEDIFICIOS *g);
+
+void gravar_estudios(LISTAEDIFICIOS *g);
 
 #endif //PROJETOLPAED_PROJETO_H
