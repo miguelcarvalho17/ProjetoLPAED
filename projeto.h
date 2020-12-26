@@ -50,7 +50,7 @@ typedef struct plataformas_array{
 }PLATAFORMAS_ARRAY;
 
 typedef struct agendas{
-    int id_agendas;
+    int id_agenda;
     char plataforma[MAX200];
     DIAS_ARRAY *array_dias;
 }AGENDAS;
@@ -136,7 +136,11 @@ void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, dou
 
 ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
 
-void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char configuracao[], int area);
+void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal, int size_agendas);
+
+AGENDAS_ARRAY *create_dynarray_array_agendas(int initsize);
+
+void insert_agenda(LISTAEDIFICIOS *pg,int id_edificio,int id_estudio, int id_agenda, char plataforma[]);
 
 /** Funções de remover */
 
@@ -155,7 +159,8 @@ ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio)
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                    char morada[MAX200], double preco_m2, int size_estudios);
 
-void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area);
+void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal);
+
 
 
 
@@ -164,5 +169,7 @@ void gravar_edificios(LISTAEDIFICIOS *g);
 void gravar_estudios(LISTAEDIFICIOS *g);
 
 void read_edificios_txt(LISTAEDIFICIOS *g);
+
+void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
 
 #endif //PROJETOLPAED_PROJETO_H

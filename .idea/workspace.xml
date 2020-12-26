@@ -11,7 +11,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f269b8fd-0342-4eaf-b170-c6b2957cec6b" name="Default Changelist" comment="feitofeito" />
+    <list default="true" id="f269b8fd-0342-4eaf-b170-c6b2957cec6b" name="Default Changelist" comment="feitofeito">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ProjetoLPAED.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ProjetoLPAED.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projeto.c" beforeDir="false" afterPath="$PROJECT_DIR$/projeto.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projeto.h" beforeDir="false" afterPath="$PROJECT_DIR$/projeto.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,11 +50,6 @@
   </component>
   <component name="RunManager">
     <configuration name="ProjetoLPAED" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ProjetoLPAED" TARGET_NAME="ProjetoLPAED" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ProjetoLPAED" RUN_TARGET_NAME="ProjetoLPAED">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -91,10 +91,22 @@
       <workItem from="1608902757991" duration="10156000" />
       <workItem from="1608913948415" duration="877000" />
       <workItem from="1608921387551" duration="3249000" />
+      <workItem from="1608991959294" duration="10213000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
