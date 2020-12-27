@@ -5,21 +5,8 @@
 #ifndef PROJETOLPAED_PROJETO_H
 #define PROJETOLPAED_PROJETO_H
 #define MAX200 200
+#define MAX20 20
 
-
-typedef struct dias {
-    int dia;
-    int mes;
-    int ano;
-
-    struct evento *nextevento;
-} DIAS;
-
-typedef struct dias_array {
-    int n_dias;
-    int size_dias;
-    DIAS *pdias; //ARRAY DE DIAS
-} DIAS_ARRAY;
 
 typedef struct regras {
     int id;
@@ -39,8 +26,8 @@ typedef struct politica {
 }POLITICA;
 
 typedef struct plataforma {
-    char nome[MAX200];
-    POLITICA politicas[MAX200];
+    char nome[MAX20];
+    POLITICA politicas[MAX20];
 }PLATAFORMA;
 
 typedef struct plataformas_array{
@@ -49,10 +36,24 @@ typedef struct plataformas_array{
     PLATAFORMA *pplataforma;
 }PLATAFORMAS_ARRAY;
 
+typedef struct dias {
+    int dia;
+    int mes;
+    int ano;
+
+    struct evento *nextevento;
+} DIAS;
+
+typedef struct dias_array {
+    int n_dias;
+    int size_dias;
+    DIAS *pdias; //ARRAY DE DIAS
+} DIAS_ARRAY;
+
 typedef struct agendas{
     int id_agenda;
-    char plataforma[MAX200];
-    DIAS_ARRAY *array_dias;
+    char plataforma[MAX20];
+    DIAS_ARRAY array_dias;
 }AGENDAS;
 
 typedef struct agendas_array{
@@ -100,7 +101,7 @@ typedef struct listaedificios {
 //LISTA LIGADA DE EVENTOS
 typedef struct evento {
     int id_evento;
-    char tipo[MAX200];
+    char tipo[MAX20];
     int id_cliente;
     struct evento *nextEvento;
 } EVENTO;
@@ -140,7 +141,11 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[],
 
 AGENDAS_ARRAY *create_dynarray_array_agendas(int initsize);
 
-void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char plataforma[]);
+void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char plataforma[], int size_dias);
+
+void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio,int id_agenda, int dia, int mes, int ano);
+
+DIAS_ARRAY *create_dynarray_array_dias(int initsize);
 
 /** Funções de remover */
 
@@ -155,6 +160,8 @@ void remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_edificio, 
 EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
 
 ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
+
+AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda);
 
 /** Funções de editar */
 

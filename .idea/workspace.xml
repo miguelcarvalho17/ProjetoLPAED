@@ -14,6 +14,7 @@
     <list default="true" id="f269b8fd-0342-4eaf-b170-c6b2957cec6b" name="Default Changelist" comment="feitofeito">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/ProjetoLPAED.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ProjetoLPAED.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projeto.c" beforeDir="false" afterPath="$PROJECT_DIR$/projeto.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projeto.h" beforeDir="false" afterPath="$PROJECT_DIR$/projeto.h" afterDir="false" />
     </list>
@@ -54,11 +55,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -92,6 +88,7 @@
       <workItem from="1608913948415" duration="877000" />
       <workItem from="1608921387551" duration="3249000" />
       <workItem from="1608991959294" duration="10213000" />
+      <workItem from="1609081174436" duration="5347000" />
     </task>
     <servers />
   </component>
@@ -108,5 +105,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
