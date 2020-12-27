@@ -8,6 +8,7 @@
 //tp 10,11,12
 
 int id_edificio = 1;
+int id_estudio = 1;
 
 
 int main_projeto(int argc, const char *argv[]) {
@@ -18,27 +19,32 @@ int main_projeto(int argc, const char *argv[]) {
 
     insert_edificio(e, "PF Maia", 41.162392, -8.655714, "Avenida da Maia", 1.5, 5);
 
-    insert_estudio(e, 1, 1, 1, "t2", 50,30,600,4);
-    insert_estudio(e, 1, 2, 1, "t2", 50,30,600,4);
-    insert_estudio(e, 1, 3, 2, "t2", 50,30,600,4);
-    insert_estudio(e, 1, 4, 3, "t2", 50,30,600,4);
-    insert_estudio(e, 1, 5, 4, "t2", 50,30,600,4);
+    insert_estudio(e, 1, 1, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 1, 1, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 1, 2, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 1, 3, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 1, 4, "t2", 50, 30, 600, 4);
 
     insert_edificio(e, "PF Boavista", 41.162392, -8.655714, "Avenida da Boavista", 1.5, 5);
 
-    insert_estudio(e, 2, 6, 5, "t2", 50, 30,600,4);
-    insert_estudio(e, 2, 7, 6, "t2", 50,30,600,4);
-    insert_estudio(e, 2, 8, 7, "t2", 50,30,600,4);
-    insert_estudio(e, 2, 9, 3, "t2", 50,30,600,4);
-    insert_estudio(e, 2, 10, 3, "t2", 50,30,600,4);
-    insert_estudio(e, 2, 11, 3, "t2", 50,30,600,4);
+    insert_estudio(e, 2, 5, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 2, 6, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 2, 7, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
+    insert_estudio(e, 2, 5, "t2", 50, 30, 600, 4);
 
-    insert_agenda(e, 1,1,1,"MASTER");
-    insert_agenda(e, 1,1,2,"AIRBNB");
-    insert_agenda(e, 1,1,3,"AIRBNC");
-    insert_agenda(e, 1,1,4,"AIRBNE");
-    insert_agenda(e, 1,2,1,"MASTER");
-    insert_agenda(e, 2,10,1,"MASTER");
+
+    insert_agenda(e, 1, 1, 1, "MASTER");
+    insert_agenda(e, 1, 1, 2, "AIRBNB");
+    insert_agenda(e, 1, 1, 3, "AIRBNC");
+    insert_agenda(e, 1, 1, 4, "AIRBNE");
+  //  insert_agenda(e, 1, 2, 1, "MASTER");
+    insert_agenda(e, 1, 4, 1, "MASTER");
+    insert_agenda(e, 2, 10, 1, "MASTER");
+
 
 
     /** Imprimir lista */
@@ -50,23 +56,28 @@ int main_projeto(int argc, const char *argv[]) {
 
     //read_edificios_txt(e);
     //read_edificios_txt(e);
-    print_listaEdificio(e);
+
 
 /*
     // Find estudio
     ESTUDIO *printestudio = find_estudio_dynarray_arrayestudios(e, 5);
     printf("%d, %d, %s, %d\n", printestudio->id_estudio, printestudio->numero, printestudio->configuracao,
            printestudio->area);
-
 */
-    //Remove estudio
-    //EDIFICIO *edificio = find_edificio(e, 2);
-    //ESTUDIO *aremover = find_estudio_dynarray_arrayestudios(e, 5);
-    //remove_estudio_dynarray_arrayestudios(edificio, aremover);
 
+    /*  remove_estudio_dynarray_arrayestudios(e,2,11);
+      print_listaEdificio(e);
+      printf("...............\n");
+      remove_estudio_dynarray_arrayestudios(e,2,9);
+      print_listaEdificio(e);
+      printf("...............\n");
+      remove_estudio_dynarray_arrayestudios(e,1,1);*/
+    print_listaEdificio(e);
     //print_listaEdificio(e);
     // Remove edificio
-    //remove_edificio(e, "PF Maia");
+    //  remove_edificio(e, "PF Boavista");
+    //print_listaEdificio(e);
+
 
     // Editar edificio
     //edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
@@ -119,7 +130,6 @@ void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, dou
     pg->num_edificios++;
 }
 
-
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                    char morada[MAX200], double preco_m2, int size_estudios) {
     EDIFICIO *pe = find_edificio(pg, id_edificio);
@@ -135,7 +145,8 @@ void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], doubl
 }
 
 
-void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal, int size_agendas) {
+void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area,
+                    float preco_diario, float preco_mensal, int size_agendas) {
     //FUNÇAO AUXILIAR
     EDIFICIO *pedificio = find_edificio(pg, id);
 
@@ -152,13 +163,13 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char 
                                                                       pedificio->array_estudios.size_estudios);
         }
         ESTUDIO *pestudio = pedificio->array_estudios.pestudios + pedificio->array_estudios.n_estudios;
-        pestudio->id_estudio = id_estudio;
+        pestudio->id_estudio = id_estudio++;
         pestudio->numero = numero;
 
         strcpy(pestudio->configuracao, configuracao);
         pestudio->area = area;
         pestudio->preco_diaria = preco_diario;
-        pestudio->preco_mensal  = preco_mensal;
+        pestudio->preco_mensal = preco_mensal;
         AGENDAS_ARRAY *agendasarray = create_dynarray_array_agendas(size_agendas);
         pestudio->array_agendas = *agendasarray;
 
@@ -166,11 +177,12 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char 
     }
 }
 
-void insert_agenda(LISTAEDIFICIOS *pg,int id_edificio,int id_estudio, int id_agenda, char plataforma[]){
+void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char plataforma[]) {
     EDIFICIO *pedificio = find_edificio(pg, id_edificio);
     ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
     if (pedificio != NULL) {
-        AGENDAS *pagenda = pedificio->array_estudios.pestudios->array_agendas.pagenda + pedificio->array_estudios.pestudios->array_agendas.n_agendas;
+        AGENDAS *pagenda = pedificio->array_estudios.pestudios->array_agendas.pagenda +
+                           pedificio->array_estudios.pestudios->array_agendas.n_agendas;
         pagenda->id_agenda = id_agenda;
 
         strcpy(pagenda->plataforma, plataforma);
@@ -190,12 +202,29 @@ ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize) {
     return estudiosarray;
 }
 
-void remove_estudio_dynarray_arrayestudios(EDIFICIO *edificio, ESTUDIO *aremover) {
+/*void remove_estudio_dynarray_arrayestudios(EDIFICIO *edificio, ESTUDIO *aremover) {
 
     aremover->numero = 0;
     aremover->area = 0;
     strcpy(aremover->configuracao, "");
 
+    for (int i = 0; i < edificio->array_estudios.n_estudios; ++i) {
+        *aremover = *(aremover + 1);
+        aremover++;
+    }
+    edificio->array_estudios.n_estudios--;
+}*/
+void remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio) {
+
+    EDIFICIO *edificio = find_edificio(pg, id_edificio);
+    ESTUDIO *aremover = find_estudio_dynarray_arrayestudios(pg, id_estudio);
+
+    if (aremover != NULL) {
+        aremover->numero = 0;
+        aremover->area = 0;
+        strcpy(aremover->configuracao, "");
+
+    }
     for (int i = 0; i < edificio->array_estudios.n_estudios; ++i) {
         *aremover = *(aremover + 1);
         aremover++;
@@ -282,17 +311,16 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
         ESTUDIO *pc = pp->array_estudios.pestudios;
         AGENDAS *pa = pc->array_agendas.pagenda;
 
-        for (int i = 0; i < pp->array_estudios.n_estudios && pc->numero != 0; ++i) {
+        for (int i = 0; i < pp->array_estudios.n_estudios; i++) {
 
-            printf("\tEstudio:ID-> %d,Numero porta-> %d,Configuracao-> %s,Area-> %d, Preco diaria-> %.2f, Preco mensal->%.2f\n", pc->id_estudio, pc->numero,
+            printf("\tEstudio:ID-> %d,Numero porta-> %d,Configuracao-> %s,Area-> %d, Preco diaria-> %.2f, Preco mensal->%.2f\n",
+                   pc->id_estudio, pc->numero,
                    pc->configuracao, pc->area, pc->preco_diaria, pc->preco_mensal);
 
-            if (pc->array_agendas.pagenda != NULL){
 
-            for (int j = 0; j < pc->array_agendas.n_agendas; ++j) {
-                printf("\tID agenda-> %d,Plataforma-> %s\n", pa->id_agenda,pa->plataforma);
+            for (int j = 0; j < pc->array_agendas.n_agendas && pa->id_agenda != 0; j++) {
+                printf("\tID agenda-> %d,Plataforma-> %s\n", pa->id_agenda, pa->plataforma);
                 pa++;
-            }
             }
             pc++;
         }
@@ -301,7 +329,8 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
 }
 
 
-void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal) {
+void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario,
+                  float preco_mensal) {
     ESTUDIO *pe = find_estudio_dynarray_arrayestudios(pg, id_estudio);
     if (pe != NULL) {
         pe->id_estudio = id_estudio;
@@ -321,11 +350,12 @@ void gravar_edificios(LISTAEDIFICIOS *g) {
     if (fp != NULL) {
         fprintf(fp, "Numero de edificios:%d\n", g->num_edificios);
         while (pp != NULL) {
-            fprintf(fp,"%d,%s, %s, %f, %f, %f\n", pp->id_edificio,pp->nome, pp->morada, pp->preco_m2, pp->latitude, pp->longitude);
+            fprintf(fp, "%d,%s, %s, %f, %f, %f\n", pp->id_edificio, pp->nome, pp->morada, pp->preco_m2, pp->latitude,
+                    pp->longitude);
             pp = pp->next;
         }
 
-    }else {
+    } else {
         printf("Erro na abertura do ficheiro\n");
     }
 }
@@ -335,17 +365,19 @@ void gravar_estudios(LISTAEDIFICIOS *g) {
     EDIFICIO *pp = g->pedificios;
     FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\estudios.txt", "w"));
     if (fp != NULL) {
-        while (pp != NULL){
+        while (pp != NULL) {
             fprintf(fp, "Numero de estudios: %d\n", pp->array_estudios.n_estudios);
-        ESTUDIO *pc = pp->array_estudios.pestudios;
-        for (int i = 0; i < g->pedificios->array_estudios.n_estudios && pc->id_estudio > 0 && pc->id_estudio < 1000; i++) {
-            fprintf(fp, "ESTUDIO: %d, %d,%d, %s, %d, %f, %f\n", pc->id_estudio,pc->numero,pp->id_edificio,pc->configuracao,pc->area, pc->preco_diaria, pc->preco_mensal);
-            pc++;
-        }
+            ESTUDIO *pc = pp->array_estudios.pestudios;
+            for (int i = 0;
+                 i < g->pedificios->array_estudios.n_estudios && pc->id_estudio > 0 && pc->id_estudio < 1000; i++) {
+                fprintf(fp, "ESTUDIO: %d, %d,%d, %s, %d, %f, %f\n", pc->id_estudio, pc->numero, pp->id_edificio,
+                        pc->configuracao, pc->area, pc->preco_diaria, pc->preco_mensal);
+                pc++;
+            }
             pp = pp->next;
         }
         fclose(fp);
-    }else {
+    } else {
         printf("Erro na abertura do ficheiro\n");
     }
 }
@@ -360,14 +392,15 @@ void read_edificios_txt(LISTAEDIFICIOS *g) {
         //IGNORAR ATE ao espaço, so guardar o que esta a frente( nome da turma)
         fscanf(fp, "%*s %*s %d\n", &num_edificios);
 
-        char morada[MAX200]; char nome[MAX200];
+        char morada[MAX200];
+        char nome[MAX200];
         int id;
         float latitude, longitude, preco_m2;
 
         for (int i = 0; i < num_edificios; ++i) {
             fscanf(fp, "%d, %s, %s, %f, %f, %f\n", &id, nome, morada, &preco_m2, &latitude, &longitude);
 
-            insert_edificio(g,nome, latitude,longitude,morada,preco_m2,5);
+            insert_edificio(g, nome, latitude, longitude, morada, preco_m2, 5);
         }
         fclose(fp);
     }
@@ -392,7 +425,7 @@ void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g) {
     fscanf(fp, "%*s %d", &size);
 
     //Create dyn array...
-   create_dynarray_array_estudios(size);
+    create_dynarray_array_estudios(size);
 
     pestudio = g->pedificios->array_estudios.pestudios;
     for (int i = 0; i < g->pedificios->array_estudios.n_estudios; i++) {
@@ -401,7 +434,8 @@ void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g) {
         // ii)  ignore ':'                          -> %*[:]
         //...
 
-        fscanf(fp, "%[^:]%*[:]%d %d %d %s %d",auxStr, &(pestudio->id_estudio), &(pestudio->numero), &(g->pedificios->id_edificio),pestudio->configuracao,&(pestudio->area));
+        fscanf(fp, "%[^:]%*[:]%d %d %d %s %d", auxStr, &(pestudio->id_estudio), &(pestudio->numero),
+               &(g->pedificios->id_edificio), pestudio->configuracao, &(pestudio->area));
         pestudio++;
     }
     fclose(fp);

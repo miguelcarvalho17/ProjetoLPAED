@@ -136,17 +136,19 @@ void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, dou
 
 ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
 
-void insert_estudio(LISTAEDIFICIOS *pg, int id,int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal, int size_agendas);
+void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area, float preco_diario, float preco_mensal, int size_agendas);
 
 AGENDAS_ARRAY *create_dynarray_array_agendas(int initsize);
 
-void insert_agenda(LISTAEDIFICIOS *pg,int id_edificio,int id_estudio, int id_agenda, char plataforma[]);
+void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char plataforma[]);
 
 /** Funções de remover */
 
 void remove_edificio(LISTAEDIFICIOS *pg, char name[]);
 
-void remove_estudio_dynarray_arrayestudios(EDIFICIO *edificio, ESTUDIO *aremover);
+//void remove_estudio_dynarray_arrayestudios(EDIFICIO *edificio, ESTUDIO *aremover);
+
+void remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio);
 
 
 /** Funções de find */
