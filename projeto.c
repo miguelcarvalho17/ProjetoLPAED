@@ -9,6 +9,7 @@
 
 int id_edificio = 1;
 int id_estudio = 1;
+int id_agenda = 1;
 
 
 int main_projeto(int argc, const char *argv[]) {
@@ -37,25 +38,25 @@ int main_projeto(int argc, const char *argv[]) {
     insert_estudio(e, 2, 5, "t2", 50, 30, 600, 4);
 
 
-    insert_agenda(e, 1, 1, 1, "MASTER", 7);
-    insert_agenda(e, 1, 1, 2, "AIRBNB", 7);
-    insert_agenda(e, 1, 1, 3, "AIRBNC", 7);
-    insert_agenda(e, 1, 1, 4, "AIRBNE", 7);
+    insert_agenda(e, 1, 1,  "MASTER", 7);
+    insert_agenda(e, 1, 1,  "AIRBNB", 7);
+    insert_agenda(e, 1, 1,  "AIRBNC", 7);
+    insert_agenda(e, 1, 1,  "AIRBNE", 7);
 
 
-    insert_agenda(e, 1, 2, 5, "MASTER", 7);
-    insert_agenda(e, 1, 2, 6, "AIRBNB", 7);
-    insert_agenda(e, 1, 2, 7, "AIRBNC", 7);
-    insert_agenda(e, 1, 2, 8, "AIRBNE", 7);
+    insert_agenda(e, 1, 2,  "MASTER", 7);
+    insert_agenda(e, 1, 2,  "AIRBNB", 7);
+    insert_agenda(e, 1, 2,  "AIRBNC", 7);
+    insert_agenda(e, 1, 2,  "AIRBNE", 7);
 
-    insert_agenda(e, 1, 4, 9, "MASTER", 7);
+    insert_agenda(e, 1, 4,  "MASTER", 7);
 
-    insert_agenda(e, 2, 7, 10, "MASTER", 7);
-    insert_agenda(e, 2, 10, 11, "MASTER", 7);
+    insert_agenda(e, 2, 7,  "MASTER", 7);
+    insert_agenda(e, 2, 10,  "MASTER", 7);
 
-    insert_agenda(e, 2, 12, 12, "MASTER", 7);
-    insert_agenda(e, 2, 12, 13, "MASTER", 7);
-    insert_agenda(e, 2, 12, 14, "MASTER", 7);
+    insert_agenda(e, 2, 12,  "MASTER", 7);
+    insert_agenda(e, 2, 12,  "MASTER", 7);
+    insert_agenda(e, 2, 12,  "MASTER", 7);
 
 
     insert_dia(e, 1, 1, 1, 1, 1, 1);
@@ -71,8 +72,7 @@ int main_projeto(int argc, const char *argv[]) {
     insert_dia(e, 1, 4, 9, 9, 9, 9);
 
 
-
-  // insert_dia(e, 2, 7, 10, 10, 10, 10);
+    insert_dia(e, 2, 7, 10, 10, 10, 10);
 
 
 
@@ -210,14 +210,14 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[],
     }
 }
 
-void
-insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char plataforma[], int size_dias) {
+
+void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char plataforma[], int size_dias) {
     EDIFICIO *pedificio = find_edificio(pg, id_edificio);
     ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
     if (pedificio != NULL && pestudio != NULL) {
         AGENDAS *pagenda = pestudio->array_agendas.pagenda + pestudio->array_agendas.n_agendas;
 
-        pagenda->id_agenda = id_agenda;
+        pagenda->id_agenda = id_agenda++;
 
         strcpy(pagenda->plataforma, plataforma);
 
@@ -233,7 +233,7 @@ void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agen
     EDIFICIO *pedificio = find_edificio(pg, id_edificio);
     ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
     AGENDAS *pagenda = find_agenda_dynarray_arrayagendas(pg, id_agenda);
-    if (pedificio != NULL && pestudio != NULL) {
+    if (pedificio != NULL && pestudio != NULL && pagenda != NULL) {
         DIAS *pdias = pagenda->array_dias.pdias + pagenda->array_dias.n_dias;
         pdias->dia = dia;
 
@@ -244,32 +244,38 @@ void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agen
         pagenda->array_dias.n_dias++;
     }
 }
-
 AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda) { // BINARY SEARCH
-    ESTUDIO *pestudio = pg->pedificios->array_estudios.pestudios;
+    EDIFICIO* edificio = pg->pedificios;
+    while (edificio != NULL) {
+        ESTUDIO* pestudio = edificio->array_estudios.pestudios;
+        for (int i = 0; i < edificio->array_estudios.n_estudios; i++) {
+            AGENDAS* pst = pestudio->array_agendas.pagenda;
+            int l = 0;
+            int r = pestudio->array_agendas.n_agendas - 1;
 
-    while (pestudio != NULL) {
-        AGENDAS *pst = pestudio->array_agendas.pagenda;
-        int l = 0;
-        int r = pestudio->array_agendas.n_agendas - 1;
+            if (pst == NULL) {
+                printf("* find_student_dynarray_arraydias(): Array dias encontra-se vazio!\n");
+                return pst;
+            }
+            while (l <= r) {
+                int m = l + (r - l) / 2;
+                if (pst[m].id_agenda == id_agenda) {
 
-        if (pst == NULL) {
-            printf("* find_student_dynarray_arraydias(): Array dias encontra-se vazio!\n");
-            return pst;
-        }
-        while (l <= r) {
-            int m = l + (r - l) / 2;
-            if (pst[m].id_agenda == id_agenda) {
-                return &pst[m];
+                    return &pst[m];
+                }
+                if (pst[m].id_agenda < id_agenda) {
+                    l = m + 1;
+                }
+                else {
+                    r = m - 1;
+                }
             }
-            if (pst[m].id_agenda < id_agenda) {
-                l = m + 1;
-            } else {
-                r = m - 1;
-            }
+
+            pestudio++;
         }
-        pestudio++;
+        edificio = edificio->next;
     }
+
     return NULL;
 }
 

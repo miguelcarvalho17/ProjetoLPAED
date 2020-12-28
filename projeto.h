@@ -141,7 +141,7 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[],
 
 AGENDAS_ARRAY *create_dynarray_array_agendas(int initsize);
 
-void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char plataforma[], int size_dias);
+void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char plataforma[], int size_dias);
 
 void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio,int id_agenda, int dia, int mes, int ano);
 
