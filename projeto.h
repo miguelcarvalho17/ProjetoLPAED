@@ -170,9 +170,6 @@ void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], doubl
 
 void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal);
 
-
-
-
 void gravar_edificios(LISTAEDIFICIOS *g);
 
 void gravar_estudios(LISTAEDIFICIOS *g);
