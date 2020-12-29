@@ -41,7 +41,7 @@ typedef struct dias {
     int mes;
     int ano;
 
-    struct listaeventos *eventos;
+    struct listaeventos *listaeventos;
 } DIAS;
 
 typedef struct dias_array {
@@ -135,6 +135,8 @@ int main_projeto(int argc, const char *argv[]);
 /** Criar lista ligada de edificios */
 LISTAEDIFICIOS *create_lista_edificio();
 
+LISTAEVENTOS *create_lista_eventos();
+
 /** Imprimir toda a informação dos edificios */
 void print_listaEdificio(const LISTAEDIFICIOS* g);
 
@@ -152,7 +154,7 @@ void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char pla
 
 void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio,int id_agenda, int dia, int mes, int ano);
 
-void insert_evento(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char tipo[], DIAS datafim,
+void insert_evento(LISTAEDIFICIOS *pg, char tipo[], DIAS datafim,
                    int id_cliente, int dia, int mes, int ano);
 
 DIAS_ARRAY *create_dynarray_array_dias(int initsize);

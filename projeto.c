@@ -77,8 +77,8 @@ int main_projeto(int argc, const char *argv[]) {
     insert_dia(e, 2, 10, 11, 11, 11, 11);
 
     DIAS datafim = {29,12,2020};
-    insert_evento(e,1,1,1,"Limpeza", datafim, -1,1,1,1);
-
+    insert_evento(e,"Limpeza",datafim,-1,1,1,1);
+    insert_evento(e,"Manutencao",datafim,-1,1,1,1);
 
 
 
@@ -92,8 +92,8 @@ int main_projeto(int argc, const char *argv[]) {
     print_listaEdificio(e);
     printf("----------------------------------\n\n");
 
-  //  DIAS *printdia = find_dia_dynarray_arraydias(e, 12, 12, 12);
-   // printf("%d, %d, , %d\n", printdia->dia, printdia->mes, printdia->ano);
+    //  DIAS *printdia = find_dia_dynarray_arraydias(e, 12, 12, 12);
+    // printf("%d, %d, , %d\n", printdia->dia, printdia->mes, printdia->ano);
 
 
 
@@ -184,14 +184,14 @@ void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, dou
     pg->num_edificios++;
 }
 
-void insert_evento(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char tipo[], DIAS datafim,
+void insert_evento(LISTAEDIFICIOS *pg, char tipo[], DIAS datafim,
                    int id_cliente, int dia, int mes, int ano) {
     //TEMOS A LISTA EDIFICIOS A APONTAR PARA NULL
     //QUEREMOS COLOCAR A LISTA A APONTAR PARA OS EDIFICIOS
     //EDIFICIO CRIADO
-   // EDIFICIO *pedificio = find_edificio(pg, id_edificio);
-   // ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
-   // AGENDAS *pagenda = find_agenda_dynarray_arrayagendas(pg, id_agenda);
+    // EDIFICIO *pedificio = find_edificio(pg, id_edificio);
+    // ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
+    // AGENDAS *pagenda = find_agenda_dynarray_arrayagendas(pg, id_agenda);
     DIAS *pdias = find_dia_dynarray_arraydias(pg, dia, mes, ano);
 
     EVENTO *s = (EVENTO *) malloc(sizeof(EVENTO));
@@ -202,25 +202,26 @@ void insert_evento(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_a
     s->datafim.mes = datafim.mes;
     s->datafim.ano = datafim.ano;
 
-
     s->nextEvento = NULL;
 
-    EVENTO *pant = NULL, *pcurrent = pdias->eventos->peventos;
+    LISTAEVENTOS *plista = pg->pedificios->array_estudios.pestudios->array_agendas.pagenda->array_dias.pdias->listaeventos;
+
+    EVENTO *pant = NULL, *pcurrent = plista->peventos;
     while (pcurrent != NULL && id_evento > pcurrent->id_evento) {
         pant = pcurrent;
         pcurrent = pcurrent->nextEvento;
     }
     //INSERÇAO A CABEÇA
-    if (pcurrent == pdias->eventos->peventos) {
-        s->nextEvento = pdias->eventos->peventos->nextEvento;
-        pdias->eventos->peventos = s;
-        pdias->eventos->num_eventos++;
+    if (pcurrent == plista->peventos) {
+        s->nextEvento = plista->peventos;
+        plista->peventos = s;
+        plista->num_eventos++;
         return;
     }
     //INSERÇÃO A MEIO OU NO FIM
     s->nextEvento = pcurrent;
     pant->nextEvento = s;
-    pdias->eventos->num_eventos++;
+    plista->num_eventos++;
 }
 
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
@@ -303,10 +304,10 @@ void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agen
         pdias->ano = ano;
 
         pagenda->array_dias.n_dias++;
+
+        LISTAEVENTOS *clistaeventos = create_lista_eventos();
+        pagenda->array_dias.pdias->listaeventos = clistaeventos;
     }
-   LISTAEVENTOS *clistaeventos = create_lista_eventos();
-
-
 
 }
 
@@ -508,7 +509,11 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
                 DIAS *pd = pa->array_dias.pdias;
                 for (int k = 0; k < pa->array_dias.n_dias; k++) {
                     printf("\tData -> %d / %d / %d\n", pd->dia, pd->mes, pd->ano);
-
+                    EVENTO *pe = pd->listaeventos->peventos;
+                    while(pe!=NULL){
+                        printf("EVENTO: %d,%s, %d-%d-%d, %d-%d-%d, %d \n", pe->id_evento, pe->tipo, pd->dia, pd->mes, pd->ano, pe->datafim.dia,pe->datafim.mes, pe->datafim.ano,pe->id_cliente);
+                        pe = pe->nextEvento;
+                    }
                     pd++;
                 }
 
@@ -516,7 +521,6 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
             }
             pc++;
         }
-
         pp = pp->next;
     }
 }
