@@ -10,6 +10,7 @@
 int id_edificio = 1;
 int id_estudio = 1;
 int id_agenda = 1;
+int id_evento = 1;
 
 
 int main_projeto(int argc, const char *argv[]) {
@@ -38,25 +39,25 @@ int main_projeto(int argc, const char *argv[]) {
     insert_estudio(e, 2, 5, "t2", 50, 30, 600, 4);
 
 
-    insert_agenda(e, 1, 1,  "MASTER", 7);
-    insert_agenda(e, 1, 1,  "AIRBNB", 7);
-    insert_agenda(e, 1, 1,  "AIRBNC", 7);
-    insert_agenda(e, 1, 1,  "AIRBNE", 7);
+    insert_agenda(e, 1, 1, "MASTER", 7);
+    insert_agenda(e, 1, 1, "AIRBNB", 7);
+    insert_agenda(e, 1, 1, "AIRBNC", 7);
+    insert_agenda(e, 1, 1, "AIRBNE", 7);
 
 
-    insert_agenda(e, 1, 2,  "MASTER", 7);
-    insert_agenda(e, 1, 2,  "AIRBNB", 7);
-    insert_agenda(e, 1, 2,  "AIRBNC", 7);
-    insert_agenda(e, 1, 2,  "AIRBNE", 7);
+    insert_agenda(e, 1, 2, "MASTER", 7);
+    insert_agenda(e, 1, 2, "AIRBNB", 7);
+    insert_agenda(e, 1, 2, "AIRBNC", 7);
+    insert_agenda(e, 1, 2, "AIRBNE", 7);
 
-    insert_agenda(e, 1, 4,  "MASTER", 7);
+    insert_agenda(e, 1, 4, "MASTER", 7);
 
-    insert_agenda(e, 2, 7,  "MASTER", 7);
-    insert_agenda(e, 2, 10,  "MASTER", 7);
+    insert_agenda(e, 2, 7, "MASTER", 7);
+    insert_agenda(e, 2, 10, "MASTER", 7);
 
-    insert_agenda(e, 2, 12,  "MASTER", 7);
-    insert_agenda(e, 2, 12,  "MASTER", 7);
-    insert_agenda(e, 2, 12,  "MASTER", 7);
+    insert_agenda(e, 2, 12, "MASTER", 7);
+    insert_agenda(e, 2, 12, "MASTER", 7);
+    insert_agenda(e, 2, 12, "MASTER", 7);
 
 
     insert_dia(e, 1, 1, 1, 1, 1, 1);
@@ -73,6 +74,13 @@ int main_projeto(int argc, const char *argv[]) {
 
 
     insert_dia(e, 2, 7, 10, 10, 10, 10);
+    insert_dia(e, 2, 10, 11, 11, 11, 11);
+
+    DIAS datafim = {29,12,2020};
+    insert_evento(e,1,1,1,"Limpeza", datafim, -1,1,1,1);
+
+
+
 
 
 
@@ -83,6 +91,12 @@ int main_projeto(int argc, const char *argv[]) {
     /** Imprimir lista */
     print_listaEdificio(e);
     printf("----------------------------------\n\n");
+
+  //  DIAS *printdia = find_dia_dynarray_arraydias(e, 12, 12, 12);
+   // printf("%d, %d, , %d\n", printdia->dia, printdia->mes, printdia->ano);
+
+
+
 
     //gravar_edificios(e);
     //gravar_estudios(e);
@@ -129,6 +143,13 @@ LISTAEDIFICIOS *create_lista_edificio() {
     return le;
 }
 
+LISTAEVENTOS *create_lista_eventos() {
+    LISTAEVENTOS *leventos = (LISTAEVENTOS *) calloc(1, sizeof(LISTAEVENTOS));
+    leventos->peventos = NULL;
+
+    return leventos;
+}
+
 void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, double longitude,
                      char morada[MAX200], double preco_m2, int size_estudios) {
     //TEMOS A LISTA EDIFICIOS A APONTAR PARA NULL
@@ -161,6 +182,45 @@ void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, dou
     s->next = pcurrent;
     pant->next = s;
     pg->num_edificios++;
+}
+
+void insert_evento(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char tipo[], DIAS datafim,
+                   int id_cliente, int dia, int mes, int ano) {
+    //TEMOS A LISTA EDIFICIOS A APONTAR PARA NULL
+    //QUEREMOS COLOCAR A LISTA A APONTAR PARA OS EDIFICIOS
+    //EDIFICIO CRIADO
+   // EDIFICIO *pedificio = find_edificio(pg, id_edificio);
+   // ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
+   // AGENDAS *pagenda = find_agenda_dynarray_arrayagendas(pg, id_agenda);
+    DIAS *pdias = find_dia_dynarray_arraydias(pg, dia, mes, ano);
+
+    EVENTO *s = (EVENTO *) malloc(sizeof(EVENTO));
+    s->id_evento = id_evento++;
+    strcpy(s->tipo, tipo);
+    s->id_cliente = id_cliente;
+    s->datafim.dia = datafim.dia;
+    s->datafim.mes = datafim.mes;
+    s->datafim.ano = datafim.ano;
+
+
+    s->nextEvento = NULL;
+
+    EVENTO *pant = NULL, *pcurrent = pdias->eventos->peventos;
+    while (pcurrent != NULL && id_evento > pcurrent->id_evento) {
+        pant = pcurrent;
+        pcurrent = pcurrent->nextEvento;
+    }
+    //INSERÇAO A CABEÇA
+    if (pcurrent == pdias->eventos->peventos) {
+        s->nextEvento = pdias->eventos->peventos->nextEvento;
+        pdias->eventos->peventos = s;
+        pdias->eventos->num_eventos++;
+        return;
+    }
+    //INSERÇÃO A MEIO OU NO FIM
+    s->nextEvento = pcurrent;
+    pant->nextEvento = s;
+    pdias->eventos->num_eventos++;
 }
 
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
@@ -233,6 +293,7 @@ void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agen
     EDIFICIO *pedificio = find_edificio(pg, id_edificio);
     ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
     AGENDAS *pagenda = find_agenda_dynarray_arrayagendas(pg, id_agenda);
+
     if (pedificio != NULL && pestudio != NULL && pagenda != NULL) {
         DIAS *pdias = pagenda->array_dias.pdias + pagenda->array_dias.n_dias;
         pdias->dia = dia;
@@ -243,13 +304,18 @@ void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agen
 
         pagenda->array_dias.n_dias++;
     }
+   LISTAEVENTOS *clistaeventos = create_lista_eventos();
+
+
+
 }
+
 AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda) { // BINARY SEARCH
-    EDIFICIO* edificio = pg->pedificios;
+    EDIFICIO *edificio = pg->pedificios;
     while (edificio != NULL) {
-        ESTUDIO* pestudio = edificio->array_estudios.pestudios;
+        ESTUDIO *pestudio = edificio->array_estudios.pestudios;
         for (int i = 0; i < edificio->array_estudios.n_estudios; i++) {
-            AGENDAS* pst = pestudio->array_agendas.pagenda;
+            AGENDAS *pst = pestudio->array_agendas.pagenda;
             int l = 0;
             int r = pestudio->array_agendas.n_agendas - 1;
 
@@ -265,8 +331,7 @@ AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda) { 
                 }
                 if (pst[m].id_agenda < id_agenda) {
                     l = m + 1;
-                }
-                else {
+                } else {
                     r = m - 1;
                 }
             }
@@ -278,6 +343,45 @@ AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda) { 
 
     return NULL;
 }
+
+DIAS *find_dia_dynarray_arraydias(LISTAEDIFICIOS *pg, int dia, int mes, int ano) {
+
+    EDIFICIO *edificio = pg->pedificios;
+    while (edificio != NULL) {
+        ESTUDIO *pestudio = edificio->array_estudios.pestudios;
+        for (int i = 0; i < edificio->array_estudios.n_estudios; i++) {
+            AGENDAS *pst = pestudio->array_agendas.pagenda;
+            for (int j = 0; j < pst->array_dias.n_dias; j++) {
+                DIAS *pdia = pst->array_dias.pdias;
+                int l = 0;
+                int r = pst->array_dias.n_dias - 1;
+
+                if (pdia == NULL) {
+                    printf("* find_student_dynarray_arraydias(): Array dias encontra-se vazio!\n");
+                    return pdia;
+                }
+                while (l <= r) {
+                    int m = l + (r - l) / 2;
+                    if (pdia[m].dia == dia && pdia[m].mes == mes && pdia[m].ano == ano) {
+
+                        return &pdia[m];
+                    }
+                    if (pdia[m].dia < dia && pdia[m].mes < mes && pdia[m].ano < ano) {
+                        l = m + 1;
+                    } else {
+                        r = m - 1;
+                    }
+                }
+                pst++;
+            }
+            pestudio++;
+        }
+        edificio = edificio->next;
+    }
+
+    return NULL;
+}
+
 
 DIAS_ARRAY *create_dynarray_array_dias(int initsize) {
     DIAS *pdias = (DIAS *) calloc(initsize, sizeof(DIAS));

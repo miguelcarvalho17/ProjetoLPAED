@@ -41,7 +41,7 @@ typedef struct dias {
     int mes;
     int ano;
 
-    struct evento *nextevento;
+    struct listaeventos *eventos;
 } DIAS;
 
 typedef struct dias_array {
@@ -98,13 +98,20 @@ typedef struct listaedificios {
 } LISTAEDIFICIOS;
 
 
+
 //LISTA LIGADA DE EVENTOS
 typedef struct evento {
     int id_evento;
     char tipo[MAX20];
+    DIAS datafim;
     int id_cliente;
     struct evento *nextEvento;
 } EVENTO;
+
+typedef struct listaeventos {
+    int num_eventos;
+    EVENTO *peventos;
+} LISTAEVENTOS;
 
 typedef struct historicoEstadias {
     int id_estadia;
@@ -145,6 +152,9 @@ void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char pla
 
 void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio,int id_agenda, int dia, int mes, int ano);
 
+void insert_evento(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, char tipo[], DIAS datafim,
+                   int id_cliente, int dia, int mes, int ano);
+
 DIAS_ARRAY *create_dynarray_array_dias(int initsize);
 
 /** Funções de remover */
@@ -162,6 +172,8 @@ EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
 ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio);
 
 AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda);
+
+DIAS *find_dia_dynarray_arraydias(LISTAEDIFICIOS *pg, int dia, int mes, int ano);
 
 /** Funções de editar */
 
