@@ -154,8 +154,8 @@ void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char pla
 
 void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio,int id_agenda, int dia, int mes, int ano);
 
-void insert_evento(LISTAEDIFICIOS *pg, char tipo[], DIAS datafim,
-                   int id_cliente,int id_agenda, int dia, int mes, int ano);
+void insert_evento(LISTAEDIFICIOS* pg, const char* tipo, DIAS datafim,
+                   int id_cliente, int id_agenda, int dia, int mes, int ano);
 
 DIAS_ARRAY *create_dynarray_array_dias(int initsize);
 
