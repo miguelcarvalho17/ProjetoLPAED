@@ -56,8 +56,9 @@ int main_projeto(int argc, const char *argv[]) {
     insert_agenda(e, 2, 10, "MASTER", 7);
 
     insert_agenda(e, 2, 12, "MASTER", 7);
-    insert_agenda(e, 2, 12, "MASTER", 7);
-    insert_agenda(e, 2, 12, "MASTER", 7);
+    insert_agenda(e, 2, 12, "AIRBNB", 7);
+    insert_agenda(e, 2, 12, "AIRBNC", 7);
+    insert_agenda(e, 2, 12, "AIRBNE", 7);
 
 
     insert_dia(e, 1, 1, 1, 1, 1, 1);
@@ -72,8 +73,7 @@ int main_projeto(int argc, const char *argv[]) {
     insert_dia(e, 1, 2, 8, 8, 8, 8);
 
     insert_dia(e, 1, 4, 9, 9, 9, 9);
-
-
+    
     insert_dia(e, 2, 7, 10, 10, 10, 10);
     insert_dia(e, 2, 10, 11, 11, 11, 11);
 
@@ -87,7 +87,8 @@ int main_projeto(int argc, const char *argv[]) {
 
 
 
-
+    //EVENTO *fevento = find_evento(e,2,4);
+    //printf("%d\n", fevento->id_evento);
 
 
     //insert_dia(e, 2, 10, 10, 22, 3, 2021);
@@ -96,14 +97,18 @@ int main_projeto(int argc, const char *argv[]) {
 
     /** Imprimir lista */
     print_listaEdificio(e);
-    //printf("----------------------------------\n\n");
+    printf("----------------------------------\n\n");
+
+    DIAS fim = {31,12,2020};
+    edit_evento(e,2,4,"Alojamento", fim,1);
+    print_listaEdificio(e);
 
     //DIAS *printdia = find_dia_dynarray_arraydias(e,2, 1, 1, 1);
     //printf("%d, %d, %d\n", printdia->dia, printdia->mes, printdia->ano);
 
-    gravar_edificios(e);
+    //gravar_edificios(e);
 
-    read_edificios_txt(e);
+    //read_edificios_txt(e);
 
 
 
@@ -124,7 +129,7 @@ int main_projeto(int argc, const char *argv[]) {
     //print_listaEdificio(e);
     //print_listaEdificio(e);
     // Remove edificio
-    //  remove_edificio(e, "PF Boavista");
+    //remove_edificio(e, "PF Boavista");
     //print_listaEdificio(e);
 
 
@@ -646,4 +651,72 @@ AGENDAS_ARRAY *create_dynarray_array_agendas(int initsize) {
     agendasarray->size_agendas = initsize;
 
     return agendasarray;
+}
+
+void remove_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento) {
+    AGENDAS *pagenda = find_agenda_dynarray_arrayagendas(pg, id_agenda);
+    //NAO REMOVEMOS NADA SE A LISTA ESTIVER VAZIA
+    if (pagenda->array_dias.pdias->listaeventos->peventos == NULL) {
+        printf("Esse evento nao existe.");
+        return;
+    }
+    EVENTO *pant = NULL, *pcurrent = pagenda->array_dias.pdias->listaeventos->peventos;
+    while (pcurrent != NULL && pcurrent->id_evento != id_evento) {
+        pant = pcurrent;
+        pcurrent = pcurrent->nextEvento;
+    }
+    //SE O EVENTO NAO EXISTIR
+    if (pcurrent == NULL) {
+        return;
+    }
+    //REMOÇÃO A CABEÇA
+    if (pcurrent == pagenda->array_dias.pdias->listaeventos->peventos) {
+        pagenda->array_dias.pdias->listaeventos->peventos = pcurrent->nextEvento;
+        pagenda->array_dias.pdias->listaeventos->num_eventos--;
+        free(pcurrent);
+        return;
+    }
+    pant->nextEvento = pcurrent->nextEvento;
+    free(pcurrent);
+    //DECREMENTAR O NUMERO DE EVENTOS
+    pagenda->array_dias.pdias->listaeventos->num_eventos--;
+}
+
+EVENTO *find_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento) {
+
+    EDIFICIO* edificio = pg->pedificios;
+    while (edificio != NULL) {
+        ESTUDIO* pestudio = edificio->array_estudios.pestudios;
+        for (int i = 0; i < edificio->array_estudios.n_estudios; i++) {
+            AGENDAS* pst = pestudio->array_agendas.pagenda;
+            for (int k = 0; k < pestudio->array_agendas.n_agendas; k++) {
+                if (pst->id_agenda == id_agenda) {
+                    //DIAS* pdia = pst->array_dias.pdias;
+                    EVENTO *pevento = pst->array_dias.pdias->listaeventos->peventos;
+                    while (pevento != NULL) {
+                        if (pevento->id_evento == id_evento) {
+                            return pevento;
+                        }
+                        pevento = pevento->nextEvento;
+                    }
+                    }
+                pst++;
+            }
+            pestudio++;
+        }
+        edificio = edificio->next;
+    }
+    return NULL;
+}
+
+void edit_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento, char tipo[], DIAS datafim, int id_cliente) {
+    EVENTO *pevento = find_evento(pg,id_agenda, id_evento);
+    if (pevento != NULL) {
+        pevento->id_evento = id_evento;
+        strcpy(pevento->tipo, tipo);
+        pevento->datafim.dia = datafim.dia;
+        pevento->datafim.mes = datafim.mes;
+        pevento->datafim.ano = datafim.ano;
+        pevento->id_cliente = id_cliente;
+    }
 }

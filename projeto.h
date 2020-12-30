@@ -167,6 +167,8 @@ void remove_edificio(LISTAEDIFICIOS *pg, char name[]);
 
 void remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio);
 
+void remove_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento);
+
 
 /** Funções de find */
 EDIFICIO *find_edificio(LISTAEDIFICIOS *pg, int id);
@@ -177,12 +179,16 @@ AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda);
 
 DIAS *find_dia_dynarray_arraydias(LISTAEDIFICIOS *pg,int id_agenda, int dia, int mes, int ano);
 
+EVENTO *find_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento);
+
 /** Funções de editar */
 
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                    char morada[MAX200], double preco_m2, int size_estudios);
 
 void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal);
+
+void edit_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento, char tipo[], DIAS datafim, int id_cliente);
 
 void gravar_edificios(LISTAEDIFICIOS *g);
 
