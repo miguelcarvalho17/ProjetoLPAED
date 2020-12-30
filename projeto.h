@@ -155,7 +155,7 @@ void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char pla
 void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio,int id_agenda, int dia, int mes, int ano);
 
 void insert_evento(LISTAEDIFICIOS *pg, char tipo[], DIAS datafim,
-                   int id_cliente, int dia, int mes, int ano);
+                   int id_cliente,int id_agenda, int dia, int mes, int ano);
 
 DIAS_ARRAY *create_dynarray_array_dias(int initsize);
 
@@ -175,7 +175,7 @@ ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio)
 
 AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda);
 
-DIAS *find_dia_dynarray_arraydias(LISTAEDIFICIOS *pg, int dia, int mes, int ano);
+DIAS *find_dia_dynarray_arraydias(LISTAEDIFICIOS *pg,int id_agenda, int dia, int mes, int ano);
 
 /** Funções de editar */
 
@@ -185,8 +185,6 @@ void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], doubl
 void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal);
 
 void gravar_edificios(LISTAEDIFICIOS *g);
-
-void gravar_estudios(LISTAEDIFICIOS *g);
 
 void read_edificios_txt(LISTAEDIFICIOS *g);
 
