@@ -19,7 +19,7 @@ int main_projeto(int argc, const char *argv[]) {
 
     /** Criação dos edificios e seus estudios */
 
-    insert_edificio(e, "PF Maia", 41.162392, -8.655714, "Avenida da Maia", 1.5, 5);
+    /*insert_edificio(e, "PF Maia", 41.162392, -8.655714, "Avenida da Maia", 1.5, 5);
 
     insert_estudio(e, 1, 1, "t2", 50, 30, 600, 4);
     insert_estudio(e, 1, 1, "t2", 50, 30, 600, 4);
@@ -73,7 +73,7 @@ int main_projeto(int argc, const char *argv[]) {
     insert_dia(e, 1, 2, 8, 8, 8, 8);
 
     insert_dia(e, 1, 4, 9, 9, 9, 9);
-    
+
     insert_dia(e, 2, 7, 10, 10, 10, 10);
     insert_dia(e, 2, 10, 11, 11, 11, 11);
 
@@ -93,23 +93,23 @@ int main_projeto(int argc, const char *argv[]) {
 
     //insert_dia(e, 2, 10, 10, 22, 3, 2021);
 
-
+*/
 
     /** Imprimir lista */
-    print_listaEdificio(e);
+    //print_listaEdificio(e);
     printf("----------------------------------\n\n");
 
-    DIAS fim = {31,12,2020};
-    edit_evento(e,2,4,"Alojamento", fim,1);
-    print_listaEdificio(e);
+    //DIAS fim = {31,12,2020};
+    //edit_evento(e,2,4,"Alojamento", fim,1);
+    //print_listaEdificio(e);
 
     //DIAS *printdia = find_dia_dynarray_arraydias(e,2, 1, 1, 1);
     //printf("%d, %d, %d\n", printdia->dia, printdia->mes, printdia->ano);
 
     //gravar_edificios(e);
 
-    //read_edificios_txt(e);
-
+    read_edificios_txt(e);
+    print_listaEdificio(e);
 
 
 /*
@@ -566,15 +566,15 @@ void gravar_edificios(LISTAEDIFICIOS *g) {
     FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "w"));
 
     if (fp != NULL) {
-        fprintf(fp, "Numero de edificios:%d\n", g->num_edificios);
+        fprintf(fp, "Numero de edificios: %d\n", g->num_edificios);
         while (pp != NULL) {
             fprintf(fp, "%d,%s, %s, %f, %f, %f\n", pp->id_edificio, pp->nome, pp->morada, pp->preco_m2, pp->latitude,
                     pp->longitude);
             ESTUDIO *pc = pp->array_estudios.pestudios;
-            fprintf(fp,"Numero de estudios:%d / %d\n", pp->array_estudios.n_estudios, pp->array_estudios.size_estudios);
+            fprintf(fp,"Numero de estudios:%d\n", pp->array_estudios.n_estudios);
             for (int i = 0;
                  i < pp->array_estudios.n_estudios; i++) {
-                fprintf(fp, "%d, %d,%d, %s, %d, %f, %f\n", pc->id_estudio, pc->numero, pp->id_edificio,
+                fprintf(fp, "%d,%d,%d,%s,%d,%f,%f\n", pc->id_estudio, pc->numero, pp->id_edificio,
                         pc->configuracao, pc->area, pc->preco_diaria, pc->preco_mensal);
                 pc++;
             }
@@ -587,6 +587,7 @@ void gravar_edificios(LISTAEDIFICIOS *g) {
 
 void read_edificios_txt(LISTAEDIFICIOS *g) {
     FILE *fp = NULL;
+    ESTUDIO *pestudio = NULL;
     int num_edificios = 0;
 
 //TESTAMOS SE FP != NULL PARA VER SE ENTRAMOS NO FICHEIRO OU NAO
@@ -596,20 +597,29 @@ void read_edificios_txt(LISTAEDIFICIOS *g) {
 
         char morada[MAX200];
         char nome[MAX200];
-        int id;
+        int id, n_estudios = 0;
         float latitude, longitude, preco_m2;
 
         for (int i = 0; i < num_edificios; ++i) {
-            fscanf(fp, "%d, %s, %s, %f, %f, %f\n", &id, nome, morada, &preco_m2, &latitude, &longitude);
+            fscanf(fp, "%d,%s,%s,%f,%f,%f\n", &id, nome, morada, &preco_m2, &latitude, &longitude);
+            fscanf(fp, "%*s %*s %*s %d", &n_estudios);
+            insert_edificio(g, nome, latitude, longitude, morada, preco_m2, n_estudios);
 
-            insert_edificio(g, nome, latitude, longitude, morada, preco_m2, 5);
+            create_dynarray_array_estudios(n_estudios);
+
+            pestudio = g->pedificios->array_estudios.pestudios;
+            for (int j = 0; j < g->pedificios->array_estudios.n_estudios; i++) {
+                fscanf(fp, "%d,%d,%s,%d,%f,%f", &(pestudio->id_estudio), &(pestudio->numero),
+                      pestudio->configuracao, &(pestudio->area), &(pestudio->preco_diaria), &(pestudio->preco_mensal));
+                pestudio++;
+            }
         }
         fclose(fp);
     }
 }
 
 
-void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g) {
+/*void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g) {
     FILE *fp = NULL;
     ESTUDIO *pestudio = NULL;
 
@@ -642,6 +652,7 @@ void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g) {
     }
     fclose(fp);
 }
+ */
 
 AGENDAS_ARRAY *create_dynarray_array_agendas(int initsize) {
     AGENDAS *pagendas = (AGENDAS *) calloc(initsize, sizeof(AGENDAS));
