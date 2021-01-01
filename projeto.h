@@ -191,9 +191,9 @@ void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configura
 void edit_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento, char tipo[], DIAS datafim, int id_cliente);
 
 void gravar_edificios(LISTAEDIFICIOS *g);
+void escrever_agendas_txt(LISTAEDIFICIOS *g);
+LISTAEDIFICIOS* read_edificios_txt();
 
-void read_edificios_txt(LISTAEDIFICIOS *g);
-
-void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
+        void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
 
 #endif //PROJETOLPAED_PROJETO_H
