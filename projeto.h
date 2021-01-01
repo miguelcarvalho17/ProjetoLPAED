@@ -14,27 +14,27 @@ typedef struct regras {
     double taxa;
 } REGRAS;
 
-typedef struct regras_array{
+typedef struct regras_array {
     int n_regras;
     int size_regras;
     REGRAS *pregras;
-}REGRAS_ARRAY;
+} REGRAS_ARRAY;
 
 typedef struct politica {
     char nome[MAX200];
     REGRAS_ARRAY regras;
-}POLITICA;
+} POLITICA;
 
 typedef struct plataforma {
     char nome[MAX20];
     POLITICA politicas[MAX20];
-}PLATAFORMA;
+} PLATAFORMA;
 
-typedef struct plataformas_array{
+typedef struct plataformas_array {
     int n_plataformas;
     int size_plataformas;
     PLATAFORMA *pplataforma;
-}PLATAFORMAS_ARRAY;
+} PLATAFORMAS_ARRAY;
 
 typedef struct dias {
     int dia;
@@ -50,17 +50,17 @@ typedef struct dias_array {
     DIAS *pdias; //ARRAY DE DIAS
 } DIAS_ARRAY;
 
-typedef struct agendas{
+typedef struct agendas {
     int id_agenda;
     char plataforma[MAX20];
     DIAS_ARRAY array_dias;
-}AGENDAS;
+} AGENDAS;
 
-typedef struct agendas_array{
+typedef struct agendas_array {
     int n_agendas;
     int size_agendas;
     AGENDAS *pagenda;
-}AGENDAS_ARRAY;
+} AGENDAS_ARRAY;
 
 typedef struct estudio {
     int id_estudio;
@@ -98,7 +98,6 @@ typedef struct listaedificios {
 } LISTAEDIFICIOS;
 
 
-
 //LISTA LIGADA DE EVENTOS
 typedef struct evento {
     int id_evento;
@@ -124,10 +123,15 @@ typedef struct historicoEstadias {
 
 typedef struct hospede {
     int id_cliente;
-    char *nome_cliente;
+    char nome_cliente[MAX20];
     HISTORICOESTADIAS *pprimeiraEstadia;
     struct hospede *pnext;
 } HOSPEDE;
+
+typedef struct listahospedes {
+    int num_hospedes;
+    HOSPEDE *phospede;
+} LISTAHOSPEDES;
 
 
 int main_projeto(int argc, const char *argv[]);
@@ -137,8 +141,12 @@ LISTAEDIFICIOS *create_lista_edificio();
 
 LISTAEVENTOS *create_lista_eventos();
 
+LISTAHOSPEDES *create_lista_hospedes();
+
 /** Imprimir toda a informação dos edificios */
-void print_listaEdificio(const LISTAEDIFICIOS* g);
+void print_listaEdificio(const LISTAEDIFICIOS *g);
+
+void print_listaHospedes(const LISTAHOSPEDES *h);
 
 /** Funções de inserir */
 void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, double longitude,
@@ -146,16 +154,20 @@ void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, dou
 
 ESTUDIO_ARRAY *create_dynarray_array_estudios(int initsize);
 
-void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area, float preco_diario, float preco_mensal, int size_agendas);
+void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[], int area, float preco_diario,
+                    float preco_mensal, int size_agendas);
 
 AGENDAS_ARRAY *create_dynarray_array_agendas(int initsize);
 
 void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char plataforma[], int size_dias);
 
-void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio,int id_agenda, int dia, int mes, int ano);
+void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agenda, int dia, int mes, int ano);
 
-void insert_evento(LISTAEDIFICIOS* pg, const char* tipo, DIAS datafim,
+void insert_evento(LISTAEDIFICIOS *pg, const char *tipo, DIAS datafim,
                    int id_cliente, int id_agenda, int dia, int mes, int ano);
+
+void
+insert_hospede(LISTAEDIFICIOS *pg, LISTAHOSPEDES *pl, const char nome[], int id_agenda, int id_evento, int id_cliente);
 
 DIAS_ARRAY *create_dynarray_array_dias(int initsize);
 
@@ -167,7 +179,9 @@ void remove_edificio(LISTAEDIFICIOS *pg, char name[]);
 
 void remove_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio);
 
-void remove_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento);
+void remove_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento);
+
+void remove_hospede(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, int id_agenda, int id_evento, int id_cliente);
 
 
 /** Funções de find */
@@ -177,23 +191,31 @@ ESTUDIO *find_estudio_dynarray_arrayestudios(LISTAEDIFICIOS *pg, int id_estudio)
 
 AGENDAS *find_agenda_dynarray_arrayagendas(LISTAEDIFICIOS *pg, int id_agenda);
 
-DIAS *find_dia_dynarray_arraydias(LISTAEDIFICIOS *pg,int id_agenda, int dia, int mes, int ano);
+DIAS *find_dia_dynarray_arraydias(LISTAEDIFICIOS *pg, int id_agenda, int dia, int mes, int ano);
 
-EVENTO *find_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento);
+EVENTO *find_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento);
+
+HOSPEDE *find_hospede(LISTAHOSPEDES *pl, int id);
 
 /** Funções de editar */
 
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
                    char morada[MAX200], double preco_m2, int size_estudios);
 
-void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario, float preco_mensal);
+void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario,
+                  float preco_mensal);
 
-void edit_evento(LISTAEDIFICIOS *pg,int id_agenda, int id_evento, char tipo[], DIAS datafim, int id_cliente);
+void edit_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento, char tipo[], DIAS datafim,
+                 int id_cliente);
+
+void edit_hospede(LISTAHOSPEDES *pl, int id_cliente, char nome[]);
 
 void gravar_edificios(LISTAEDIFICIOS *g);
-void escrever_agendas_txt(LISTAEDIFICIOS *g);
-LISTAEDIFICIOS* read_edificios_txt();
 
-        void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
+void escrever_agendas_txt(LISTAEDIFICIOS *g);
+
+LISTAEDIFICIOS *read_edificios_txt();
+
+void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
 
 #endif //PROJETOLPAED_PROJETO_H
