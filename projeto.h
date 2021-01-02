@@ -8,6 +8,7 @@
 #define MAX20 20
 
 
+
 typedef struct regras {
     int id;
     char tipo[MAX200];
@@ -218,11 +219,13 @@ void edit_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento, char tipo[], 
 
 void edit_hospede(LISTAHOSPEDES *pl, int id_cliente, char nome[]);
 
-void gravar_edificios(LISTAEDIFICIOS *g);
+void escrever_edificios(LISTAEDIFICIOS* g);
+void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
 
 void escrever_agendas_txt(LISTAEDIFICIOS *g);
 
 LISTAEDIFICIOS *read_edificios_txt();
+void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
 
 void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
 

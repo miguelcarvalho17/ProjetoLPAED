@@ -11,7 +11,7 @@ int id_edificio = 1;
 int id_estudio = 1;
 int id_agenda = 1;
 int id_evento = 1;
-int id_estadia= 1;
+int id_estadia = 1;
 
 
 int main_projeto(int argc, const char *argv[]) {
@@ -67,8 +67,10 @@ int main_projeto(int argc, const char *argv[]) {
     insert_dia(e, 2, 7, 10, 10, 10, 10);
     insert_dia(e, 2, 10, 11, 11, 11, 11);
      */
-    DIAS datafim = {10,2,2021};
-    insert_evento(e,"Alojamento",datafim,1,1,1,1,2021);
+    DIAS datafim = {10, 2, 2021};
+    insert_evento(e, "Alojamento", datafim, 1, 1, 1, 1, 2021);
+    insert_evento(e, "Alojamento", datafim, 1, 1, 1, 1, 2021);
+    insert_evento(e, "Manutencao", datafim, -1, 2, 1, 1, 2021);
     //insert_evento(e,"Manutencao",datafim,5,1,1,1,1);
     //insert_evento(e,"Alojamento",datafim,2,1,2,2,2);
     //insert_evento(e,"Manutencao",datafim,-1,2,1,1,1);
@@ -82,15 +84,16 @@ int main_projeto(int argc, const char *argv[]) {
     //printf("%s\n", fevento->tipo);
     //insert_dia(e, 2, 10, 10, 22, 3, 2021);
 
-    insert_hospede(e, h,"Paulo",1,1,1);
+    insert_hospede(e, h, "Paulo", 1, 1, 1);
+    insert_hospede(e, h, "Daniel", 2, 3, -1);
     //insert_hospede(e,h,"Joao", 1,3,2);
     //insert_hospede(e,h,"Daniel", 11,6,3);
 
 
-    insert_historicoEstadias(e,h,he,"Paulo",1,1,1,1,2021,1,1);
-    //insert_historicoEstadias(e,h,he,"Joao",1,1,2,2,2,3,2);
+    insert_historicoEstadias(e, h, he, "Paulo", 1, 1, 1, 1, 2021, 1, 1);
+    insert_historicoEstadias(e, h, he, "Daniel", 1, 2, 1, 1, 2021, 3, -1);
     //edit_hospede(h,2,"Miguel");
-
+   // print_listaHistorico(he);
     //insert_hospede(e,h,"Ze",10,5,4);
 
     //print_listaHospedes(h);
@@ -103,7 +106,7 @@ int main_projeto(int argc, const char *argv[]) {
 
     printf("----------------------------------\n\n");
 
-    print_listaHistorico(he);
+    // print_listaHistorico(he);
 
 
     //DIAS fim = {31,12,2020};
@@ -116,16 +119,17 @@ int main_projeto(int argc, const char *argv[]) {
     //gravar_edificios(e);
 
     //read_edificios_txt(e);
+    char fname[] = "C:\\Users\\Utilizador\\CLionProjects\\ProjetoLPAED\\edificiosbin.txt";
+   escrever_edificios_bin(e, fname);
+
+    ler_edificios_bin(e, fname);
     //print_listaEdificio(e);
     //print_listaHospedes(h);
 
-
-/*
-    // Find estudio
-    ESTUDIO *printestudio = find_estudio_dynarray_arrayestudios(e, 5);
-    printf("%d, %d, %s, %d\n", printestudio->id_estudio, printestudio->numero, printestudio->configuracao,
-           printestudio->area);
-*/
+    /* // Find estudio
+     ESTUDIO *printestudio = find_estudio_dynarray_arrayestudios(e, 5);
+     printf("%d, %d, %s, %d\n", printestudio->id_estudio, printestudio->numero, printestudio->configuracao,
+            printestudio->area);*/
 
     /*  remove_estudio_dynarray_arrayestudios(e,2,11);
       print_listaEdificio(e);
@@ -320,6 +324,7 @@ void insert_estudio(LISTAEDIFICIOS *pg, int id, int numero, char configuracao[],
         pedificio->array_estudios.n_estudios++;
     }
 }
+
 void insert_agenda(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, char plataforma[], int size_dias) {
     EDIFICIO *pedificio = find_edificio(pg, id_edificio);
     ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
@@ -359,15 +364,16 @@ void insert_dia(LISTAEDIFICIOS *pg, int id_edificio, int id_estudio, int id_agen
 
 }
 
-void insert_hospede(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, const char nome[],int id_agenda, int id_evento, int id_cliente) {
+void
+insert_hospede(LISTAEDIFICIOS *pg, LISTAHOSPEDES *pl, const char nome[], int id_agenda, int id_evento, int id_cliente) {
     //TEMOS A LISTA EDIFICIOS A APONTAR PARA NULL
     //QUEREMOS COLOCAR A LISTA A APONTAR PARA OS EDIFICIOS
     //EDIFICIO CRIADO
-    EVENTO *pevento = find_evento(pg, id_agenda,id_evento);
+    EVENTO *pevento = find_evento(pg, id_agenda, id_evento);
 
-    if (pevento != NULL && pevento->id_cliente == id_cliente){
+    if (pevento != NULL && pevento->id_cliente == id_cliente) {
 
-        HOSPEDE *h = (HOSPEDE *) calloc(1,sizeof(HOSPEDE));
+        HOSPEDE *h = (HOSPEDE *) calloc(1, sizeof(HOSPEDE));
         h->id_cliente = pevento->id_cliente;
         //h->id_cliente = id_cliente;
         strcpy(h->nome_cliente, nome);
@@ -394,7 +400,8 @@ void insert_hospede(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, const char nome[],int 
     }
 }
 
-void insert_historicoEstadias(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, LISTAHISTORICOESTADIAS *he, const char nome[],int id_estudio,int id_agenda,int dia, int mes, int ano, int id_evento, int id_hospede) {
+void insert_historicoEstadias(LISTAEDIFICIOS *pg, LISTAHOSPEDES *pl, LISTAHISTORICOESTADIAS *he, const char nome[],
+                              int id_estudio, int id_agenda, int dia, int mes, int ano, int id_evento, int id_hospede) {
     //TEMOS A LISTA EDIFICIOS A APONTAR PARA NULL
     //QUEREMOS COLOCAR A LISTA A APONTAR PARA OS EDIFICIOS
     //EDIFICIO CRIADO
@@ -403,24 +410,26 @@ void insert_historicoEstadias(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, LISTAHISTORI
     HOSPEDE *phospede = find_hospede(pl, id_hospede);
     EVENTO *pevento = find_evento(pg, id_agenda, id_evento);
 
-    if (phospede != NULL && phospede->id_cliente == id_hospede){
+    if (phospede != NULL && phospede->id_cliente == id_hospede) {
 
-        HISTORICOESTADIAS *hestadias = (HISTORICOESTADIAS *) calloc(1,sizeof(HISTORICOESTADIAS));
+        HISTORICOESTADIAS *hestadias = (HISTORICOESTADIAS *) calloc(1, sizeof(HISTORICOESTADIAS));
         int dias;
         hestadias->id_estadia = id_estadia++;
         strcpy(hestadias->nome_cliente, phospede->nome_cliente);
         hestadias->dataEntrada.dia = pdia->dia;
-        hestadias->dataEntrada.mes =pdia->mes;
-        hestadias->dataEntrada.ano =pdia->ano;
+        hestadias->dataEntrada.mes = pdia->mes;
+        hestadias->dataEntrada.ano = pdia->ano;
 
-        hestadias->dataSaida.dia =  pevento->datafim.dia;
-        hestadias->dataSaida.mes =  pevento->datafim.mes;
-        hestadias->dataSaida.ano =  pevento->datafim.ano;
-        DIAS diferenca = diferenca_dias(pdia->dia, pdia->mes, pdia->ano, pevento->datafim.dia,pevento->datafim.mes,pevento->datafim.ano);
-        if (diferenca.mes >= 1 && diferenca.dia > 0){
-            hestadias->preco = (pestudio->preco_mensal * (float)diferenca.mes) + (pestudio->preco_diaria * (float)diferenca.dia);
-        }else if(diferenca.mes < 1){
-            hestadias->preco = pestudio->preco_diaria * (float)diferenca.dia;
+        hestadias->dataSaida.dia = pevento->datafim.dia;
+        hestadias->dataSaida.mes = pevento->datafim.mes;
+        hestadias->dataSaida.ano = pevento->datafim.ano;
+        DIAS diferenca = diferenca_dias(pdia->dia, pdia->mes, pdia->ano, pevento->datafim.dia, pevento->datafim.mes,
+                                        pevento->datafim.ano);
+        if (diferenca.mes >= 1 && diferenca.dia > 0) {
+            hestadias->preco =
+                    (pestudio->preco_mensal * (float) diferenca.mes) + (pestudio->preco_diaria * (float) diferenca.dia);
+        } else if (diferenca.mes < 1) {
+            hestadias->preco = pestudio->preco_diaria * (float) diferenca.dia;
         }
         hestadias->pnext_estadia = NULL;
 
@@ -459,6 +468,7 @@ void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], doubl
         pe->array_estudios.size_estudios = size_estudios;
     }
 }
+
 void edit_estudio(LISTAEDIFICIOS *pg, int id_estudio, int numero, char configuracao[], int area, float preco_diario,
                   float preco_mensal) {
     ESTUDIO *pe = find_estudio_dynarray_arrayestudios(pg, id_estudio);
@@ -627,9 +637,9 @@ EVENTO *find_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento) {
             AGENDAS *pst = pestudio->array_agendas.pagenda;
             for (int k = 0; k < pestudio->array_agendas.n_agendas; k++) {
                 if (pst->id_agenda == id_agenda) {
-                    DIAS* pdias = pst->array_dias.pdias;
+                    DIAS *pdias = pst->array_dias.pdias;
                     for (int j = 0; j < pst->array_dias.n_dias; j++) {
-                        EVENTO* pevento = pdias->listaeventos->peventos;
+                        EVENTO *pevento = pdias->listaeventos->peventos;
                         while (pevento != NULL) {
                             if (pevento->id_evento == id_evento) {
                                 return pevento;
@@ -723,7 +733,7 @@ void remove_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento) {
     pagenda->array_dias.pdias->listaeventos->num_eventos--;
 }
 
-void remove_hospede(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, int id_agenda, int id_evento, int id_cliente) {
+void remove_hospede(LISTAEDIFICIOS *pg, LISTAHOSPEDES *pl, int id_agenda, int id_evento, int id_cliente) {
     HOSPEDE *phospede = find_hospede(pl, id_cliente);
     //NAO REMOVEMOS NADA SE A LISTA ESTIVER VAZIA
     if (pl->phospede == NULL) {
@@ -752,11 +762,59 @@ void remove_hospede(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, int id_agenda, int id_
     pl->num_hospedes--;
 }
 
+void write_string(FILE *fp, const char *str) {
+    unsigned int str_len = strlen(str) + 1;
+    fwrite(&str_len, sizeof(unsigned int), 1, fp);
+    fwrite(str, sizeof(char), str_len, fp);
+}
 
 
-void gravar_edificios(LISTAEDIFICIOS* g) {
-    EDIFICIO* pp = g->pedificios;
-    FILE* fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "w"));
+void read_string(FILE *fp, const char *str) {
+    unsigned int str_size = 0;
+    fread(&str_size, sizeof(unsigned int), 1, fp);
+    fread(str, sizeof(char), str_size, fp);
+}
+
+void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
+    FILE* fp = NULL;
+
+    if ((fp = fopen(fname, "wb")) == NULL) {
+        printf("Erro %s\n", fname);
+        return;
+    }
+
+    fwrite(&le->num_edificios, sizeof(le->num_edificios), 1, fp);   //GUARDAR O NR edificios
+    EDIFICIO* pe = le->pedificios;
+
+    for (int i = 0; i < le->num_edificios; ++i) {
+        fwrite((&pe->id_edificio), sizeof(int), 1, fp);
+        write_string(fp, pe->nome);
+        fwrite((&pe->latitude), sizeof(double), 1, fp);
+        fwrite((&pe->longitude), sizeof(double), 1, fp);
+        write_string(fp, pe->morada);
+        fwrite((&pe->preco_m2), sizeof(double), 1, fp);
+
+
+        ESTUDIO* pest = pe->array_estudios.pestudios;
+        fwrite(&pe->array_estudios.n_estudios, sizeof(pe->array_estudios.n_estudios), 1, fp);
+        for (int j = 0; j < pe->array_estudios.n_estudios; j++) {
+            fwrite((&pest->id_estudio), sizeof(int), 1, fp);
+            fwrite((&pest->numero), sizeof(int), 1, fp);
+            write_string(fp, pest->configuracao);
+            fwrite((&pest->area), sizeof(int), 1, fp);
+            fwrite((&pest->preco_diaria), sizeof(float), 1, fp);
+            fwrite((&pest->preco_mensal), sizeof(float), 1, fp);
+            fwrite((&pest->array_agendas.n_agendas), sizeof(int), 1, fp);
+
+            pest++;
+        }
+        pe = pe->next;
+    }
+    fclose(fp);
+}
+void escrever_edificios(LISTAEDIFICIOS *g) {
+    EDIFICIO *pp = g->pedificios;
+    FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "w"));
 
     if (fp != NULL) {
         fprintf(fp, "Numero de edificios:%d\n", g->num_edificios);
@@ -764,7 +822,7 @@ void gravar_edificios(LISTAEDIFICIOS* g) {
             fprintf(fp, "%d,%s,%s,%f,%f,%f\n", pp->id_edificio, pp->nome, pp->morada, pp->preco_m2,
                     pp->latitude,
                     pp->longitude);
-            ESTUDIO* pc = pp->array_estudios.pestudios;
+            ESTUDIO *pc = pp->array_estudios.pestudios;
             fprintf(fp, "Numero de estudios:%d\n", pp->array_estudios.n_estudios);
             for (int i = 0;
                  i < pp->array_estudios.n_estudios; i++) {
@@ -775,8 +833,7 @@ void gravar_edificios(LISTAEDIFICIOS* g) {
             pp = pp->next;
         }
         fclose(fp);
-    }
-    else {
+    } else {
         printf("Erro na abertura do ficheiro\n");
     }
 }
@@ -796,7 +853,7 @@ void escrever_agendas_txt(LISTAEDIFICIOS *g) {
             for (int i = 0; i < pp->array_estudios.n_estudios; i++) {
 
                 AGENDAS *aa = pe->array_agendas.pagenda;
-                fprintf(fp,"%d agendas\n", pe->array_agendas.n_agendas);
+                fprintf(fp, "%d agendas\n", pe->array_agendas.n_agendas);
                 for (int j = 0; j < pe->array_agendas.n_agendas; j++) {
                     fprintf(fp, "%d, %s\n", aa->id_agenda, aa->plataforma);
                     DIAS *pd = aa->array_dias.pdias;
@@ -856,10 +913,10 @@ void read_agendas_txt() {
 }
  */
 
-LISTAEDIFICIOS* read_edificios_txt() {
-    LISTAEDIFICIOS* g = create_lista_edificio();
+LISTAEDIFICIOS *read_edificios_txt() {
+    LISTAEDIFICIOS *g = create_lista_edificio();
 
-    FILE* fp;
+    FILE *fp;
 
     if ((fp = fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "r")) == NULL) {
         printf("File not opened!\n");
@@ -884,7 +941,7 @@ LISTAEDIFICIOS* read_edificios_txt() {
 
         insert_edificio(g, nome, latitude, longitude, morada, preco_m2, n_estudios);
 
-        EDIFICIO* fe = g->pedificios;
+        EDIFICIO *fe = g->pedificios;
         while (fe->next != NULL) fe = fe->next;
 
         for (int j = 0; j < n_estudios; j++) {
@@ -892,7 +949,8 @@ LISTAEDIFICIOS* read_edificios_txt() {
             float preco_diaria, preco_mensal;
             char configuracao[30];
 
-            fscanf(fp, "%*d,%d,%*d,%[^,],%d,%f,%f,%d\n", &numero, configuracao, &area, &preco_diaria, &preco_mensal, &size_agendas);
+            fscanf(fp, "%*d,%d,%*d,%[^,],%d,%f,%f,%d\n", &numero, configuracao, &area, &preco_diaria, &preco_mensal,
+                   &size_agendas);
             insert_estudio(g, fe->id_edificio, numero, configuracao, area, preco_diaria, preco_mensal, size_agendas);
         }
     }
@@ -904,7 +962,62 @@ LISTAEDIFICIOS* read_edificios_txt() {
     return g;
 }
 
-void print_listaHospedes(const LISTAHOSPEDES* h) {
+
+void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
+    le = create_lista_edificio();
+
+    FILE* fp = NULL;
+    if ((fp = fopen(fname, "rb")) == NULL) {
+        printf("Erro %s\n", fname);
+        return;
+    }
+    id_edificio = 1;
+    id_estudio = 1;
+    id_agenda = 1;
+    id_evento = 1;
+
+    int num_edificios = 0;
+    fread(&num_edificios, sizeof(int), 1, fp);
+
+    for (int i = 0; i < num_edificios; i++) {
+        char morada[MAX200], nome[MAX200];
+        int n_estudios = 0;
+        double latitude, longitude, preco_m2;
+
+        fseek(fp, sizeof(int), SEEK_CUR);
+        read_string(fp, nome);
+        fread(&latitude, sizeof(double), 1, fp);
+        fread(&longitude, sizeof(double), 1, fp);
+        read_string(fp, morada);
+        fread(&preco_m2, sizeof(double), 1, fp);
+        fread(&n_estudios, sizeof(int), 1, fp);
+
+        insert_edificio(le, nome, latitude, longitude, morada, preco_m2, n_estudios);
+        EDIFICIO* fe = le->pedificios;
+        while (fe->next != NULL) fe = fe->next;
+
+        for (int j = 0; j < n_estudios; j++) {
+            int numero, area, n_agendas;
+            float preco_diaria, preco_mensal;
+            char configuracao[30];
+
+            fseek(fp, sizeof(int), SEEK_CUR);
+            fread(&numero, sizeof(int), 1, fp);
+            read_string(fp, configuracao);
+            fread(&area, sizeof(int), 1, fp);
+            fread(&preco_diaria, sizeof(float), 1, fp);
+            fread(&preco_mensal, sizeof(float), 1, fp);
+            fread(&n_agendas, sizeof(int), 1, fp);
+
+            insert_estudio(le, fe->id_edificio, numero, configuracao, area, preco_diaria, preco_mensal, n_agendas);
+        }
+    }
+
+    fclose(fp);
+    print_listaEdificio(le);
+
+}
+void print_listaHospedes(const LISTAHOSPEDES *h) {
     HOSPEDE *ph = h->phospede;
     printf("%d\n", h->num_hospedes);
     while (ph != NULL) {
@@ -955,52 +1068,40 @@ void print_listaHistorico(const LISTAHISTORICOESTADIAS *he) {
     HISTORICOESTADIAS *ph = he->pHestadias;
     printf("%d\n", he->num_estadias);
     while (ph != NULL) {
-        printf("Hospede: %s, %d,Data de entrada-> %d-%d-%d, Data de saida-> %d-%d-%d, Preco: %.2f euros\n", ph->nome_cliente,ph->id_estadia,ph->dataEntrada.dia, ph->dataEntrada.mes, ph->dataEntrada.ano,ph->dataSaida.dia, ph->dataSaida.mes, ph->dataSaida.ano, ph->preco);
+        printf("Hospede: %s, %d,Data de entrada-> %d-%d-%d, Data de saida-> %d-%d-%d, Preco: %.2f euros\n",
+               ph->nome_cliente, ph->id_estadia, ph->dataEntrada.dia, ph->dataEntrada.mes, ph->dataEntrada.ano,
+               ph->dataSaida.dia, ph->dataSaida.mes, ph->dataSaida.ano, ph->preco);
         ph = ph->pnext_estadia;
     }
 }
 
-DIAS diferenca_dias(int d1, int m1, int ano1, int d2, int m2, int ano2){
-    DIAS aux = {0,0,0};
+DIAS diferenca_dias(int d1, int m1, int ano1, int d2, int m2, int ano2) {
+    DIAS aux = {0, 0, 0};
     int day_diff, mon_diff, year_diff;
-    if(d2 < d1)
-    {
+    if (d2 < d1) {
         // borrow days from february
-        if (m2 == 3)
-        {
+        if (m2 == 3) {
             //  check whether year is a leap year
-            if ((ano2 % 4 == 0 && ano2 % 100 != 0) || (ano2 % 400 == 0))
-            {
+            if ((ano2 % 4 == 0 && ano2 % 100 != 0) || (ano2 % 400 == 0)) {
                 d2 += 29;
-            }
-
-            else
-            {
+            } else {
                 d2 += 28;
             }
         }
-
             // borrow days from April or June or September or November
-        else if (m2 == 5 || m2 == 7 || m2 == 10 || m2 == 12)
-        {
+        else if (m2 == 5 || m2 == 7 || m2 == 10 || m2 == 12) {
             d2 += 30;
         }
-
             // borrow days from Jan or Mar or May or July or Aug or Oct or Dec
-        else
-        {
+        else {
             d2 += 31;
         }
-
         m2 = m2 - 1;
     }
-
-    if (m2 < m1)
-    {
+    if (m2 < m1) {
         m2 += 12;
         ano2 -= 1;
     }
-
     day_diff = d2 - d1;
     mon_diff = m2 - m1;
     year_diff = ano2 - ano1;
