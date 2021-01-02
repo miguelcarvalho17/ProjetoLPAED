@@ -54,10 +54,10 @@ int main_projeto(int argc, const char *argv[]) {
     insert_agenda(e, 2, 12, "AIRBNB", 7);
     insert_agenda(e, 2, 12, "AIRBNC", 7);
     insert_agenda(e, 2, 12, "AIRBNE", 7);
-    insert_dia(e, 1, 1, 1, 1, 1, 1);
-    insert_dia(e, 1, 1, 1, 2, 2, 2);
-    insert_dia(e, 1, 1, 2, 1, 1, 1);
-    insert_dia(e, 1, 1, 3, 3, 3, 3);
+    insert_dia(e, 1, 1, 1, 1, 1, 2021);
+    insert_dia(e, 1, 1, 1, 2, 1, 2021);
+    insert_dia(e, 1, 1, 2, 1, 1, 2021);
+    /*insert_dia(e, 1, 1, 3, 3, 3, 3);
     insert_dia(e, 1, 1, 4, 4, 4, 4);
     insert_dia(e, 1, 2, 5, 5, 5, 5);
     insert_dia(e, 1, 2, 6, 6, 6, 6);
@@ -66,14 +66,16 @@ int main_projeto(int argc, const char *argv[]) {
     insert_dia(e, 1, 4, 9, 9, 9, 9);
     insert_dia(e, 2, 7, 10, 10, 10, 10);
     insert_dia(e, 2, 10, 11, 11, 11, 11);
-    DIAS datafim = {29,12,2020};
-    insert_evento(e,"Alojamento",datafim,1,1,1,1,1);
-    insert_evento(e,"Manutencao",datafim,5,1,1,1,1);
-    insert_evento(e,"Alojamento",datafim,2,1,2,2,2);
-    insert_evento(e,"Manutencao",datafim,-1,2,1,1,1);
+     */
+    DIAS datafim = {10,2,2021};
+    insert_evento(e,"Alojamento",datafim,1,1,1,1,2021);
+    //insert_evento(e,"Manutencao",datafim,5,1,1,1,1);
+    //insert_evento(e,"Alojamento",datafim,2,1,2,2,2);
+    //insert_evento(e,"Manutencao",datafim,-1,2,1,1,1);
 
-    insert_evento(e,"Alojamento",datafim,4,10,10,10,10);
-    insert_evento(e,"Alojamento",datafim,3,11,11,11,11);
+    //insert_evento(e,"Alojamento",datafim,4,10,10,10,10);
+    //insert_evento(e,"Alojamento",datafim,3,11,11,11,11);
+    //insert_evento(e,"Alojamento",datafim,3,3,3,3,3);
     //print_listaEdificio(e);
 
     //EVENTO *fevento = find_evento(e,1,3);
@@ -81,21 +83,28 @@ int main_projeto(int argc, const char *argv[]) {
     //insert_dia(e, 2, 10, 10, 22, 3, 2021);
 
     insert_hospede(e, h,"Paulo",1,1,1);
-    insert_hospede(e,h,"Joao", 1,3,2);
-    insert_hospede(e,h,"Daniel", 11,6,3);
+    //insert_hospede(e,h,"Joao", 1,3,2);
+    //insert_hospede(e,h,"Daniel", 11,6,3);
 
-    edit_hospede(h,2,"Miguel");
 
-    insert_hospede(e,h,"Ze",10,5,4);
+    insert_historicoEstadias(e,h,he,"Paulo",1,1,1,1,2021,1,1);
+    //insert_historicoEstadias(e,h,he,"Joao",1,1,2,2,2,3,2);
+    //edit_hospede(h,2,"Miguel");
 
-    print_listaHospedes(h);
+    //insert_hospede(e,h,"Ze",10,5,4);
 
-    remove_hospede(e,h,1,3,2);
+    //print_listaHospedes(h);
+
+    //remove_hospede(e,h,1,3,2);
     //insert_hospede(e,h,"Diogo",1,2,5);
 
     /** Imprimir lista */
     //print_listaEdificio(e);
+
     printf("----------------------------------\n\n");
+
+    print_listaHistorico(he);
+
 
     //DIAS fim = {31,12,2020};
     //edit_evento(e,2,4,"Alojamento", fim,1);
@@ -135,7 +144,7 @@ int main_projeto(int argc, const char *argv[]) {
     // Editar edificio
     //edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
 
-    gravar_edificios(e);
+    //gravar_edificios(e);
     // Editar estudio
     //edit_estudio(e,8,31,"T3",150,50, 950);
 
@@ -385,41 +394,53 @@ void insert_hospede(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, const char nome[],int 
     }
 }
 
-void insert_historicoEstadias(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, LISTAHISTORICOESTADIAS *he, const char nome[],int id_agenda, int id_evento, int id_hospede) {
+void insert_historicoEstadias(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, LISTAHISTORICOESTADIAS *he, const char nome[],int id_estudio,int id_agenda,int dia, int mes, int ano, int id_evento, int id_hospede) {
     //TEMOS A LISTA EDIFICIOS A APONTAR PARA NULL
     //QUEREMOS COLOCAR A LISTA A APONTAR PARA OS EDIFICIOS
     //EDIFICIO CRIADO
+    ESTUDIO *pestudio = find_estudio_dynarray_arrayestudios(pg, id_estudio);
+    DIAS *pdia = find_dia_dynarray_arraydias(pg, id_agenda, dia, mes, ano);
     HOSPEDE *phospede = find_hospede(pl, id_hospede);
     EVENTO *pevento = find_evento(pg, id_agenda, id_evento);
 
     if (phospede != NULL && phospede->id_cliente == id_hospede){
 
-        HISTORICOESTADIAS *he = (HISTORICOESTADIAS *) calloc(1,sizeof(HISTORICOESTADIAS));
-        he->id_estadia = id_estadia++;
-        strcpy(he->nome_cliente, phospede->nome_cliente);
-        //he->preco = preco;
-        he->dataSaida.dia =  pevento->datafim.dia;
-        he->dataSaida.mes =  pevento->datafim.mes;
-        he->dataSaida.ano =  pevento->datafim.ano;
-        he->pnext_estadia = NULL;
+        HISTORICOESTADIAS *hestadias = (HISTORICOESTADIAS *) calloc(1,sizeof(HISTORICOESTADIAS));
+        int dias;
+        hestadias->id_estadia = id_estadia++;
+        strcpy(hestadias->nome_cliente, phospede->nome_cliente);
+        hestadias->dataEntrada.dia = pdia->dia;
+        hestadias->dataEntrada.mes =pdia->mes;
+        hestadias->dataEntrada.ano =pdia->ano;
 
-        HOSPEDE *pant = NULL, *pcurrent = he.
-        while (pcurrent != NULL && id_cliente > pcurrent->id_cliente) {
+        hestadias->dataSaida.dia =  pevento->datafim.dia;
+        hestadias->dataSaida.mes =  pevento->datafim.mes;
+        hestadias->dataSaida.ano =  pevento->datafim.ano;
+        DIAS diferenca = diferenca_dias(pdia->dia, pdia->mes, pdia->ano, pevento->datafim.dia,pevento->datafim.mes,pevento->datafim.ano);
+        if (diferenca.mes >= 1 && diferenca.dia > 0){
+            hestadias->preco = (pestudio->preco_mensal * (float)diferenca.mes) + (pestudio->preco_diaria * (float)diferenca.dia);
+        }else if(diferenca.mes < 1){
+            hestadias->preco = pestudio->preco_diaria * (float)diferenca.dia;
+        }
+        hestadias->pnext_estadia = NULL;
+
+        HISTORICOESTADIAS *pant = NULL, *pcurrent = he->pHestadias;
+        while (pcurrent != NULL && id_estadia > pcurrent->id_estadia) {
             pant = pcurrent;
-            pcurrent = pcurrent->pnext;
+            pcurrent = pcurrent->pnext_estadia;
         }
         //INSERÇAO A CABEÇA
-        if (pcurrent == pl->phospede) {
-            h->pnext = pl->phospede;
-            pl->phospede = h;
-            pl->num_hospedes++;
+        if (pcurrent == he->pHestadias) {
+            hestadias->pnext_estadia = he->pHestadias;
+            he->pHestadias = hestadias;
+            he->num_estadias++;
 
             return;
         }
         //INSERÇÃO A MEIO OU NO FIM
-        h->pnext = pcurrent;
-        pant->pnext = h;
-        pl->num_hospedes++;
+        hestadias->pnext_estadia = pcurrent;
+        pant->pnext_estadia = hestadias;
+        he->num_estadias++;
     }
 
 }
@@ -928,4 +949,65 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
         }
         pp = pp->next;
     }
+}
+
+void print_listaHistorico(const LISTAHISTORICOESTADIAS *he) {
+    HISTORICOESTADIAS *ph = he->pHestadias;
+    printf("%d\n", he->num_estadias);
+    while (ph != NULL) {
+        printf("Hospede: %s, %d,Data de entrada-> %d-%d-%d, Data de saida-> %d-%d-%d, Preco: %.2f euros\n", ph->nome_cliente,ph->id_estadia,ph->dataEntrada.dia, ph->dataEntrada.mes, ph->dataEntrada.ano,ph->dataSaida.dia, ph->dataSaida.mes, ph->dataSaida.ano, ph->preco);
+        ph = ph->pnext_estadia;
+    }
+}
+
+DIAS diferenca_dias(int d1, int m1, int ano1, int d2, int m2, int ano2){
+    DIAS aux = {0,0,0};
+    int day_diff, mon_diff, year_diff;
+    if(d2 < d1)
+    {
+        // borrow days from february
+        if (m2 == 3)
+        {
+            //  check whether year is a leap year
+            if ((ano2 % 4 == 0 && ano2 % 100 != 0) || (ano2 % 400 == 0))
+            {
+                d2 += 29;
+            }
+
+            else
+            {
+                d2 += 28;
+            }
+        }
+
+            // borrow days from April or June or September or November
+        else if (m2 == 5 || m2 == 7 || m2 == 10 || m2 == 12)
+        {
+            d2 += 30;
+        }
+
+            // borrow days from Jan or Mar or May or July or Aug or Oct or Dec
+        else
+        {
+            d2 += 31;
+        }
+
+        m2 = m2 - 1;
+    }
+
+    if (m2 < m1)
+    {
+        m2 += 12;
+        ano2 -= 1;
+    }
+
+    day_diff = d2 - d1;
+    mon_diff = m2 - m1;
+    year_diff = ano2 - ano1;
+
+    aux.dia = day_diff;
+    aux.mes = mon_diff;
+    aux.ano = year_diff;
+
+    return aux;
 }

@@ -115,7 +115,7 @@ typedef struct listaeventos {
 typedef struct historicoEstadias {
     int id_estadia;
     char nome_cliente[MAX200];
-    int preco;
+    float preco;
     DIAS dataEntrada;
     DIAS dataSaida;
     struct historicoEstadias *pnext_estadia;
@@ -153,6 +153,8 @@ void print_listaEdificio(const LISTAEDIFICIOS *g);
 
 void print_listaHospedes(const LISTAHOSPEDES *h);
 
+void print_listaHistorico(const LISTAHISTORICOESTADIAS * he);
+
 /** Funções de inserir */
 void insert_edificio(LISTAEDIFICIOS *pg, char nome[MAX200], double latitude, double longitude,
                      char morada[MAX200], double preco_m2, int size_estudios);
@@ -172,6 +174,8 @@ void insert_evento(LISTAEDIFICIOS *pg, const char *tipo, DIAS datafim,
                    int id_cliente, int id_agenda, int dia, int mes, int ano);
 
 void insert_hospede(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, const char nome[],int id_agenda, int id_evento, int id_cliente);
+
+void insert_historicoEstadias(LISTAEDIFICIOS *pg,LISTAHOSPEDES *pl, LISTAHISTORICOESTADIAS *he, const char nome[],int id_estudio,int id_agenda,int dia, int mes, int ano, int id_evento, int id_hospede);
 
 DIAS_ARRAY *create_dynarray_array_dias(int initsize);
 
@@ -223,5 +227,8 @@ LISTAEDIFICIOS *read_edificios_txt();
 void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
 
 LISTAHISTORICOESTADIAS *create_lista_historico_estadias();
+
+
+DIAS diferenca_dias(int d1, int m1, int ano1, int d2, int m2, int ano2);
 
 #endif //PROJETOLPAED_PROJETO_H
