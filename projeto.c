@@ -29,7 +29,11 @@ int main_projeto(int argc, const char *argv[]) {
     char politica[] = "p1";
 
     insert_plataforma(pa, "Master", politica);
-    
+    insert_plataforma(pa, "Airbnb", politica);
+
+
+    PLATAFORMA *p = find_plataforma_dynarray_arrayplataformas(pa, "Master");
+    printf("%s", p->nome);
 
     /** Criação dos edificios e seus estudios */
 
@@ -1139,11 +1143,28 @@ PLATAFORMAS_ARRAY *create_dyn_array_plataformas(int initsize) {
 
 void insert_plataforma(PLATAFORMAS_ARRAY *pa, char nome[], char politica[]) {
     PLATAFORMA *p = pa->pplataforma;
-    p->nome = (char *) malloc(strlen(nome)+1);
-    strcpy(p->nome, nome);
-    strcpy((char *) p->politicas, politica);
-
-    pa->n_plataformas++;
+    int i;
+    for (i = 0; i < pa->size_plataformas; ++i) {
+        if (p->nome == NULL){
+            p->nome = (char *) malloc(strlen(nome)+1);
+            strcpy(p->nome, nome);
+            strcpy((char *) p->politicas, politica);
+            return;
+        }
+            p++;
+    }
+    if (i == pa->n_plataformas) {
+        int oldsize = pa->n_plataformas;
+        int newsize = pa->n_plataformas + 2;
+        pa->pplataforma = (PLATAFORMA *) realloc(pa->pplataforma, newsize * sizeof(PLATAFORMA));
+        for (i = oldsize; i < newsize; ++i) {
+            p->nome = NULL;
+            strcpy((char *) p->politicas,"");
+        }
+        p = pa->pplataforma + oldsize;
+        strcpy(p->nome, nome);
+        strcpy((char *) p->politicas, politica);
+    }
 }
 
 REGRAS_ARRAY *create_dyn_array_regras(int initsize) {
@@ -1217,24 +1238,14 @@ REGRAS *find_regra_dynarray_arrayregras(REGRAS_ARRAY *pra, int id_regra) { // BI
 PLATAFORMA *find_plataforma_dynarray_arrayplataformas(PLATAFORMAS_ARRAY *pa, char nome[]) { // BINARY SEARCH
     PLATAFORMA *pp = pa->pplataforma;
 
-    for (int i = 0; i < pa->n_plataformas; ++i) {
-        int l = 0;
-        int r = pa->n_plataformas - 1;
-
-        while (l <= r) {
-            int m = l + (r - l) / 2;
-            if (strcmp(pp[i].nome , nome) == 0) {
-                return pp;
-            }
-            if (strcmp(pp[i].nome , nome) < 0) {
-                l = m + 1;
-            } else {
-                r = m - 1;
-            }
-        }
+    if (pp == NULL){
+        printf("*find_plataforma_dynarray_arrayplataformas(): nao tem plataformas para procurar");
+        return pp;
+    }
+    for (int i = 0; i < pa->n_plataformas && pp->nome != NULL && strcmp(pp->nome, nome) != 0; ++i) {
         pp++;
     }
-    return NULL;
+    return (pp->nome != NULL && strcmp(pp->nome, nome) == 0? pp : NULL);
 }
 
 
