@@ -22,6 +22,15 @@ int main_projeto(int argc, const char *argv[]) {
 
     LISTAHISTORICOESTADIAS *he = create_lista_historico_estadias();
 
+    PLATAFORMAS_ARRAY *pa = create_dyn_array_plataformas(4);
+
+    REGRAS_ARRAY *ra = create_dyn_array_regras(10);
+
+    char politica[] = "p1";
+
+    insert_plataforma(pa, "Master", politica);
+    
+
     /** Criação dos edificios e seus estudios */
 
     insert_edificio(e, "PF Maia", 41.162392, -8.655714, "Avenida da Maia", 1.5, 5);
@@ -93,7 +102,7 @@ int main_projeto(int argc, const char *argv[]) {
     insert_historicoEstadias(e, h, he, "Paulo", 1, 1, 1, 1, 2021, 1, 1);
     insert_historicoEstadias(e, h, he, "Daniel", 1, 2, 1, 1, 2021, 3, -1);
     //edit_hospede(h,2,"Miguel");
-   // print_listaHistorico(he);
+    // print_listaHistorico(he);
     //insert_hospede(e,h,"Ze",10,5,4);
 
     //print_listaHospedes(h);
@@ -116,13 +125,16 @@ int main_projeto(int argc, const char *argv[]) {
     //DIAS *printdia = find_dia_dynarray_arraydias(e,2, 1, 1, 1);
     //printf("%d, %d, %d\n", printdia->dia, printdia->mes, printdia->ano);
     //escrever_agendas_txt(e);
-    //gravar_edificios(e);
+    //escrever_edificios(e);
 
     //read_edificios_txt(e);
-    char fname[] = "C:\\Users\\Utilizador\\CLionProjects\\ProjetoLPAED\\edificiosbin.txt";
-   escrever_edificios_bin(e, fname);
+    char fname[] = "C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificiosbin.txt";
+    //escrever_edificios_bin(e, fname);
 
-    ler_edificios_bin(e, fname);
+    //ler_edificios_bin(e, fname);
+
+    //insert_regra(ra,1,"p1", 0.3);
+
     //print_listaEdificio(e);
     //print_listaHospedes(h);
 
@@ -258,7 +270,7 @@ void insert_evento(LISTAEDIFICIOS *pg, const char *tipo, DIAS datafim,
     AGENDAS *pagenda = find_agenda_dynarray_arrayagendas(pg, id_agenda);
     DIAS *pdias = find_dia_dynarray_arraydias(pg, id_agenda, dia, mes, ano);
 
-    if (pagenda != NULL && pdias != NULL) { // Check whether pagenda and pdias were actually found or not
+    if (pagenda != NULL && pdias != NULL) {
         EVENTO *s = (EVENTO *) malloc(sizeof(EVENTO));
         s->id_evento = id_evento++;
         strcpy(s->tipo, tipo);
@@ -270,9 +282,9 @@ void insert_evento(LISTAEDIFICIOS *pg, const char *tipo, DIAS datafim,
         s->nextEvento = NULL;
 
         if (pdias->listaeventos == NULL) {
-            pdias->listaeventos = create_lista_eventos(); // Create event list if missing
+            pdias->listaeventos = create_lista_eventos();
         }
-        LISTAEVENTOS *plista = pdias->listaeventos; // Pick pointer to event list
+        LISTAEVENTOS *plista = pdias->listaeventos;
 
         EVENTO *pant = NULL, *pcurrent = plista->peventos;
         while (pcurrent != NULL && id_evento > pcurrent->id_evento) {
@@ -775,8 +787,8 @@ void read_string(FILE *fp, const char *str) {
     fread(str, sizeof(char), str_size, fp);
 }
 
-void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
-    FILE* fp = NULL;
+void escrever_edificios_bin(LISTAEDIFICIOS *le, const char *fname) {
+    FILE *fp = NULL;
 
     if ((fp = fopen(fname, "wb")) == NULL) {
         printf("Erro %s\n", fname);
@@ -784,7 +796,7 @@ void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
     }
 
     fwrite(&le->num_edificios, sizeof(le->num_edificios), 1, fp);   //GUARDAR O NR edificios
-    EDIFICIO* pe = le->pedificios;
+    EDIFICIO *pe = le->pedificios;
 
     for (int i = 0; i < le->num_edificios; ++i) {
         fwrite((&pe->id_edificio), sizeof(int), 1, fp);
@@ -795,7 +807,7 @@ void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
         fwrite((&pe->preco_m2), sizeof(double), 1, fp);
 
 
-        ESTUDIO* pest = pe->array_estudios.pestudios;
+        ESTUDIO *pest = pe->array_estudios.pestudios;
         fwrite(&pe->array_estudios.n_estudios, sizeof(pe->array_estudios.n_estudios), 1, fp);
         for (int j = 0; j < pe->array_estudios.n_estudios; j++) {
             fwrite((&pest->id_estudio), sizeof(int), 1, fp);
@@ -812,6 +824,7 @@ void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
     }
     fclose(fp);
 }
+
 void escrever_edificios(LISTAEDIFICIOS *g) {
     EDIFICIO *pp = g->pedificios;
     FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "w"));
@@ -963,10 +976,10 @@ LISTAEDIFICIOS *read_edificios_txt() {
 }
 
 
-void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
+void ler_edificios_bin(LISTAEDIFICIOS *le, const char *fname) {
     le = create_lista_edificio();
 
-    FILE* fp = NULL;
+    FILE *fp = NULL;
     if ((fp = fopen(fname, "rb")) == NULL) {
         printf("Erro %s\n", fname);
         return;
@@ -993,7 +1006,7 @@ void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
         fread(&n_estudios, sizeof(int), 1, fp);
 
         insert_edificio(le, nome, latitude, longitude, morada, preco_m2, n_estudios);
-        EDIFICIO* fe = le->pedificios;
+        EDIFICIO *fe = le->pedificios;
         while (fe->next != NULL) fe = fe->next;
 
         for (int j = 0; j < n_estudios; j++) {
@@ -1017,6 +1030,7 @@ void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname) {
     print_listaEdificio(le);
 
 }
+
 void print_listaHospedes(const LISTAHOSPEDES *h) {
     HOSPEDE *ph = h->phospede;
     printf("%d\n", h->num_hospedes);
@@ -1112,3 +1126,116 @@ DIAS diferenca_dias(int d1, int m1, int ano1, int d2, int m2, int ano2) {
 
     return aux;
 }
+
+PLATAFORMAS_ARRAY *create_dyn_array_plataformas(int initsize) {
+    PLATAFORMA *pp = (PLATAFORMA *) calloc(initsize, sizeof(PLATAFORMA));
+    PLATAFORMAS_ARRAY *pa = (PLATAFORMAS_ARRAY *) calloc(1, sizeof(PLATAFORMAS_ARRAY));
+    pa->pplataforma = pp;
+    pa->n_plataformas = 0;
+    pa->size_plataformas = initsize;
+
+    return pa;
+}
+
+void insert_plataforma(PLATAFORMAS_ARRAY *pa, char nome[], char politica[]) {
+    PLATAFORMA *p = pa->pplataforma;
+    p->nome = (char *) malloc(strlen(nome)+1);
+    strcpy(p->nome, nome);
+    strcpy((char *) p->politicas, politica);
+
+    pa->n_plataformas++;
+}
+
+REGRAS_ARRAY *create_dyn_array_regras(int initsize) {
+    REGRAS *pr = (REGRAS *) calloc(initsize, sizeof(REGRAS));
+    REGRAS_ARRAY *pra = (REGRAS_ARRAY *) calloc(1, sizeof(REGRAS_ARRAY));
+    pra->pregras = pr;
+    pra->n_regras = 0;
+    pra->size_regras = initsize;
+
+    return pra;
+}
+
+void insert_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa) {
+    REGRAS *pr = pra->pregras;
+    int i;
+    for (i = 0; i < pra->n_regras; ++i) {
+        strcpy(pr->tipo, tipo);
+        pr->id = id;
+        pr->taxa = taxa;
+        pr++;
+    }
+
+    if (i == pra->size_regras){
+        int oldsize = pra->size_regras;
+        int newsize = pra->size_regras + 2;
+        pra->pregras = (REGRAS *) realloc(pra->pregras, newsize * sizeof(REGRAS));
+        for (i = oldsize;i<newsize;++i) {
+            strcpy(pr->tipo, "");
+            pr->id = 0;
+            pr->taxa = 0;
+        }
+        pr = pra->pregras + oldsize;
+        strcpy(pr->tipo, tipo);
+        pr->id = id;
+        pr->taxa = taxa;
+    }
+}
+
+void edit_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa) {
+    REGRAS *pe = find_regra_dynarray_arrayregras(pra, id);
+    if (pe != NULL) {
+        pe->id = id;
+        strcpy(pe->tipo, tipo);
+        pe->taxa = taxa;
+    }
+}
+
+REGRAS *find_regra_dynarray_arrayregras(REGRAS_ARRAY *pra, int id_regra) { // BINARY SEARCH
+    REGRAS *pregra = pra->pregras;
+
+    for (int i = 0; i < pra->n_regras; ++i) {
+        int l = 0;
+        int r = pra->n_regras - 1;
+
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+            if (pregra[i].id == id_estudio) {
+                return pregra;
+            }
+            if (pregra[i].id < id_estudio) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+        pregra++;
+    }
+    return NULL;
+}
+
+PLATAFORMA *find_plataforma_dynarray_arrayplataformas(PLATAFORMAS_ARRAY *pa, char nome[]) { // BINARY SEARCH
+    PLATAFORMA *pp = pa->pplataforma;
+
+    for (int i = 0; i < pa->n_plataformas; ++i) {
+        int l = 0;
+        int r = pa->n_plataformas - 1;
+
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+            if (strcmp(pp[i].nome , nome) == 0) {
+                return pp;
+            }
+            if (strcmp(pp[i].nome , nome) < 0) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+        pp++;
+    }
+    return NULL;
+}
+
+
+

@@ -27,7 +27,7 @@ typedef struct politica {
 } POLITICA;
 
 typedef struct plataforma {
-    char nome[MAX20];
+    char *nome;
     POLITICA politicas[MAX20];
 } PLATAFORMA;
 
@@ -206,6 +206,10 @@ EVENTO *find_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento);
 
 HOSPEDE *find_hospede(LISTAHOSPEDES *pl, int id);
 
+PLATAFORMA *find_plataforma_dynarray_arrayplataformas(PLATAFORMAS_ARRAY *pa, char nome[]);
+
+REGRAS *find_regra_dynarray_arrayregras(REGRAS_ARRAY *pra, int id_regra);
+
 /** Funções de editar */
 
 void edit_edificio(LISTAEDIFICIOS *pg, int id_edificio, char nome[MAX200], double latitude, double longitude,
@@ -218,6 +222,8 @@ void edit_evento(LISTAEDIFICIOS *pg, int id_agenda, int id_evento, char tipo[], 
                  int id_cliente);
 
 void edit_hospede(LISTAHOSPEDES *pl, int id_cliente, char nome[]);
+
+void edit_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa);
 
 void escrever_edificios(LISTAEDIFICIOS* g);
 void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
@@ -233,5 +239,13 @@ LISTAHISTORICOESTADIAS *create_lista_historico_estadias();
 
 
 DIAS diferenca_dias(int d1, int m1, int ano1, int d2, int m2, int ano2);
+
+PLATAFORMAS_ARRAY *create_dyn_array_plataformas(int initsize);
+
+void insert_plataforma(PLATAFORMAS_ARRAY *pa, char nome[],char politica[]);
+
+void insert_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa);
+
+REGRAS_ARRAY *create_dyn_array_regras(int initsize);
 
 #endif //PROJETOLPAED_PROJETO_H
