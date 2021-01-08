@@ -248,4 +248,6 @@ void insert_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa);
 
 REGRAS_ARRAY *create_dyn_array_regras(int initsize);
 
+void ocupacaoEdificio(LISTAEDIFICIOS *pe, LISTAHISTORICOESTADIAS *phe, int edificio);
+
 #endif //PROJETOLPAED_PROJETO_H
