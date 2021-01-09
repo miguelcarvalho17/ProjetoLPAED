@@ -1,3 +1,4 @@
+
 #include "projeto.h"
 #include <stdio.h>
 #include <math.h>
@@ -38,73 +39,41 @@ int main_projeto(int argc, const char *argv[]) {
     /** Criação dos edificios e seus estudios */
 
     insert_edificio(e, "PF Maia", 41.162392, -8.655714, "Avenida da Maia", 1.5, 5);
-    insert_estudio(e, 1, 1, "t2", 50, 30, 600, 4);
-    insert_estudio(e, 1, 1, "t3", 50, 60, 600, 4);
-    //insert_estudio(e, 1, 2, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 1, 3, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 1, 4, "t2", 50, 30, 600, 4);
-    insert_edificio(e, "PF Boavista", 41.162392, -8.655714, "Avenida da Boavista", 1.5, 5);
-    insert_estudio(e, 2, 5, "t2", 50, 30, 600, 4);
-    insert_estudio(e, 2, 6, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 2, 7, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 2, 3, "t2", 50, 30, 600, 4);
-    //insert_estudio(e, 2, 5, "t2", 50, 30, 600, 4);
-    insert_agenda(e, 1, 1, "MASTER", 7);
+
+    insert_estudio(e, 1, 1, "t2", 50, 30, 600, 4);   // 2 ESTUDIOS PARA O PRIMEIRO EDIFICIO
+    insert_estudio(e, 1, 2, "t3", 50, 60, 600, 4);
+
+    insert_agenda(e, 1, 1, "MASTER", 7); // 2 AGENDAS PARA O PRIMEIRO ESTUDIO DO PRIMEIRO EDIFICIO
     insert_agenda(e, 1, 1, "AIRBNB", 7);
-    //insert_agenda(e, 1, 1, "AIRBNC", 7);
-    //insert_agenda(e, 1, 1, "AIRBNE", 7);
-    //insert_agenda(e, 1, 2, "MASTER", 7);
-    //insert_agenda(e, 1, 2, "AIRBNB", 7);
-    //insert_agenda(e, 1, 2, "AIRBNC", 7);
-    //insert_agenda(e, 1, 4, "MASTER", 7);
-    //insert_agenda(e, 2, 7, "MASTER", 7);
-    insert_agenda(e, 2, 3, "MASTER", 7);
-    insert_agenda(e, 2, 3, "AIRBNB", 7);
-    insert_agenda(e, 2, 4, "MASTER", 7);
-    //insert_agenda(e, 2, 12, "AIRBNC", 7);
-    //insert_agenda(e, 2, 12, "AIRBNE", 7);
+
+    insert_agenda(e, 1, 2, "MASTER", 7); // 2 AGENDAS PARA O SEGUNDO ESTUDIO DO PRIMEIRO EDIFICIO
+    insert_agenda(e, 1, 2, "AIRBNB", 7);
+
     insert_dia(e, 1, 1, 1, 1, 1, 2021);
-    insert_dia(e, 1, 1, 1, 10, 1, 2021);
-    insert_dia(e, 1, 1, 1, 15, 1, 2021);
-    insert_dia(e, 1, 1, 2, 1, 1, 2021);
+    insert_dia(e, 1, 1, 1, 2, 1, 2021);
+    insert_dia(e, 1, 1, 2, 3, 1, 2021);
 
-    insert_dia(e, 2, 3, 3, 10, 1, 2021);
-    insert_dia(e, 2, 3, 3, 20, 1, 2021);
+    insert_dia(e, 1, 2, 3, 4, 1, 2021);
+    insert_dia(e, 1, 2, 4, 5, 1, 2021);
 
-    /*insert_dia(e, 1, 1, 3, 3, 3, 3);
-    insert_dia(e, 1, 1, 4, 4, 4, 4);
-    insert_dia(e, 1, 2, 5, 5, 5, 5);
-    insert_dia(e, 1, 2, 6, 6, 6, 6);
-    insert_dia(e, 1, 2, 7, 7, 7, 7);
-    insert_dia(e, 1, 2, 8, 8, 8, 8);
-    insert_dia(e, 1, 4, 9, 9, 9, 9);
-    insert_dia(e, 2, 7, 10, 10, 10, 10);
-    insert_dia(e, 2, 10, 11, 11, 11, 11);
-     */
-    DIAS datafim = {10, 1, 2021};
-    DIAS dataf = {15, 1, 2021};
+
     DIAS data = {1, 1, 2021};
     insert_evento(e, "Limpeza", data, -1, 1, 1, 1, 2021);
-    insert_evento(e, "Alojamento", datafim, 1, 1, 1, 1, 2021);
-    insert_evento(e, "Alojamento", dataf, 2, 1, 10, 1, 2021);
-    insert_evento(e, "Manutencao", datafim, -1, 1, 15, 1, 2021);
-    insert_evento(e, "Manutencao", datafim, -1, 3, 1, 1, 2021);
+    insert_evento(e, "Hospede", data, 1, 1, 1, 1, 2021);
+    insert_evento(e, "Hospede", data, 1, 1, 2, 1, 2021);
 
-    insert_evento(e, "Alojamento", dataf, 3, 3, 10, 1, 2021);
-    insert_evento(e, "Alojamento", dataf, 4, 3, 20, 1, 2021);
-    //insert_evento(e,"Manutencao",datafim,5,1,1,1,1);
-    //insert_evento(e,"Alojamento",datafim,2,1,2,2,2);
-    //insert_evento(e,"Manutencao",datafim,-1,2,1,1,1);
+    insert_evento(e, "Hospede", data, 1, 2, 3, 1, 2021);
 
+    insert_evento(e, "Trolha", data, -1, 3, 4, 1, 2021);
+    insert_evento(e, "Pedreiro", data, -1, 3, 4, 1, 2021);
+
+    insert_evento(e, "Pedreiro", data, -1, 4, 5, 1, 2021);
 
 
-    //insert_evento(e,"Alojamento",datafim,4,10,10,10,10);
-    //insert_evento(e,"Alojamento",datafim,3,11,11,11,11);
-    //insert_evento(e,"Alojamento",datafim,3,3,3,3,3);
-    //print_listaEdificio(e);
+
+    DIAS datafim = {10, 1, 2021};
+    DIAS dataf = {15, 1, 2021};
+
 
     //EVENTO *fevento = find_evento(e,1,3);
     //printf("%s\n", fevento->tipo);
@@ -132,14 +101,14 @@ int main_projeto(int argc, const char *argv[]) {
 
     printf("----------------------------------\n\n");
 
-    ocupacaoEdificio(e, he, 1);
+ //   ocupacaoEdificio(e, he, 1);
 
     //print_listaHistorico(he);
 
 
     //DIAS fim = {31,12,2020};
     //edit_evento(e,2,4,"Alojamento", fim,1);
-    //print_listaEdificio(e);
+
 
     //DIAS *printdia = find_dia_dynarray_arraydias(e,2, 1, 1, 1);
     //printf("%d, %d, %d\n", printdia->dia, printdia->mes, printdia->ano);
@@ -173,8 +142,25 @@ int main_projeto(int argc, const char *argv[]) {
     //print_listaEdificio(e);
     // Remove edificio
     //remove_edificio(e, "PF Boavista");
-    //print_listaEdificio(e);
 
+    insert_edificio(e, "PF Boavista", 41.162392, -8.655714, "Avenida da Boavista", 1.5, 5);
+    insert_estudio(e,2,3,"t3", 50, 30, 300,4);
+    insert_estudio(e,2,4,"t4", 50, 30, 300,4);
+    insert_estudio(e,2,5,"t5", 50, 30, 300,4);
+    insert_agenda(e,2,3,"MASTER",7);
+    insert_agenda(e,2,4,"MASTER",7);
+    insert_agenda(e,2,5,"MASTER",7);
+    insert_dia(e,2,3,5,1,1,2021);
+    insert_dia(e,2,3,6,1,1,2021);
+    insert_dia(e,2,3,7,1,1,2021);
+    DIAS datafi = {10, 1, 2021};
+    insert_evento(e,"hospede", datafi, 1,5,1,1,2021);
+    insert_evento(e,"guest", datafi, 1,5,1,1,2021);
+    insert_evento(e,"guest", datafi, 1,6,1,1,2021);
+    insert_evento(e,"guest", datafi, 1,7,1,1,2021);
+  //  print_listaEdificio(e);
+
+   // ocupacaoEdificio(e,he, 1);
 
     // Editar edificio
     //edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
@@ -182,6 +168,8 @@ int main_projeto(int argc, const char *argv[]) {
     //gravar_edificios(e);
     // Editar estudio
     //edit_estudio(e,8,31,"T3",150,50, 950);
+    print_listaEdificio(e);
+    printf("%d", get_studio_occupancy(e, 1, get_timestamp(1, 1, 2021), get_timestamp(5, 1, 2021)));
 
     return 0;
 }
@@ -1084,7 +1072,7 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
                     if (pd->listaeventos != NULL) {
                         EVENTO *pe = pd->listaeventos->peventos;
                         while (pe != NULL) {
-                            printf("\t\t\t\tEVENTO: %d,%s, %d-%d-%d, %d-%d-%d, %d \n", pe->id_evento, pe->tipo, pd->dia,
+                            printf("\t\t\t\tEVENTO:%d,%s, %d-%d-%d, %d-%d-%d, ID-Cliente:%d \n", pe->id_evento, pe->tipo, pd->dia,
                                    pd->mes, pd->ano, pe->datafim.dia, pe->datafim.mes, pe->datafim.ano, pe->id_cliente);
                             pe = pe->nextEvento;
                         }
@@ -1265,27 +1253,43 @@ PLATAFORMA *find_plataforma_dynarray_arrayplataformas(PLATAFORMAS_ARRAY *pa, cha
     return (pp->nome != NULL && strcmp(pp->nome, nome) == 0 ? pp : NULL);
 }
 
-void ocupacaoEdificio(LISTAEDIFICIOS *pe, LISTAHISTORICOESTADIAS *phe, int edificio) {
-    int aux = 0;
-    EDIFICIO *e = find_edificio(pe, edificio);
+int is_estudio_occupied(ESTUDIO* es, int from, int to) {
+    for (int j = 0; j < es->array_agendas.n_agendas; j++) {
+        AGENDAS* ag = es->array_agendas.pagenda + j;
+        for (int k = 0; k < ag->array_dias.n_dias; k++) {
+            DIAS* di = ag->array_dias.pdias + k;
 
-    for (int i = 0; i < e->array_estudios.n_estudios; ++i) {
-        ESTUDIO *es = e->array_estudios.pestudios;
-        for (int j = 0; j < es->array_agendas.n_agendas; ++j) {
-            AGENDAS *a = es->array_agendas.pagenda;
-            for (int k = 0; k < a->array_dias.n_dias; ++k){
-                DIAS *d = a->array_dias.pdias;
-                EVENTO *ev = d->listaeventos->peventos;
-                while (ev != NULL) {
-                    if (ev->id_cliente >= 0) {
-                        aux++;
-                    }
-                    ev = ev->nextEvento;
+            EVENTO* ev = di->listaeventos->peventos;
+            while (ev != NULL) {
+                if (ev->id_cliente >= 0 && is_between(ev->datafim, from, to) == 1) {
+                    return 1;
                 }
+
+                ev = ev->nextEvento;
             }
         }
     }
-    printf("%d", aux);
+
+    return 0;
 }
 
+int is_between(DIAS date, int from, int to) {
+    int ts = get_timestamp(date.dia, date.mes, date.ano); // guarda em ts o total de dias da nossa datafim
+    if (ts >= from && ts <= to) { return 1; } else { return 0; } // se o total de dias da data for maior que a data de inicio e menor que a de saida significa que o nosso evento esta entre as datas a ser procuradas.
+                                                                // return 1 se sim
+}
 
+int get_timestamp(int day, int month, int year) {
+    return day + month * 31 + year * 12 * 31;           // 1 + 1*31 + 2021*12*31= 5000  5005
+}
+
+int get_studio_occupancy(LISTAEDIFICIOS* pe, int edificio, int from, int to) {
+    int aux = 0;
+
+    EDIFICIO* e = find_edificio(pe, edificio);
+    for (int i = 0; i < e->array_estudios.n_estudios; i++) {
+        aux = aux + is_estudio_occupied(e->array_estudios.pestudios + i, from, to);
+    }
+
+    return aux;
+}
