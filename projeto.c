@@ -1,4 +1,3 @@
-
 #include "projeto.h"
 #include <stdio.h>
 #include <math.h>
@@ -70,7 +69,6 @@ int main_projeto(int argc, const char *argv[]) {
     insert_evento(e, "Pedreiro", data, -1, 4, 5, 1, 2021);
 
 
-
     DIAS datafim = {10, 1, 2021};
     DIAS dataf = {15, 1, 2021};
 
@@ -101,7 +99,7 @@ int main_projeto(int argc, const char *argv[]) {
 
     printf("----------------------------------\n\n");
 
- //   ocupacaoEdificio(e, he, 1);
+    //   ocupacaoEdificio(e, he, 1);
 
     //print_listaHistorico(he);
 
@@ -144,23 +142,23 @@ int main_projeto(int argc, const char *argv[]) {
     //remove_edificio(e, "PF Boavista");
 
     insert_edificio(e, "PF Boavista", 41.162392, -8.655714, "Avenida da Boavista", 1.5, 5);
-    insert_estudio(e,2,3,"t3", 50, 30, 300,4);
-    insert_estudio(e,2,4,"t4", 50, 30, 300,4);
-    insert_estudio(e,2,5,"t5", 50, 30, 300,4);
-    insert_agenda(e,2,3,"MASTER",7);
-    insert_agenda(e,2,4,"MASTER",7);
-    insert_agenda(e,2,5,"MASTER",7);
-    insert_dia(e,2,3,5,1,1,2021);
-    insert_dia(e,2,3,6,1,1,2021);
-    insert_dia(e,2,3,7,1,1,2021);
+    insert_estudio(e, 2, 3, "t3", 50, 30, 300, 4);
+    insert_estudio(e, 2, 4, "t4", 50, 30, 300, 4);
+    insert_estudio(e, 2, 5, "t5", 50, 30, 300, 4);
+    insert_agenda(e, 2, 3, "MASTER", 7);
+    insert_agenda(e, 2, 4, "MASTER", 7);
+    insert_agenda(e, 2, 5, "MASTER", 7);
+    insert_dia(e, 2, 3, 5, 1, 1, 2021);
+    insert_dia(e, 2, 3, 6, 1, 1, 2021);
+    insert_dia(e, 2, 3, 7, 1, 1, 2021);
     DIAS datafi = {10, 1, 2021};
-    insert_evento(e,"hospede", datafi, 1,5,1,1,2021);
-    insert_evento(e,"guest", datafi, 1,5,1,1,2021);
-    insert_evento(e,"guest", datafi, 1,6,1,1,2021);
-    insert_evento(e,"guest", datafi, 1,7,1,1,2021);
-  //  print_listaEdificio(e);
+    insert_evento(e, "hospede", datafi, 1, 5, 1, 1, 2021);
+    insert_evento(e, "guest", datafi, 1, 5, 1, 1, 2021);
+    insert_evento(e, "guest", datafi, 1, 6, 1, 1, 2021);
+    insert_evento(e, "guest", datafi, 1, 7, 1, 1, 2021);
+    //  print_listaEdificio(e);
 
-   // ocupacaoEdificio(e,he, 1);
+    // ocupacaoEdificio(e,he, 1);
 
     // Editar edificio
     //edit_edificio(e, 1, "Ribeira", 41.162392, -8.655714, "Ribeira", 1.5, 3);
@@ -169,7 +167,9 @@ int main_projeto(int argc, const char *argv[]) {
     // Editar estudio
     //edit_estudio(e,8,31,"T3",150,50, 950);
     print_listaEdificio(e);
-    printf("%d", get_studio_occupancy(e, 1, get_timestamp(1, 1, 2021), get_timestamp(5, 1, 2021)));
+    //printf("Taxa de ocupacao do edificio: %.2f %% \n", get_studio_occupancy(e, 2, get_timestamp(1, 1, 2021), get_timestamp(15, 1, 2021)));
+
+    printf("Taxa total de ocupacao: %.2f %%", get_total_estudios_occupancy(e,get_timestamp(1, 1, 2021), get_timestamp(15, 1, 2021)));
 
     return 0;
 }
@@ -1072,7 +1072,8 @@ void print_listaEdificio(const LISTAEDIFICIOS *g) {
                     if (pd->listaeventos != NULL) {
                         EVENTO *pe = pd->listaeventos->peventos;
                         while (pe != NULL) {
-                            printf("\t\t\t\tEVENTO:%d,%s, %d-%d-%d, %d-%d-%d, ID-Cliente:%d \n", pe->id_evento, pe->tipo, pd->dia,
+                            printf("\t\t\t\tEVENTO:%d,%s, %d-%d-%d, %d-%d-%d, ID-Cliente:%d \n", pe->id_evento,
+                                   pe->tipo, pd->dia,
                                    pd->mes, pd->ano, pe->datafim.dia, pe->datafim.mes, pe->datafim.ano, pe->id_cliente);
                             pe = pe->nextEvento;
                         }
@@ -1253,13 +1254,13 @@ PLATAFORMA *find_plataforma_dynarray_arrayplataformas(PLATAFORMAS_ARRAY *pa, cha
     return (pp->nome != NULL && strcmp(pp->nome, nome) == 0 ? pp : NULL);
 }
 
-int is_estudio_occupied(ESTUDIO* es, int from, int to) {
+int is_estudio_occupied(ESTUDIO *es, int from, int to) {
     for (int j = 0; j < es->array_agendas.n_agendas; j++) {
-        AGENDAS* ag = es->array_agendas.pagenda + j;
+        AGENDAS *ag = es->array_agendas.pagenda + j;
         for (int k = 0; k < ag->array_dias.n_dias; k++) {
-            DIAS* di = ag->array_dias.pdias + k;
+            DIAS *di = ag->array_dias.pdias + k;
 
-            EVENTO* ev = di->listaeventos->peventos;
+            EVENTO *ev = di->listaeventos->peventos;
             while (ev != NULL) {
                 if (ev->id_cliente >= 0 && is_between(ev->datafim, from, to) == 1) {
                     return 1;
@@ -1275,21 +1276,46 @@ int is_estudio_occupied(ESTUDIO* es, int from, int to) {
 
 int is_between(DIAS date, int from, int to) {
     int ts = get_timestamp(date.dia, date.mes, date.ano); // guarda em ts o total de dias da nossa datafim
-    if (ts >= from && ts <= to) { return 1; } else { return 0; } // se o total de dias da data for maior que a data de inicio e menor que a de saida significa que o nosso evento esta entre as datas a ser procuradas.
-                                                                // return 1 se sim
+    if (ts >= from && ts <= to) {
+        return 1;       // se o total de dias da data for maior que a data de inicio e menor que a de saida significa que o nosso evento esta entre as datas a ser procuradas.
+        // return 1 se sim
+    } else {
+        return 0;
+    }
 }
 
 int get_timestamp(int day, int month, int year) {
     return day + month * 31 + year * 12 * 31;           // 1 + 1*31 + 2021*12*31= 5000  5005
 }
 
-int get_studio_occupancy(LISTAEDIFICIOS* pe, int edificio, int from, int to) {
+float get_studio_occupancy(LISTAEDIFICIOS *pe, int edificio, int from, int to) {
     int aux = 0;
 
-    EDIFICIO* e = find_edificio(pe, edificio);
+    EDIFICIO *e = find_edificio(pe, edificio);
     for (int i = 0; i < e->array_estudios.n_estudios; i++) {
         aux = aux + is_estudio_occupied(e->array_estudios.pestudios + i, from, to);
     }
+    float ocupacao = (float) aux / (float) e->array_estudios.n_estudios;
 
-    return aux;
+    ocupacao *= 100;
+
+    return ocupacao;
+}
+
+
+float get_total_estudios_occupancy(LISTAEDIFICIOS *pe, int from, int to){
+    int aux = 0;
+    int num_estudios = 0;
+    EDIFICIO *e =pe->pedificios;
+    while( e != NULL){
+        for (int i = 0; i < e->array_estudios.n_estudios; ++i) {
+            aux = aux + is_estudio_occupied(e->array_estudios.pestudios + i, from, to);
+        }
+        num_estudios+= e->array_estudios.n_estudios;
+        e = e->next;
+    }
+    float ocupacao = (float) aux  / (float) num_estudios;
+    ocupacao *= 100;
+    return ocupacao;
+
 }

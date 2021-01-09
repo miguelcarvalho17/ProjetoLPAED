@@ -248,10 +248,11 @@ void insert_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa);
 
 REGRAS_ARRAY *create_dyn_array_regras(int initsize);
 
-void ocupacaoEdificio(LISTAEDIFICIOS *pe, LISTAHISTORICOESTADIAS *phe, int edificio);
 int get_timestamp(int day, int month, int year);
-int get_studio_occupancy(LISTAEDIFICIOS* pe, int edificio, int from, int to);
+float get_studio_occupancy(LISTAEDIFICIOS *pe, int edificio, int from, int to);
 int is_between(DIAS date, int from, int to);
 int is_estudio_occupied(ESTUDIO* es, int from, int to);
+
+float get_total_estudios_occupancy(LISTAEDIFICIOS *pe, int from, int to);
 
 #endif //PROJETOLPAED_PROJETO_H
