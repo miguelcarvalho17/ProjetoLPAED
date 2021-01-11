@@ -228,7 +228,9 @@ void edit_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa);
 void escrever_edificios(LISTAEDIFICIOS* g);
 void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
 
-void escrever_agendas_txt(LISTAEDIFICIOS *g);
+void escrever_agenda_bin(LISTAEDIFICIOS *le, const char *fn, int agenda);
+
+void escrever_agenda_txt(LISTAEDIFICIOS *g, int agenda);
 
 LISTAEDIFICIOS *read_edificios_txt();
 void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
