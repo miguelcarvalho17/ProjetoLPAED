@@ -227,6 +227,7 @@ void edit_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa);
 
 void escrever_edificios(LISTAEDIFICIOS* g);
 void escrever_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
+void escrever_hospedes_txt(LISTAHOSPEDES *g);
 
 void escrever_agenda_bin(LISTAEDIFICIOS *le, const char *fn, int agenda);
 
@@ -236,7 +237,7 @@ LISTAEDIFICIOS *read_edificios_txt();
 void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
 
 void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
-
+void read_agenda_txt(LISTAEDIFICIOS* g, int edificio, int estudio);
 LISTAHISTORICOESTADIAS *create_lista_historico_estadias();
 
 

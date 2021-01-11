@@ -45,8 +45,8 @@ int main_projeto(int argc, const char *argv[]) {
     insert_agenda(e, 1, 1, "MASTER", 7); // 2 AGENDAS PARA O PRIMEIRO ESTUDIO DO PRIMEIRO EDIFICIO
     insert_agenda(e, 1, 1, "AIRBNB", 7);
 
-    insert_agenda(e, 1, 2, "MASTER", 7); // 2 AGENDAS PARA O SEGUNDO ESTUDIO DO PRIMEIRO EDIFICIO
-    insert_agenda(e, 1, 2, "AIRBNB", 7);
+   // insert_agenda(e, 1, 2, "MASTER", 7); // 2 AGENDAS PARA O SEGUNDO ESTUDIO DO PRIMEIRO EDIFICIO
+    //   insert_agenda(e, 1, 2, "AIRBNB", 7);
 
     insert_dia(e, 1, 1, 1, 1, 1, 2021);
     insert_dia(e, 1, 1, 1, 2, 1, 2021);
@@ -56,10 +56,10 @@ int main_projeto(int argc, const char *argv[]) {
     insert_dia(e, 1, 2, 4, 5, 1, 2021);
 
 
-    DIAS data = {1, 1, 2021};
+    DIAS data = {10, 1, 2021};
     insert_evento(e, "Limpeza", data, -1, 1, 1, 1, 2021);
     insert_evento(e, "Hospede", data, 1, 1, 1, 1, 2021);
-    insert_evento(e, "Hospede", data, 1, 1, 2, 1, 2021);
+    insert_evento(e, "Hospede", data, 2, 1, 2, 1, 2021);
 
     insert_evento(e, "Hospede", data, 1, 2, 3, 1, 2021);
 
@@ -84,7 +84,7 @@ int main_projeto(int argc, const char *argv[]) {
 
 
     insert_historicoEstadias(e, h, he, "Paulo", 1, 1, 1, 1, 2021, 2, 1);
-    insert_historicoEstadias(e, h, he, "Daniel", 1, 1, 10, 1, 2021, 3, 2);
+    insert_historicoEstadias(e, h, he, "Daniel", 1, 1, 2, 1, 2021, 3, 2);
     //edit_hospede(h,2,"Miguel");
     //print_listaHistorico(he);
     //insert_hospede(e,h,"Ze",10,5,4);
@@ -122,7 +122,7 @@ int main_projeto(int argc, const char *argv[]) {
     //insert_regra(ra,1,"p1", 0.3);
 
     //print_listaEdificio(e);
-    //print_listaHospedes(h);
+    //   print_listaHospedes(h);
 
     /* // Find estudio
      ESTUDIO *printestudio = find_estudio_dynarray_arrayestudios(e, 5);
@@ -145,9 +145,9 @@ int main_projeto(int argc, const char *argv[]) {
     insert_estudio(e, 2, 3, "t3", 50, 30, 300, 4);
     insert_estudio(e, 2, 4, "t4", 50, 30, 300, 4);
     insert_estudio(e, 2, 5, "t5", 50, 30, 300, 4);
-    insert_agenda(e, 2, 3, "MASTER", 7);
-    insert_agenda(e, 2, 4, "MASTER", 7);
-    insert_agenda(e, 2, 5, "MASTER", 7);
+    //    insert_agenda(e, 2, 3, "MASTER", 7);
+    //   insert_agenda(e, 2, 4, "MASTER", 7);
+    //   insert_agenda(e, 2, 5, "MASTER", 7);
     insert_dia(e, 2, 3, 5, 1, 1, 2021);
     insert_dia(e, 2, 3, 6, 1, 1, 2021);
     insert_dia(e, 2, 3, 7, 1, 1, 2021);
@@ -167,11 +167,20 @@ int main_projeto(int argc, const char *argv[]) {
     // Editar estudio
     //edit_estudio(e,8,31,"T3",150,50, 950);
     //print_listaEdificio(e);
-    escrever_agenda_txt(e, 1);
+    //  escrever_agenda_txt(e, 1);
     //printf("Taxa de ocupacao do edificio: %.2f %% \n", get_studio_occupancy(e, 2, get_timestamp(1, 1, 2021), get_timestamp(15, 1, 2021)));
 
     //printf("Taxa total de ocupacao: %.2f %%", get_total_estudios_occupancy(e,get_timestamp(1, 1, 2021), get_timestamp(15, 1, 2021)));
 
+    // escrever_hospedes_txt(h);
+    //  print_listaHospedes(h);
+    // print_listaEdificio(e);
+
+   // find_dia_dynarray_arraydias(e, 1, 1, 1, 2021);
+   // escrever_agenda_txt(e, 2);
+    //escrever_agenda_txt(e, 3);
+   read_agenda_txt(e, 1, 1);
+    print_listaEdificio(e);
     return 0;
 }
 
@@ -860,49 +869,145 @@ void escrever_edificios(LISTAEDIFICIOS *g) {
         printf("Erro na abertura do ficheiro\n");
     }
 }
-
-void escrever_agenda_txt(LISTAEDIFICIOS *g, int agenda) {
-
-    AGENDAS *pa = find_agenda_dynarray_arrayagendas(g, agenda);
-
-    FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\agendas.txt", "w"));
+void escrever_historico_estadias(LISTAHISTORICOESTADIAS *he) {
+    HISTORICOESTADIAS *pp = he->pHestadias;
+    FILE *fp = (fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\historico_estadias.txt", "w"));
 
     if (fp != NULL) {
-
-            fprintf(fp, "%d %s\n", pa->id_agenda, pa->plataforma);
-                    DIAS *pd = pa->array_dias.pdias;
-                    for (int k = 0; k < pa->array_dias.n_dias; k++) {
-                        fprintf(fp, "%d/%d/%d\n", pd->dia, pd->mes, pd->ano);
-                        EVENTO *pev = pd->listaeventos->peventos;
-                        while (pev != NULL) {
-                            fprintf(fp, "%d,%s,%d-%d-%d, %d\n", pev->id_evento, pev->tipo, pev->datafim.dia,
-                                    pev->datafim.mes, pev->datafim.ano, pev->id_cliente);
-                            pev = pev->nextEvento;
-                        }
-                        pd++;
-                    }
+        fprintf(fp, "Numero de estadias:%d\n", he->num_estadias);
+        while (pp != NULL) {
+            fprintf(fp, "%s,%d, Data de entrada:%d-%d-%d, Data de saida:%d-%d-%d, Preco:%f\n", pp->nome_cliente,pp->id_estadia,pp->dataEntrada.dia,pp->dataEntrada.mes,pp->dataEntrada.ano, pp->dataSaida.dia, pp->dataSaida.mes, pp->dataSaida.ano,
+                    pp->preco);
+            pp = pp->pnext_estadia;
+        }
+        fclose(fp);
     } else {
         printf("Erro na abertura do ficheiro\n");
     }
-
 }
 
+void escrever_hospedes_txt(LISTAHOSPEDES *g) {
 
-void read_agendas_txt() {
-    LISTAEDIFICIOS* g = create_lista_edificio();
-    FILE* fp;
-    if ((fp = fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\agendas.txt", "r")) == NULL) {
-        printf("File not opened!\n");
-        return;
+    HOSPEDE *ph = g->phospede;
+    FILE *fp = (fopen("C:\\Users\\Utilizador\\CLionProjects\\ProjetoLPAED\\hospedes.txt", "w"));
+
+    if (fp != NULL) {
+        fprintf(fp, "Numero de hospedes:%d\n", g->num_hospedes);
+        while (ph != NULL) {
+            fprintf(fp, "%d,%s\n", ph->id_cliente, ph->nome_cliente);
+
+            ph = ph->pnext;
+        }
+        fclose(fp);
+    } else {
+        printf("Erro na abertura do ficheiro\n");
     }
-    int id;
-    char plataforma[MAX20];
-    fscanf(fp,"%d %s",&id, plataforma);
-    //insert_agenda(g,);
+}
+
+/*
+LISTAHOSPEDES *read_HOSPEDES_txt(LISTAEDIFICIOS *e) {
+    LISTAHOSPEDES *h = create_lista_hospedes();
+
+    FILE *fp;
+
+    if ((fp = fopen("C:\\Users\\carva\\CLionProjects\\ProjetoLPAED\\edificios.txt", "r")) == NULL) {
+        printf("File not opened!\n");
+        return NULL;
+    }
+
+   int id_hospede = 1;
+    int num_hospedes = 0;
+    fscanf(fp, "%*[^:]:%d\n", &num_hospedes);
+
+    for (int i = 0; i < num_hospedes; i++) {
+        char  nome[MAX200];
+        int n_hospedes = 0;
+
+
+        fscanf(fp, "%d, %s\n", &id_hospede, nome);
+
+        insert_hospede(e,h,id);
+
+        EDIFICIO *fe = g->pedificios;
+        while (fe->next != NULL) fe = fe->next;
+
+        for (int j = 0; j < n_estudios; j++) {
+            int numero, area, size_agendas;
+            float preco_diaria, preco_mensal;
+            char configuracao[30];
+
+            fscanf(fp, "%*d,%d,%*d,%[^,],%d,%f,%f,%d\n", &numero, configuracao, &area, &preco_diaria, &preco_mensal,
+                   &size_agendas);
+            insert_estudio(g, fe->id_edificio, numero, configuracao, area, preco_diaria, preco_mensal, size_agendas);
+        }
+    }
 
     fclose(fp);
+
+    print_listaEdificio(g);
+
+    return g;
+
+}*/
+
+void escrever_agenda_txt(LISTAEDIFICIOS* g, int agenda) {
+    AGENDAS* a = find_agenda_dynarray_arrayagendas(g, agenda);
+
+    FILE* file;
+    if ((file = fopen("C:\\Users\\Utilizador\\CLionProjects\\ProjetoLPAED\\agendas.txt", "w")) != NULL) {
+        fprintf(file, "%d,%s,%d\n", a->id_agenda, a->plataforma, a->array_dias.n_dias);
+
+        for (int i = 0; i < a->array_dias.n_dias; i++) {
+            DIAS* d = a->array_dias.pdias + i;
+            fprintf(file, "%d,%d,%d,%d\n", d->dia, d->mes, d->ano, d->listaeventos->num_eventos);
+
+            EVENTO* e = d->listaeventos->peventos;
+            while (e != NULL) {
+                fprintf(file, "%d,%d,%s,%d,%d,%d\n", e->id_evento, e->id_cliente, e->tipo, e->datafim.dia, e->datafim.mes, e->datafim.ano);
+                e = e->nextEvento;
+            }
+        }
+    } else {
+        printf("Erro na abertura do ficheiro\n");
+    }
+    fclose(file);
 }
 
+
+void read_agenda_txt(LISTAEDIFICIOS* g, int edificio, int estudio) {
+    FILE* file;
+    if ((file = fopen("C:\\Users\\Utilizador\\CLionProjects\\ProjetoLPAED\\agendas.txt", "r")) != NULL) {
+        int id, dias_count;
+        char plataforma[40];
+
+        fscanf(file, "%d,%[^,],%d\n", &id, plataforma, &dias_count);
+
+        insert_agenda(g, edificio, estudio, plataforma, dias_count);
+        AGENDAS* a = find_agenda_dynarray_arrayagendas(g, id_agenda - 1);
+
+        for (int i = 0; i < dias_count; i++) {
+            int dia, mes, ano, event_count;
+
+            fscanf(file, "%d,%d,%d,%d\n", &dia, &mes, &ano, &event_count);
+            insert_dia(g, edificio, estudio, id_agenda - 1, dia, mes, ano);
+
+            for (int j = 0; j < event_count; j++) {
+                int eid,  cliente, dia2, mes2, ano2;
+                char tipo[20];
+
+                fscanf(file, "%d,%d,%[^,],%d,%d,%d\n", &eid, &cliente, tipo, &dia2, &mes2, &ano2);
+
+                DIAS dias;
+                dias.ano = ano2;
+                dias.dia = dia2;
+                dias.mes = mes2;
+
+                insert_evento(g, tipo, dias, cliente, id_agenda - 1, dia, mes, ano);
+            }
+        }
+    }
+     fclose(file);
+}
 void escrever_agenda_bin(LISTAEDIFICIOS *le, const char *fn, int agenda) {
     FILE *fp = NULL;
 
@@ -923,7 +1028,7 @@ void escrever_agenda_bin(LISTAEDIFICIOS *le, const char *fn, int agenda) {
         fwrite((&pa->array_dias.pdias->ano), sizeof(int), 1, fp);
 
         EVENTO *pev = pd->listaeventos->peventos;
-        while (pev != NULL){
+        while (pev != NULL) {
             fwrite((&pev->id_evento), sizeof(int), 1, fp);
             write_string(fp, pev->tipo);
             fwrite((&pev->datafim.dia), sizeof(int), 1, fp);
@@ -933,7 +1038,7 @@ void escrever_agenda_bin(LISTAEDIFICIOS *le, const char *fn, int agenda) {
 
             pev = pev->nextEvento;
         }
-       pd++;
+        pd++;
     }
     fclose(fp);
 }
@@ -1269,12 +1374,10 @@ int is_estudio_occupied(ESTUDIO *es, int from, int to) {
                 if (ev->id_cliente >= 0 && is_between(ev->datafim, from, to) == 1) {
                     return 1;
                 }
-
                 ev = ev->nextEvento;
             }
         }
     }
-
     return 0;
 }
 
@@ -1306,20 +1409,18 @@ float get_studio_occupancy(LISTAEDIFICIOS *pe, int edificio, int from, int to) {
     return ocupacao;
 }
 
-
-float get_total_estudios_occupancy(LISTAEDIFICIOS *pe, int from, int to){
+float get_total_estudios_occupancy(LISTAEDIFICIOS *pe, int from, int to) {
     int aux = 0;
     int num_estudios = 0;
-    EDIFICIO *e =pe->pedificios;
-    while( e != NULL){
+    EDIFICIO *e = pe->pedificios;
+    while (e != NULL) {
         for (int i = 0; i < e->array_estudios.n_estudios; ++i) {
             aux = aux + is_estudio_occupied(e->array_estudios.pestudios + i, from, to);
         }
-        num_estudios+= e->array_estudios.n_estudios;
+        num_estudios += e->array_estudios.n_estudios;
         e = e->next;
     }
-    float ocupacao = (float) aux  / (float) num_estudios;
+    float ocupacao = (float) aux / (float) num_estudios;
     ocupacao *= 100;
     return ocupacao;
-
 }
