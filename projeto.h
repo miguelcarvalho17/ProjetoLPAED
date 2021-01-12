@@ -237,7 +237,9 @@ LISTAEDIFICIOS *read_edificios_txt();
 void ler_edificios_bin(LISTAEDIFICIOS* le, const char* fname);
 
 void read_dyn_array_estudios_txt(LISTAEDIFICIOS *g);
+
 void read_agenda_txt(LISTAEDIFICIOS* g, int edificio, int estudio);
+
 LISTAHISTORICOESTADIAS *create_lista_historico_estadias();
 
 
@@ -252,10 +254,21 @@ void insert_regra(REGRAS_ARRAY *pra, int id, char tipo[], double taxa);
 REGRAS_ARRAY *create_dyn_array_regras(int initsize);
 
 int get_timestamp(int day, int month, int year);
+
 float get_studio_occupancy(LISTAEDIFICIOS *pe, int edificio, int from, int to);
+
 int is_between(DIAS date, int from, int to);
+
 int is_estudio_occupied(ESTUDIO* es, int from, int to);
 
 float get_total_estudios_occupancy(LISTAEDIFICIOS *pe, int from, int to);
+
+void read_agenda_bin(LISTAEDIFICIOS *le, const char *agendabin, int edificio, int estudio);
+
+LISTAHOSPEDES *read_hospedes_txt(LISTAEDIFICIOS *e, LISTAHOSPEDES *h, int id_agenda, int id_evento);
+
+LISTAHISTORICOESTADIAS *read_historico_txt(LISTAEDIFICIOS *pg, LISTAHOSPEDES *pl,LISTAHISTORICOESTADIAS *he, int id_estudio, int id_agenda, int id_evento, int id_hospede);
+
+void escrever_historico_estadias(LISTAHISTORICOESTADIAS *he);
 
 #endif //PROJETOLPAED_PROJETO_H
